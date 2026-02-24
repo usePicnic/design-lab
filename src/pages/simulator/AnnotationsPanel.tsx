@@ -4,6 +4,7 @@ import type { FlowScreen, Flow } from './flowRegistry'
 import { getBaseFlow } from './flowRegistry'
 import {
   setFlowName,
+  setFlowDescription,
   setFlowSpec,
   setScreenOverride,
   resetFlowOverrides,
@@ -124,6 +125,8 @@ export default function AnnotationsPanel({
     const lines = [
       `# ${flow.name} — Flow Handoff`,
       '',
+      flow.description ? `> ${flow.description}` : '',
+      '',
       `## Spec`,
       flow.specContent ?? '_No spec available_',
       '',
@@ -160,6 +163,14 @@ export default function AnnotationsPanel({
     [flow.id, onFlowEdited],
   )
 
+  const handleDescriptionSave = useCallback(
+    (desc: string) => {
+      setFlowDescription(flow.id, desc)
+      onFlowEdited()
+    },
+    [flow.id, onFlowEdited],
+  )
+
   const handleScreenTitleSave = useCallback(
     (title: string) => {
       setScreenOverride(flow.id, currentScreen.id, 'title', title)
@@ -185,6 +196,7 @@ export default function AnnotationsPanel({
   const baseFlow = getBaseFlow(flow.id)
   const hasOverrides =
     flow.name !== baseFlow?.name ||
+    flow.description !== baseFlow?.description ||
     flow.specContent !== baseFlow?.specContent ||
     flow.screens.some(
       (s, i) =>
@@ -222,12 +234,27 @@ export default function AnnotationsPanel({
 
       <div className="p-[var(--token-spacing-md)]">
         {/* Flow name (editable) */}
-        <div className="mb-[var(--token-spacing-lg)]">
+        <div className="mb-[var(--token-spacing-2)]">
           <p className="text-[length:var(--token-font-size-caption)] text-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-1)]">
             Flow Name
           </p>
           <div className="text-[length:var(--token-font-size-heading-sm)] font-medium text-text-primary">
             <EditableField value={flow.name} onSave={handleNameSave} label="flow name" />
+          </div>
+        </div>
+
+        {/* Flow description (editable) */}
+        <div className="mb-[var(--token-spacing-lg)]">
+          <p className="text-[length:var(--token-font-size-caption)] text-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-1)]">
+            Overview
+          </p>
+          <div className="text-[length:var(--token-font-size-body-sm)] text-text-secondary">
+            <EditableField
+              value={flow.description}
+              onSave={handleDescriptionSave}
+              multiline
+              label="flow description"
+            />
           </div>
         </div>
 

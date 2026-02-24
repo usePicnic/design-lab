@@ -9,6 +9,7 @@ import specContent from './spec.md?raw'
 registerFlow({
   id: 'deposit-pix',
   name: 'Deposit via PIX',
+  description: 'User deposits BRL into their Picnic account using PIX, Brazil\'s instant payment system. Funds are converted to USD at the current exchange rate and credited to their crypto wallet balance.',
   area: 'Transactions',
   specContent,
   screens: [

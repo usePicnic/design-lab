@@ -3,10 +3,11 @@
 -- Run this in your Supabase SQL Editor
 -- ============================================
 
--- Flow overrides: stores edits to flow name and spec
+-- Flow overrides: stores edits to flow name, description, and spec
 create table if not exists flow_overrides (
   flow_id text primary key,
   name text,
+  description text,
   spec text,
   updated_at timestamptz default now()
 );

@@ -17,6 +17,7 @@ export interface FlowScreenProps {
 export interface Flow {
   id: string
   name: string
+  description: string
   area: string
   screens: FlowScreen[]
   specContent?: string
@@ -37,6 +38,7 @@ export function getFlow(id: string): Flow | undefined {
   return {
     ...base,
     name: overrides.name ?? base.name,
+    description: overrides.description ?? base.description,
     specContent: overrides.spec ?? base.specContent,
     screens: base.screens.map((s) => {
       const so = overrides.screens?.[s.id]

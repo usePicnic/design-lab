@@ -16,6 +16,7 @@ export interface ScreenOverrides {
 
 export interface FlowOverrides {
   name?: string
+  description?: string
   spec?: string
   screens?: Record<string, ScreenOverrides>
 }
@@ -54,6 +55,20 @@ export async function setFlowName(flowId: string, name: string): Promise<void> {
   if (isSupabaseConnected()) {
     await supabase!.from('flow_overrides').upsert(
       { flow_id: flowId, name, updated_at: new Date().toISOString() },
+      { onConflict: 'flow_id' },
+    )
+  }
+}
+
+export async function setFlowDescription(flowId: string, description: string): Promise<void> {
+  const all = readAll()
+  if (!all[flowId]) all[flowId] = {}
+  all[flowId].description = description
+  writeAll(all)
+
+  if (isSupabaseConnected()) {
+    await supabase!.from('flow_overrides').upsert(
+      { flow_id: flowId, description, updated_at: new Date().toISOString() },
       { onConflict: 'flow_id' },
     )
   }
@@ -142,6 +157,7 @@ export async function hydrateFromSupabase(): Promise<boolean> {
       const id = row.flow_id as string
       if (!all[id]) all[id] = {}
       if (row.name) all[id].name = row.name
+      if (row.description) all[id].description = row.description
       if (row.spec) all[id].spec = row.spec
     }
 
