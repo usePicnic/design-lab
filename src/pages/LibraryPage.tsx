@@ -43,19 +43,19 @@ export default function LibraryPage() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="h-screen flex flex-col bg-background"
+      className="h-screen flex flex-col bg-shell-bg"
     >
       {/* Top bar */}
-      <header className="h-[48px] flex items-center justify-between px-[var(--token-spacing-md)] border-b border-border-default bg-surface-primary shrink-0">
+      <header className="h-[48px] flex items-center justify-between px-[var(--token-spacing-md)] border-b border-shell-border bg-shell-surface shrink-0">
         <div className="flex items-center gap-[var(--token-spacing-2)]">
-          <h1 className="text-[length:var(--token-font-size-heading-sm)] font-semibold text-text-primary">
+          <h1 className="text-[length:var(--token-font-size-heading-sm)] font-semibold text-shell-text">
             Picnic Design Lab
           </h1>
           <span
             title={isSupabaseConnected() ? 'Connected to Supabase' : 'Local only (localStorage)'}
-            className="flex items-center gap-[4px] text-[length:var(--token-font-size-caption)] text-text-tertiary"
+            className="flex items-center gap-[4px] text-[length:var(--token-font-size-caption)] text-shell-text-tertiary"
           >
-            <span className={`inline-block w-[8px] h-[8px] rounded-[var(--token-radius-full)] ${isSupabaseConnected() ? 'bg-[#16A34A]' : 'bg-[#D1D5DB]'}`} />
+            <span className={`inline-block w-[8px] h-[8px] rounded-[var(--token-radius-full)] ${isSupabaseConnected() ? 'bg-[#16A34A]' : 'bg-shell-active'}`} />
             {isSupabaseConnected() ? 'Synced' : 'Local'}
           </span>
         </div>
@@ -64,8 +64,8 @@ export default function LibraryPage() {
             to="/library"
             className={`px-[var(--token-spacing-3)] py-[var(--token-spacing-1)] rounded-[var(--token-radius-sm)] text-[length:var(--token-font-size-body-sm)] font-medium transition-colors no-underline ${
               isLibrary
-                ? 'bg-brand-50 text-interactive-default'
-                : 'text-text-secondary hover:bg-surface-secondary'
+                ? 'bg-shell-selected text-shell-selected-text'
+                : 'text-shell-text-secondary hover:bg-shell-hover'
             }`}
           >
             Library
@@ -74,8 +74,8 @@ export default function LibraryPage() {
             to="/simulator"
             className={`px-[var(--token-spacing-3)] py-[var(--token-spacing-1)] rounded-[var(--token-radius-sm)] text-[length:var(--token-font-size-body-sm)] font-medium transition-colors no-underline ${
               !isLibrary
-                ? 'bg-brand-50 text-interactive-default'
-                : 'text-text-secondary hover:bg-surface-secondary'
+                ? 'bg-shell-selected text-shell-selected-text'
+                : 'text-shell-text-secondary hover:bg-shell-hover'
             }`}
             onClick={(e) => {
               e.preventDefault()
@@ -93,7 +93,7 @@ export default function LibraryPage() {
         {selected ? (
           <ComponentDetail componentName={selected} />
         ) : (
-          <div className="flex-1 flex items-center justify-center text-text-tertiary">
+          <div className="flex-1 flex items-center justify-center text-shell-text-tertiary">
             Select a component
           </div>
         )}

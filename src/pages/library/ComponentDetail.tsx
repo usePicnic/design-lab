@@ -19,41 +19,41 @@ export default function ComponentDetail({ componentName }: ComponentDetailProps)
 
   if (!meta) {
     return (
-      <div className="flex-1 flex items-center justify-center text-text-tertiary">
+      <div className="flex-1 flex items-center justify-center text-shell-text-tertiary">
         Select a component from the sidebar
       </div>
     )
   }
 
   return (
-    <div className="flex-1 overflow-y-auto">
+    <div className="flex-1 overflow-y-auto bg-shell-bg">
       <div className="p-[var(--token-spacing-lg)]">
         {/* Header */}
         <div className="flex items-start justify-between mb-[var(--token-spacing-lg)]">
           <div>
-            <h1 className="text-[length:var(--token-font-size-heading-lg)] leading-[var(--token-line-height-heading-lg)] font-semibold text-text-primary">
+            <h1 className="text-[length:var(--token-font-size-heading-lg)] leading-[var(--token-line-height-heading-lg)] font-semibold text-shell-text">
               {meta.name}
             </h1>
-            <p className="text-[length:var(--token-font-size-body-md)] text-text-secondary mt-[var(--token-spacing-1)]">
+            <p className="text-[length:var(--token-font-size-body-md)] text-shell-text-secondary mt-[var(--token-spacing-1)]">
               {meta.description}
             </p>
-            <span className="inline-block mt-[var(--token-spacing-2)] px-[var(--token-spacing-2)] py-[1px] bg-surface-secondary rounded-[var(--token-radius-full)] text-[length:var(--token-font-size-caption)] text-text-tertiary">
+            <span className="inline-block mt-[var(--token-spacing-2)] px-[var(--token-spacing-2)] py-[1px] bg-shell-hover rounded-[var(--token-radius-full)] text-[length:var(--token-font-size-caption)] text-shell-text-tertiary">
               {meta.category}
             </span>
           </div>
           <button
             type="button"
             onClick={() => setPhoneView(!phoneView)}
-            className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-body-sm)] border border-border-default rounded-[var(--token-radius-sm)] hover:bg-surface-secondary transition-colors cursor-pointer text-text-primary"
+            className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-body-sm)] border border-shell-border rounded-[var(--token-radius-sm)] hover:bg-shell-hover transition-colors cursor-pointer text-shell-text"
           >
             {phoneView ? '↔ Expanded' : '📱 Phone (393px)'}
           </button>
         </div>
 
-        {/* Preview */}
+        {/* Preview — light background for component rendering */}
         <div
           className={`
-            bg-surface-secondary rounded-[var(--token-radius-lg)] p-[var(--token-spacing-lg)] mb-[var(--token-spacing-lg)]
+            bg-[#F5F6F8] rounded-[var(--token-radius-lg)] p-[var(--token-spacing-lg)] mb-[var(--token-spacing-lg)]
             ${phoneView ? 'max-w-[393px] mx-auto' : ''}
           `}
         >
@@ -62,17 +62,17 @@ export default function ComponentDetail({ componentName }: ComponentDetailProps)
 
         {/* Code Snippet */}
         <div className="mb-[var(--token-spacing-lg)]">
-          <h2 className="text-[length:var(--token-font-size-heading-sm)] font-medium text-text-primary mb-[var(--token-spacing-3)]">
+          <h2 className="text-[length:var(--token-font-size-heading-sm)] font-medium text-shell-text mb-[var(--token-spacing-3)]">
             Usage
           </h2>
-          <div className="relative bg-neutral-900 rounded-[var(--token-radius-md)] p-[var(--token-spacing-md)]">
+          <div className="relative bg-[#0D0D0D] rounded-[var(--token-radius-md)] p-[var(--token-spacing-md)]">
             <code className="text-[length:var(--token-font-size-body-sm)] text-[#E5E7EB] font-mono whitespace-pre-wrap break-all">
               {codeSnippet}
             </code>
             <button
               type="button"
               onClick={() => navigator.clipboard.writeText(codeSnippet)}
-              className="absolute top-[var(--token-spacing-2)] right-[var(--token-spacing-2)] px-[var(--token-spacing-2)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-caption)] text-neutral-400 hover:text-neutral-200 bg-neutral-800 rounded-[var(--token-radius-sm)] cursor-pointer"
+              className="absolute top-[var(--token-spacing-2)] right-[var(--token-spacing-2)] px-[var(--token-spacing-2)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-caption)] text-[#888] hover:text-[#CCC] bg-[#1A1A1A] rounded-[var(--token-radius-sm)] cursor-pointer"
             >
               Copy
             </button>
@@ -81,33 +81,33 @@ export default function ComponentDetail({ componentName }: ComponentDetailProps)
 
         {/* Props Table */}
         <div>
-          <h2 className="text-[length:var(--token-font-size-heading-sm)] font-medium text-text-primary mb-[var(--token-spacing-3)]">
+          <h2 className="text-[length:var(--token-font-size-heading-sm)] font-medium text-shell-text mb-[var(--token-spacing-3)]">
             Props
           </h2>
-          <div className="overflow-x-auto rounded-[var(--token-radius-md)] border border-border-default">
+          <div className="overflow-x-auto rounded-[var(--token-radius-md)] border border-shell-border">
             <table className="w-full text-left">
               <thead>
-                <tr className="bg-surface-secondary">
-                  <th className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-caption)] font-semibold text-text-secondary">Name</th>
-                  <th className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-caption)] font-semibold text-text-secondary">Type</th>
-                  <th className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-caption)] font-semibold text-text-secondary">Default</th>
-                  <th className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-caption)] font-semibold text-text-secondary">Description</th>
+                <tr className="bg-shell-surface">
+                  <th className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-caption)] font-semibold text-shell-text-secondary">Name</th>
+                  <th className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-caption)] font-semibold text-shell-text-secondary">Type</th>
+                  <th className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-caption)] font-semibold text-shell-text-secondary">Default</th>
+                  <th className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-caption)] font-semibold text-shell-text-secondary">Description</th>
                 </tr>
               </thead>
               <tbody>
                 {meta.props.map((p) => (
-                  <tr key={p.name} className="border-t border-border-default">
-                    <td className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-body-sm)] font-mono text-text-primary">
+                  <tr key={p.name} className="border-t border-shell-border">
+                    <td className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-body-sm)] font-mono text-shell-text">
                       {p.name}
                       {p.required && <span className="text-error ml-[2px]">*</span>}
                     </td>
-                    <td className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-caption)] font-mono text-text-secondary">
+                    <td className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-caption)] font-mono text-shell-text-secondary">
                       {p.type}
                     </td>
-                    <td className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-caption)] text-text-tertiary">
+                    <td className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-caption)] text-shell-text-tertiary">
                       {p.defaultValue ?? '—'}
                     </td>
-                    <td className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-body-sm)] text-text-secondary">
+                    <td className="px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-body-sm)] text-shell-text-secondary">
                       {p.description}
                     </td>
                   </tr>

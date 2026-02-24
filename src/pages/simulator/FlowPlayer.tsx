@@ -43,7 +43,7 @@ export default function FlowPlayer({ flowId }: FlowPlayerProps) {
 
   if (!flow) {
     return (
-      <div className="flex-1 flex items-center justify-center text-text-tertiary">
+      <div className="flex-1 flex items-center justify-center text-shell-text-tertiary">
         Select a flow from the sidebar
       </div>
     )
@@ -65,7 +65,7 @@ export default function FlowPlayer({ flowId }: FlowPlayerProps) {
   return (
     <div className="flex-1 flex overflow-hidden" data-version={_version}>
       {/* Center: Phone + controls */}
-      <div className="flex-1 flex flex-col items-center justify-center gap-[var(--token-spacing-lg)] bg-neutral-100 py-[var(--token-spacing-md)]">
+      <div className="flex-1 flex flex-col items-center justify-center gap-[var(--token-spacing-lg)] bg-shell-bg py-[var(--token-spacing-md)]">
         <PhoneFrame>
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
@@ -89,25 +89,25 @@ export default function FlowPlayer({ flowId }: FlowPlayerProps) {
             type="button"
             onClick={goBack}
             disabled={safeIdx === 0}
-            className="w-[40px] h-[40px] flex items-center justify-center rounded-[var(--token-radius-full)] bg-surface-primary border border-border-default hover:bg-surface-secondary transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+            className="w-[40px] h-[40px] flex items-center justify-center rounded-[var(--token-radius-full)] bg-shell-surface border border-shell-border hover:bg-shell-hover transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed text-shell-text"
           >
             <ChevronLeft size={18} />
           </button>
-          <span className="text-[length:var(--token-font-size-body-sm)] text-text-secondary min-w-[80px] text-center">
+          <span className="text-[length:var(--token-font-size-body-sm)] text-shell-text-secondary min-w-[80px] text-center">
             {safeIdx + 1} / {flow.screens.length}
           </span>
           <button
             type="button"
             onClick={goNext}
             disabled={safeIdx === flow.screens.length - 1}
-            className="w-[40px] h-[40px] flex items-center justify-center rounded-[var(--token-radius-full)] bg-surface-primary border border-border-default hover:bg-surface-secondary transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+            className="w-[40px] h-[40px] flex items-center justify-center rounded-[var(--token-radius-full)] bg-shell-surface border border-shell-border hover:bg-shell-hover transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed text-shell-text"
           >
             <ChevronRight size={18} />
           </button>
           <button
             type="button"
             onClick={restart}
-            className="w-[40px] h-[40px] flex items-center justify-center rounded-[var(--token-radius-full)] bg-surface-primary border border-border-default hover:bg-surface-secondary transition-colors cursor-pointer ml-[var(--token-spacing-2)]"
+            className="w-[40px] h-[40px] flex items-center justify-center rounded-[var(--token-radius-full)] bg-shell-surface border border-shell-border hover:bg-shell-hover transition-colors cursor-pointer ml-[var(--token-spacing-2)] text-shell-text"
           >
             <RotateCcw size={16} />
           </button>

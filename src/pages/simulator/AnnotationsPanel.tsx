@@ -61,7 +61,7 @@ function EditableField({
             onKeyDown={handleKeyDown}
             rows={6}
             autoFocus
-            className="w-full px-[var(--token-spacing-2)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-body-sm)] leading-[var(--token-line-height-body-sm)] text-text-primary bg-surface-secondary border border-interactive-default rounded-[var(--token-radius-sm)] outline-none resize-y"
+            className="w-full px-[var(--token-spacing-2)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-body-sm)] leading-[var(--token-line-height-body-sm)] text-shell-text bg-shell-input border border-shell-selected-text rounded-[var(--token-radius-sm)] outline-none resize-y"
           />
         ) : (
           <input
@@ -70,21 +70,21 @@ function EditableField({
             onChange={(e) => setDraft(e.target.value)}
             onKeyDown={handleKeyDown}
             autoFocus
-            className="w-full px-[var(--token-spacing-2)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-body-sm)] leading-[var(--token-line-height-body-sm)] text-text-primary bg-surface-secondary border border-interactive-default rounded-[var(--token-radius-sm)] outline-none"
+            className="w-full px-[var(--token-spacing-2)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-body-sm)] leading-[var(--token-line-height-body-sm)] text-shell-text bg-shell-input border border-shell-selected-text rounded-[var(--token-radius-sm)] outline-none"
           />
         )}
         <div className="flex gap-[var(--token-spacing-1)] justify-end">
           <button
             type="button"
             onClick={() => setEditing(false)}
-            className="px-[var(--token-spacing-2)] py-[1px] text-[length:var(--token-font-size-caption)] text-text-tertiary hover:text-text-secondary cursor-pointer"
+            className="px-[var(--token-spacing-2)] py-[1px] text-[length:var(--token-font-size-caption)] text-shell-text-tertiary hover:text-shell-text-secondary cursor-pointer"
           >
             Cancel
           </button>
           <button
             type="button"
             onClick={handleSave}
-            className="px-[var(--token-spacing-2)] py-[1px] text-[length:var(--token-font-size-caption)] text-interactive-default hover:text-interactive-hover font-medium cursor-pointer flex items-center gap-[2px]"
+            className="px-[var(--token-spacing-2)] py-[1px] text-[length:var(--token-font-size-caption)] text-shell-selected-text hover:text-[#6EE7A0] font-medium cursor-pointer flex items-center gap-[2px]"
           >
             <Check size={12} />
             Save
@@ -101,12 +101,12 @@ function EditableField({
       onClick={handleEdit}
       onKeyDown={(e) => { if (e.key === 'Enter') handleEdit() }}
       title={`Click to edit ${label}`}
-      className="w-full text-left cursor-pointer flex items-start gap-[var(--token-spacing-1)] px-[var(--token-spacing-1)] py-[2px] -mx-[var(--token-spacing-1)] rounded-[var(--token-radius-sm)] hover:bg-surface-secondary transition-colors border border-transparent hover:border-border-default"
+      className="w-full text-left cursor-pointer flex items-start gap-[var(--token-spacing-1)] px-[var(--token-spacing-1)] py-[2px] -mx-[var(--token-spacing-1)] rounded-[var(--token-radius-sm)] hover:bg-shell-hover transition-colors border border-transparent hover:border-shell-border"
     >
       <span className="flex-1">{value || '(empty)'}</span>
       <Pencil
         size={12}
-        className="shrink-0 mt-[3px] text-text-tertiary"
+        className="shrink-0 mt-[3px] text-shell-text-tertiary"
       />
     </div>
   )
@@ -205,9 +205,9 @@ export default function AnnotationsPanel({
     )
 
   return (
-    <aside className="w-[300px] h-full shrink-0 overflow-y-auto border-l border-border-default bg-surface-primary">
-      <div className="p-[var(--token-spacing-md)] border-b border-border-default flex items-center justify-between">
-        <h2 className="text-[length:var(--token-font-size-caption)] leading-[var(--token-line-height-caption)] font-semibold text-text-tertiary uppercase tracking-wider">
+    <aside className="w-[300px] h-full shrink-0 overflow-y-auto border-l border-shell-border bg-shell-surface">
+      <div className="p-[var(--token-spacing-md)] border-b border-shell-border flex items-center justify-between">
+        <h2 className="text-[length:var(--token-font-size-caption)] leading-[var(--token-line-height-caption)] font-semibold text-shell-text-tertiary uppercase tracking-wider">
           Annotations
         </h2>
         <div className="flex gap-[var(--token-spacing-2)]">
@@ -216,7 +216,7 @@ export default function AnnotationsPanel({
               type="button"
               onClick={handleReset}
               title="Reset all edits"
-              className="text-[length:var(--token-font-size-caption)] text-text-tertiary hover:text-error font-medium cursor-pointer flex items-center gap-[2px]"
+              className="text-[length:var(--token-font-size-caption)] text-shell-text-tertiary hover:text-error font-medium cursor-pointer flex items-center gap-[2px]"
             >
               <RotateCcw size={11} />
               Reset
@@ -225,7 +225,7 @@ export default function AnnotationsPanel({
           <button
             type="button"
             onClick={handleExport}
-            className="text-[length:var(--token-font-size-caption)] text-interactive-default hover:text-interactive-hover font-medium cursor-pointer"
+            className="text-[length:var(--token-font-size-caption)] text-shell-selected-text hover:text-[#6EE7A0] font-medium cursor-pointer"
           >
             Export
           </button>
@@ -235,20 +235,20 @@ export default function AnnotationsPanel({
       <div className="p-[var(--token-spacing-md)]">
         {/* Flow name (editable) */}
         <div className="mb-[var(--token-spacing-2)]">
-          <p className="text-[length:var(--token-font-size-caption)] text-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-1)]">
+          <p className="text-[length:var(--token-font-size-caption)] text-shell-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-1)]">
             Flow Name
           </p>
-          <div className="text-[length:var(--token-font-size-heading-sm)] font-medium text-text-primary">
+          <div className="text-[length:var(--token-font-size-heading-sm)] font-medium text-shell-text">
             <EditableField value={flow.name} onSave={handleNameSave} label="flow name" />
           </div>
         </div>
 
         {/* Flow description (editable) */}
         <div className="mb-[var(--token-spacing-lg)]">
-          <p className="text-[length:var(--token-font-size-caption)] text-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-1)]">
+          <p className="text-[length:var(--token-font-size-caption)] text-shell-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-1)]">
             Overview
           </p>
-          <div className="text-[length:var(--token-font-size-body-sm)] text-text-secondary">
+          <div className="text-[length:var(--token-font-size-body-sm)] text-shell-text-secondary">
             <EditableField
               value={flow.description}
               onSave={handleDescriptionSave}
@@ -260,17 +260,17 @@ export default function AnnotationsPanel({
 
         {/* Current screen info (editable) */}
         <div className="mb-[var(--token-spacing-lg)]">
-          <p className="text-[length:var(--token-font-size-caption)] text-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-1)]">
+          <p className="text-[length:var(--token-font-size-caption)] text-shell-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-1)]">
             Screen {screenIndex + 1} of {flow.screens.length}
           </p>
-          <div className="text-[length:var(--token-font-size-heading-sm)] font-medium text-text-primary mb-[var(--token-spacing-1)]">
+          <div className="text-[length:var(--token-font-size-heading-sm)] font-medium text-shell-text mb-[var(--token-spacing-1)]">
             <EditableField
               value={currentScreen.title}
               onSave={handleScreenTitleSave}
               label="screen title"
             />
           </div>
-          <div className="text-[length:var(--token-font-size-body-sm)] text-text-secondary">
+          <div className="text-[length:var(--token-font-size-body-sm)] text-shell-text-secondary">
             <EditableField
               value={currentScreen.description}
               onSave={handleScreenDescSave}
@@ -282,14 +282,14 @@ export default function AnnotationsPanel({
 
         {/* Components used */}
         <div className="mb-[var(--token-spacing-lg)]">
-          <p className="text-[length:var(--token-font-size-caption)] text-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-2)]">
+          <p className="text-[length:var(--token-font-size-caption)] text-shell-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-2)]">
             Components
           </p>
           <div className="flex flex-wrap gap-[var(--token-spacing-1)]">
             {currentScreen.componentsUsed.map((c) => (
               <span
                 key={c}
-                className="px-[var(--token-spacing-2)] py-[1px] bg-surface-secondary rounded-[var(--token-radius-full)] text-[length:var(--token-font-size-caption)] text-text-secondary"
+                className="px-[var(--token-spacing-2)] py-[1px] bg-shell-hover rounded-[var(--token-radius-full)] text-[length:var(--token-font-size-caption)] text-shell-text-secondary"
               >
                 {c}
               </span>
@@ -299,21 +299,21 @@ export default function AnnotationsPanel({
 
         {/* Flow metadata */}
         <div className="mb-[var(--token-spacing-lg)]">
-          <p className="text-[length:var(--token-font-size-caption)] text-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-2)]">
+          <p className="text-[length:var(--token-font-size-caption)] text-shell-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-2)]">
             Flow Info
           </p>
           <div className="flex flex-col gap-[var(--token-spacing-1)]">
             <div className="flex justify-between text-[length:var(--token-font-size-body-sm)]">
-              <span className="text-text-secondary">Area</span>
-              <span className="text-text-primary">{flow.area}</span>
+              <span className="text-shell-text-secondary">Area</span>
+              <span className="text-shell-text">{flow.area}</span>
             </div>
             <div className="flex justify-between text-[length:var(--token-font-size-body-sm)]">
-              <span className="text-text-secondary">Total screens</span>
-              <span className="text-text-primary">{flow.screens.length}</span>
+              <span className="text-shell-text-secondary">Total screens</span>
+              <span className="text-shell-text">{flow.screens.length}</span>
             </div>
             <div className="flex justify-between text-[length:var(--token-font-size-body-sm)]">
-              <span className="text-text-secondary">Storage</span>
-              <span className="text-text-primary">
+              <span className="text-shell-text-secondary">Storage</span>
+              <span className="text-shell-text">
                 {hasOverrides ? 'localStorage (edited)' : 'Default'}
               </span>
             </div>
@@ -323,7 +323,7 @@ export default function AnnotationsPanel({
         {/* Spec content (editable) */}
         <div>
           <div className="flex items-center justify-between mb-[var(--token-spacing-2)]">
-            <p className="text-[length:var(--token-font-size-caption)] text-text-tertiary uppercase tracking-wider">
+            <p className="text-[length:var(--token-font-size-caption)] text-shell-text-tertiary uppercase tracking-wider">
               Spec
             </p>
             {!specEditing && (
@@ -333,7 +333,7 @@ export default function AnnotationsPanel({
                   setSpecDraft(flow.specContent ?? '')
                   setSpecEditing(true)
                 }}
-                className="text-[length:var(--token-font-size-caption)] text-interactive-default hover:text-interactive-hover font-medium cursor-pointer flex items-center gap-[2px]"
+                className="text-[length:var(--token-font-size-caption)] text-shell-selected-text hover:text-[#6EE7A0] font-medium cursor-pointer flex items-center gap-[2px]"
               >
                 <Pencil size={11} />
                 Edit
@@ -348,20 +348,20 @@ export default function AnnotationsPanel({
                 onChange={(e) => setSpecDraft(e.target.value)}
                 rows={16}
                 autoFocus
-                className="w-full px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-caption)] leading-[18px] text-text-primary bg-surface-secondary border border-interactive-default rounded-[var(--token-radius-md)] outline-none resize-y font-mono"
+                className="w-full px-[var(--token-spacing-3)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-caption)] leading-[18px] text-shell-text bg-shell-input border border-shell-selected-text rounded-[var(--token-radius-md)] outline-none resize-y font-mono"
               />
               <div className="flex gap-[var(--token-spacing-2)] justify-end">
                 <button
                   type="button"
                   onClick={() => setSpecEditing(false)}
-                  className="px-[var(--token-spacing-3)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-caption)] text-text-tertiary hover:text-text-secondary rounded-[var(--token-radius-sm)] cursor-pointer"
+                  className="px-[var(--token-spacing-3)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-caption)] text-shell-text-tertiary hover:text-shell-text-secondary rounded-[var(--token-radius-sm)] cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
                   onClick={handleSpecSave}
-                  className="px-[var(--token-spacing-3)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-caption)] text-text-inverse bg-interactive-default hover:bg-interactive-hover rounded-[var(--token-radius-sm)] font-medium cursor-pointer flex items-center gap-[4px]"
+                  className="px-[var(--token-spacing-3)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-caption)] text-shell-bg bg-shell-selected-text hover:bg-[#6EE7A0] rounded-[var(--token-radius-sm)] font-medium cursor-pointer flex items-center gap-[4px]"
                 >
                   <Check size={12} />
                   Save
@@ -369,7 +369,7 @@ export default function AnnotationsPanel({
               </div>
             </div>
           ) : flow.specContent ? (
-            <pre className="text-[length:var(--token-font-size-caption)] text-text-secondary whitespace-pre-wrap bg-surface-secondary p-[var(--token-spacing-3)] rounded-[var(--token-radius-md)] max-h-[300px] overflow-y-auto">
+            <pre className="text-[length:var(--token-font-size-caption)] text-shell-text-secondary whitespace-pre-wrap bg-shell-input p-[var(--token-spacing-3)] rounded-[var(--token-radius-md)] max-h-[300px] overflow-y-auto">
               {flow.specContent}
             </pre>
           ) : (
@@ -379,7 +379,7 @@ export default function AnnotationsPanel({
                 setSpecDraft('')
                 setSpecEditing(true)
               }}
-              className="w-full py-[var(--token-spacing-3)] border border-dashed border-border-default rounded-[var(--token-radius-md)] text-[length:var(--token-font-size-body-sm)] text-text-tertiary hover:text-text-secondary hover:border-border-strong transition-colors cursor-pointer"
+              className="w-full py-[var(--token-spacing-3)] border border-dashed border-shell-border rounded-[var(--token-radius-md)] text-[length:var(--token-font-size-body-sm)] text-shell-text-tertiary hover:text-shell-text-secondary hover:border-shell-active transition-colors cursor-pointer"
             >
               + Add spec
             </button>

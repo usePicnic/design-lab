@@ -16,9 +16,9 @@ const categories: { key: ComponentMeta['category']; label: string }[] = [
 
 export default function ComponentSidebar({ selected, onSelect }: ComponentSidebarProps) {
   return (
-    <aside className="w-[240px] h-full shrink-0 overflow-y-auto border-r border-border-default bg-surface-primary">
+    <aside className="w-[240px] h-full shrink-0 overflow-y-auto border-r border-shell-border bg-shell-surface">
       <div className="p-[var(--token-spacing-md)]">
-        <h2 className="text-[length:var(--token-font-size-caption)] leading-[var(--token-line-height-caption)] font-semibold text-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-3)]">
+        <h2 className="text-[length:var(--token-font-size-caption)] leading-[var(--token-line-height-caption)] font-semibold text-shell-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-3)]">
           Components
         </h2>
       </div>
@@ -27,7 +27,7 @@ export default function ComponentSidebar({ selected, onSelect }: ComponentSideba
         if (components.length === 0) return null
         return (
           <div key={key} className="mb-[var(--token-spacing-2)]">
-            <p className="px-[var(--token-spacing-md)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-caption)] font-medium text-text-tertiary uppercase tracking-wider">
+            <p className="px-[var(--token-spacing-md)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-caption)] font-medium text-shell-text-tertiary uppercase tracking-wider">
               {label}
             </p>
             {components.map((c) => (
@@ -41,8 +41,8 @@ export default function ComponentSidebar({ selected, onSelect }: ComponentSideba
                   transition-colors duration-[var(--token-transition-fast)] cursor-pointer
                   ${
                     selected === c.name
-                      ? 'bg-brand-50 text-interactive-default font-medium'
-                      : 'text-text-primary hover:bg-surface-secondary'
+                      ? 'bg-shell-selected text-shell-selected-text font-medium'
+                      : 'text-shell-text hover:bg-shell-hover'
                   }
                 `}
               >

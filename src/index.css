@@ -87,6 +87,19 @@
 
   /* Font Family */
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Shell — Dark app chrome (Figma-like) */
+  --color-shell-bg: #1E1E1E;
+  --color-shell-surface: #2C2C2C;
+  --color-shell-hover: #383838;
+  --color-shell-active: #444444;
+  --color-shell-border: #3E3E3E;
+  --color-shell-text: #E8E8E8;
+  --color-shell-text-secondary: #A0A0A0;
+  --color-shell-text-tertiary: #6B6B6B;
+  --color-shell-selected: #0D3B1E;
+  --color-shell-selected-text: #4ADE80;
+  --color-shell-input: #1E1E1E;
 }
 
 @layer base {
@@ -105,8 +118,8 @@
   }
 
   body {
-    background-color: var(--token-background);
-    color: var(--token-text-primary);
+    background-color: #1E1E1E;
+    color: #E8E8E8;
     line-height: 1.5;
   }
 

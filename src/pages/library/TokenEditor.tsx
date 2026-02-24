@@ -36,15 +36,15 @@ function TokenInput({ token, initialValue }: { token: TokenMeta; initialValue: s
           type="color"
           value={value}
           onChange={(e) => handleChange(e.target.value)}
-          className="w-[28px] h-[28px] rounded-[var(--token-radius-sm)] border border-border-default cursor-pointer shrink-0 p-0"
+          className="w-[28px] h-[28px] rounded-[var(--token-radius-sm)] border border-shell-border cursor-pointer shrink-0 p-0"
         />
-        <span className="flex-1 text-[length:var(--token-font-size-caption)] text-text-secondary font-mono truncate">
+        <span className="flex-1 text-[length:var(--token-font-size-caption)] text-shell-text-secondary font-mono truncate">
           {token.label}
         </span>
         <button
           type="button"
           onClick={handleReset}
-          className="text-[length:var(--token-font-size-caption)] text-text-tertiary hover:text-text-secondary cursor-pointer shrink-0"
+          className="text-[length:var(--token-font-size-caption)] text-shell-text-tertiary hover:text-shell-text-secondary cursor-pointer shrink-0"
         >
           Reset
         </button>
@@ -54,19 +54,19 @@ function TokenInput({ token, initialValue }: { token: TokenMeta; initialValue: s
 
   return (
     <div className="flex items-center gap-[var(--token-spacing-2)]">
-      <span className="flex-1 text-[length:var(--token-font-size-caption)] text-text-secondary truncate">
+      <span className="flex-1 text-[length:var(--token-font-size-caption)] text-shell-text-secondary truncate">
         {token.label}
       </span>
       <input
         type="text"
         value={value}
         onChange={(e) => handleChange(e.target.value)}
-        className="w-[64px] px-[var(--token-spacing-2)] py-[1px] text-[length:var(--token-font-size-caption)] text-text-primary bg-surface-secondary border border-border-default rounded-[var(--token-radius-sm)] text-right"
+        className="w-[64px] px-[var(--token-spacing-2)] py-[1px] text-[length:var(--token-font-size-caption)] text-shell-text bg-shell-input border border-shell-border rounded-[var(--token-radius-sm)] text-right"
       />
       <button
         type="button"
         onClick={handleReset}
-        className="text-[length:var(--token-font-size-caption)] text-text-tertiary hover:text-text-secondary cursor-pointer shrink-0"
+        className="text-[length:var(--token-font-size-caption)] text-shell-text-tertiary hover:text-shell-text-secondary cursor-pointer shrink-0"
       >
         Reset
       </button>
@@ -139,37 +139,37 @@ export default function TokenEditor() {
   const supabaseStatus = isSupabaseConnected()
 
   return (
-    <aside className="w-[280px] h-full shrink-0 overflow-y-auto border-l border-border-default bg-surface-primary">
+    <aside className="w-[280px] h-full shrink-0 overflow-y-auto border-l border-shell-border bg-shell-surface">
       <div className="p-[var(--token-spacing-md)] flex items-center justify-between">
         <div className="flex items-center gap-[var(--token-spacing-2)]">
-          <h2 className="text-[length:var(--token-font-size-caption)] leading-[var(--token-line-height-caption)] font-semibold text-text-tertiary uppercase tracking-wider">
+          <h2 className="text-[length:var(--token-font-size-caption)] leading-[var(--token-line-height-caption)] font-semibold text-shell-text-tertiary uppercase tracking-wider">
             Tokens
           </h2>
           <span
-            title={supabaseStatus ? 'Syncing with Supabase' : 'Local only — configure .env for Supabase sync'}
-            className={`w-[6px] h-[6px] rounded-[var(--token-radius-full)] ${supabaseStatus ? 'bg-success' : 'bg-neutral-300'}`}
+            title={supabaseStatus ? 'Syncing with Supabase' : 'Local only'}
+            className={`w-[8px] h-[8px] rounded-[var(--token-radius-full)] ${supabaseStatus ? 'bg-[#16A34A]' : 'bg-shell-active'}`}
           />
         </div>
         <button
           type="button"
           onClick={exportTokens}
-          className="text-[length:var(--token-font-size-caption)] text-interactive-default hover:text-interactive-hover font-medium cursor-pointer"
+          className="text-[length:var(--token-font-size-caption)] text-shell-selected-text hover:text-[#6EE7A0] font-medium cursor-pointer"
         >
           Export
         </button>
       </div>
 
       {tokenCategories.map((cat) => (
-        <div key={cat.label} className="border-t border-border-default">
+        <div key={cat.label} className="border-t border-shell-border">
           <button
             type="button"
             onClick={() => setExpanded(expanded === cat.label ? null : cat.label)}
-            className="w-full flex items-center justify-between px-[var(--token-spacing-md)] py-[var(--token-spacing-3)] text-left cursor-pointer hover:bg-surface-secondary transition-colors"
+            className="w-full flex items-center justify-between px-[var(--token-spacing-md)] py-[var(--token-spacing-3)] text-left cursor-pointer hover:bg-shell-hover transition-colors"
           >
-            <span className="text-[length:var(--token-font-size-body-sm)] font-medium text-text-primary">
+            <span className="text-[length:var(--token-font-size-body-sm)] font-medium text-shell-text">
               {cat.label}
             </span>
-            <span className="text-[length:var(--token-font-size-caption)] text-text-tertiary">
+            <span className="text-[length:var(--token-font-size-caption)] text-shell-text-tertiary">
               {cat.tokens.length}
             </span>
           </button>
@@ -179,7 +179,7 @@ export default function TokenEditor() {
                 <button
                   type="button"
                   onClick={() => handleResetCategory(cat.label)}
-                  className="text-[length:var(--token-font-size-caption)] text-text-tertiary hover:text-error cursor-pointer"
+                  className="text-[length:var(--token-font-size-caption)] text-shell-text-tertiary hover:text-error cursor-pointer"
                 >
                   Reset all
                 </button>

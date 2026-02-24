@@ -10,22 +10,22 @@ export default function FlowSidebar({ selectedFlowId, onSelect }: FlowSidebarPro
   const areas = Object.keys(grouped)
 
   return (
-    <aside className="w-[240px] h-full shrink-0 overflow-y-auto border-r border-border-default bg-surface-primary">
+    <aside className="w-[240px] h-full shrink-0 overflow-y-auto border-r border-shell-border bg-shell-surface">
       <div className="p-[var(--token-spacing-md)]">
-        <h2 className="text-[length:var(--token-font-size-caption)] leading-[var(--token-line-height-caption)] font-semibold text-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-3)]">
+        <h2 className="text-[length:var(--token-font-size-caption)] leading-[var(--token-line-height-caption)] font-semibold text-shell-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-3)]">
           Flows
         </h2>
       </div>
 
       {areas.length === 0 && (
-        <p className="px-[var(--token-spacing-md)] text-[length:var(--token-font-size-body-sm)] text-text-tertiary">
+        <p className="px-[var(--token-spacing-md)] text-[length:var(--token-font-size-body-sm)] text-shell-text-tertiary">
           No flows registered yet
         </p>
       )}
 
       {areas.map((area) => (
         <div key={area} className="mb-[var(--token-spacing-2)]">
-          <p className="px-[var(--token-spacing-md)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-caption)] font-medium text-text-tertiary uppercase tracking-wider">
+          <p className="px-[var(--token-spacing-md)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-caption)] font-medium text-shell-text-tertiary uppercase tracking-wider">
             {area}
           </p>
           {grouped[area].map((flow: Flow) => (
@@ -39,13 +39,13 @@ export default function FlowSidebar({ selectedFlowId, onSelect }: FlowSidebarPro
                 transition-colors duration-[var(--token-transition-fast)] cursor-pointer
                 ${
                   selectedFlowId === flow.id
-                    ? 'bg-brand-50 text-interactive-default font-medium'
-                    : 'text-text-primary hover:bg-surface-secondary'
+                    ? 'bg-shell-selected text-shell-selected-text font-medium'
+                    : 'text-shell-text hover:bg-shell-hover'
                 }
               `}
             >
               {flow.name}
-              <span className="block text-[length:var(--token-font-size-caption)] text-text-tertiary">
+              <span className="block text-[length:var(--token-font-size-caption)] text-shell-text-tertiary">
                 {flow.screens.length} screens
               </span>
             </button>
