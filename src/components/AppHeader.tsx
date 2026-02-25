@@ -8,7 +8,21 @@ interface AppHeaderProps {
 
 export default function AppHeader({ actions }: AppHeaderProps) {
   const location = useLocation()
-  const isFlows = location.pathname.startsWith('/flows')
+  const path = location.pathname
+  const activeNav = path.startsWith('/pages') ? 'pages' : path.startsWith('/flows') ? 'flows' : 'components'
+
+  const navLink = (to: string, label: string, key: string) => (
+    <Link
+      to={to}
+      className={`px-[var(--token-spacing-3)] py-[var(--token-spacing-1)] rounded-[var(--token-radius-sm)] text-[length:var(--token-font-size-body-sm)] font-medium transition-colors no-underline ${
+        activeNav === key
+          ? 'bg-shell-selected text-shell-selected-text'
+          : 'text-shell-text-secondary hover:bg-shell-hover'
+      }`}
+    >
+      {label}
+    </Link>
+  )
 
   return (
     <header className="h-[48px] flex items-center justify-between px-[var(--token-spacing-md)] border-b border-shell-border bg-shell-surface shrink-0">
@@ -28,26 +42,9 @@ export default function AppHeader({ actions }: AppHeaderProps) {
 
       {/* Center: primary navigation */}
       <nav className="flex gap-[var(--token-spacing-1)]">
-        <Link
-          to="/components"
-          className={`px-[var(--token-spacing-3)] py-[var(--token-spacing-1)] rounded-[var(--token-radius-sm)] text-[length:var(--token-font-size-body-sm)] font-medium transition-colors no-underline ${
-            !isFlows
-              ? 'bg-shell-selected text-shell-selected-text'
-              : 'text-shell-text-secondary hover:bg-shell-hover'
-          }`}
-        >
-          Components
-        </Link>
-        <Link
-          to="/flows"
-          className={`px-[var(--token-spacing-3)] py-[var(--token-spacing-1)] rounded-[var(--token-radius-sm)] text-[length:var(--token-font-size-body-sm)] font-medium transition-colors no-underline ${
-            isFlows
-              ? 'bg-shell-selected text-shell-selected-text'
-              : 'text-shell-text-secondary hover:bg-shell-hover'
-          }`}
-        >
-          Flows
-        </Link>
+        {navLink('/components', 'Components', 'components')}
+        {navLink('/pages', 'Pages', 'pages')}
+        {navLink('/flows', 'Flows', 'flows')}
       </nav>
 
       {/* Right: page-specific actions */}

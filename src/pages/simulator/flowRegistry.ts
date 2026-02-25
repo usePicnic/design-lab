@@ -9,6 +9,7 @@ export interface FlowScreen {
   description: string
   componentsUsed: string[]
   component: ComponentType<FlowScreenProps>
+  pageId?: string
 }
 
 export interface FlowScreenProps {

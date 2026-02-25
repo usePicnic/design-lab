@@ -1,4 +1,5 @@
 import { registerFlow } from '../../pages/simulator/flowRegistry'
+import { registerPage } from '../../pages/gallery/pageRegistry'
 import Screen1_AddFunds from './Screen1_AddFunds'
 import Screen2_PixDeposit from './Screen2_PixDeposit'
 import Screen3_PixPayment from './Screen3_PixPayment'
@@ -6,6 +7,53 @@ import Screen4_Processing from './Screen4_Processing'
 import Screen5_Confirmed from './Screen5_Confirmed'
 import specContent from './spec.md?raw'
 
+// Register standalone pages
+registerPage({
+  id: 'page-deposit-add-funds',
+  title: 'Add Funds',
+  description: 'Method selection: PIX, TED, or Crypto. User chooses PIX for instant free transfer.',
+  tags: ['Transactions', 'Deposit'],
+  componentsUsed: ['Header', 'ScreenLayout', 'ListItem', 'Text', 'Divider', 'Icon'],
+  component: Screen1_AddFunds,
+})
+
+registerPage({
+  id: 'page-deposit-pix-deposit',
+  title: 'PIX Deposit',
+  description: 'BRL amount entry with real-time USD conversion preview at mock exchange rate.',
+  tags: ['Transactions', 'Deposit'],
+  componentsUsed: ['Header', 'FormLayout', 'CurrencyInput', 'Card', 'Text', 'Amount', 'Button'],
+  component: Screen2_PixDeposit,
+})
+
+registerPage({
+  id: 'page-deposit-pix-payment',
+  title: 'PIX Payment',
+  description: 'QR code and copy-paste PIX code for payment. 10-minute expiration timer.',
+  tags: ['Transactions', 'Deposit'],
+  componentsUsed: ['Header', 'ScreenLayout', 'Card', 'Text', 'Divider', 'Badge', 'Button', 'Toast', 'Spacer'],
+  component: Screen3_PixPayment,
+})
+
+registerPage({
+  id: 'page-deposit-processing',
+  title: 'Processing',
+  description: 'Payment confirmation loading state. Auto-advances after 2.5 seconds.',
+  tags: ['Transactions', 'Deposit'],
+  componentsUsed: ['ResultLayout', 'LoadingSpinner', 'Text', 'Spacer'],
+  component: Screen4_Processing,
+})
+
+registerPage({
+  id: 'page-deposit-confirmed',
+  title: 'Deposit Confirmed',
+  description: 'Success state with animated checkmark, deposited amount, and updated balance.',
+  tags: ['Transactions', 'Deposit'],
+  componentsUsed: ['ResultLayout', 'SuccessAnimation', 'Text', 'Amount', 'Button', 'Spacer'],
+  component: Screen5_Confirmed,
+})
+
+// Register flow with pageId references
 registerFlow({
   id: 'deposit-pix',
   name: 'Deposit via PIX',
@@ -19,6 +67,7 @@ registerFlow({
       description: 'Method selection: PIX, TED, or Crypto. User chooses PIX for instant free transfer.',
       componentsUsed: ['Header', 'ScreenLayout', 'ListItem', 'Text', 'Divider', 'Icon'],
       component: Screen1_AddFunds,
+      pageId: 'page-deposit-add-funds',
     },
     {
       id: 'pix-deposit',
@@ -26,6 +75,7 @@ registerFlow({
       description: 'BRL amount entry with real-time USD conversion preview at mock exchange rate.',
       componentsUsed: ['Header', 'FormLayout', 'CurrencyInput', 'Card', 'Text', 'Amount', 'Button'],
       component: Screen2_PixDeposit,
+      pageId: 'page-deposit-pix-deposit',
     },
     {
       id: 'pix-payment',
@@ -33,6 +83,7 @@ registerFlow({
       description: 'QR code and copy-paste PIX code for payment. 10-minute expiration timer.',
       componentsUsed: ['Header', 'ScreenLayout', 'Card', 'Text', 'Divider', 'Badge', 'Button', 'Toast', 'Spacer'],
       component: Screen3_PixPayment,
+      pageId: 'page-deposit-pix-payment',
     },
     {
       id: 'processing',
@@ -40,6 +91,7 @@ registerFlow({
       description: 'Payment confirmation loading state. Auto-advances after 2.5 seconds.',
       componentsUsed: ['ResultLayout', 'LoadingSpinner', 'Text', 'Spacer'],
       component: Screen4_Processing,
+      pageId: 'page-deposit-processing',
     },
     {
       id: 'confirmed',
@@ -47,6 +99,7 @@ registerFlow({
       description: 'Success state with animated checkmark, deposited amount, and updated balance.',
       componentsUsed: ['ResultLayout', 'SuccessAnimation', 'Text', 'Amount', 'Button', 'Spacer'],
       component: Screen5_Confirmed,
+      pageId: 'page-deposit-confirmed',
     },
   ],
 })
