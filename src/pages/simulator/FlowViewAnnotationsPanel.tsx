@@ -1,10 +1,11 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { RiPencilLine, RiCheckLine, RiPlayLine, RiRefreshLine, RiFileTextLine, RiCloseLine, RiAddLine, RiCodeSSlashLine } from '@remixicon/react'
 import type { Node, Edge } from '@xyflow/react'
 import type { Flow } from './flowRegistry'
 import { getAllFlows, getFlow, getLinkedFlows, getFlowsLinkingTo } from './flowRegistry'
 import { getDynamicFlow } from './dynamicFlowStore'
+import { isFlowArchived } from './flowGroupStore'
 import type { FlowNodeData } from './flowGraph.types'
 import { NODE_TYPE_CONFIG } from './nodeTypeConfig'
 import { SLUG_REGEX, formatSlug } from '../../lib/slugify'
@@ -356,6 +357,110 @@ function EntryPointSection({
             <RiAddLine size={14} />
           </button>
         </div>
+      </div>
+    </div>
+  )
+}
+
+// ── Searchable flow-reference dropdown ──
+
+function FlowReferenceSelect({
+  value,
+  currentFlowId,
+  onChange,
+}: {
+  value: string
+  currentFlowId: string
+  onChange: (flowId: string) => void
+}) {
+  const [open, setOpen] = useState(false)
+  const [search, setSearch] = useState('')
+  const inputRef = useRef<HTMLInputElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
+
+  const currentFlowArchived = isFlowArchived(currentFlowId)
+
+  const options = useMemo(() => {
+    const all = getAllFlows()
+      .filter((f) => f.id !== currentFlowId)
+      .filter((f) => currentFlowArchived || !isFlowArchived(f.id))
+      .sort((a, b) => a.id.localeCompare(b.id))
+    if (!search) return all
+    const q = search.toLowerCase()
+    return all.filter((f) => f.id.toLowerCase().includes(q))
+  }, [currentFlowId, currentFlowArchived, search])
+
+  // Focus input when opened
+  useEffect(() => {
+    if (open) {
+      setSearch('')
+      setTimeout(() => inputRef.current?.focus(), 0)
+    }
+  }, [open])
+
+  // Close on outside click
+  useEffect(() => {
+    if (!open) return
+    const handler = (e: MouseEvent) => {
+      if (listRef.current && !listRef.current.contains(e.target as HTMLElement)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [open])
+
+  const selectedLabel = value || '(None)'
+
+  return (
+    <div className="mb-[var(--token-spacing-lg)]">
+      <p className="text-[length:var(--token-font-size-caption)] text-shell-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-1)]">
+        Target Flow
+      </p>
+      <div className="relative" ref={listRef}>
+        <button
+          type="button"
+          onClick={() => setOpen(!open)}
+          className="w-full px-[var(--token-spacing-2)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-body-sm)] text-shell-text bg-shell-input border border-shell-border rounded-[var(--token-radius-sm)] outline-none focus:border-shell-selected-text cursor-pointer text-left truncate"
+        >
+          {selectedLabel}
+        </button>
+        {open && (
+          <div className="absolute z-50 top-full left-0 right-0 mt-[2px] bg-[#252525] border border-white/[0.12] rounded-[var(--token-radius-sm)] shadow-lg max-h-[240px] flex flex-col overflow-hidden">
+            <input
+              ref={inputRef}
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search flows…"
+              className="w-full px-[var(--token-spacing-2)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-body-sm)] text-shell-text bg-transparent border-b border-white/[0.08] outline-none placeholder:text-[#666] shrink-0"
+            />
+            <div className="overflow-y-auto">
+              <button
+                type="button"
+                onClick={() => { onChange(''); setOpen(false) }}
+                className={`w-full text-left px-[var(--token-spacing-2)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-body-sm)] hover:bg-white/[0.06] ${!value ? 'text-shell-selected-text' : 'text-[#888] italic'}`}
+              >
+                (None)
+              </button>
+              {options.map((f) => (
+                <button
+                  key={f.id}
+                  type="button"
+                  onClick={() => { onChange(f.id); setOpen(false) }}
+                  className={`w-full text-left px-[var(--token-spacing-2)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-body-sm)] hover:bg-white/[0.06] truncate ${f.id === value ? 'text-shell-selected-text' : 'text-shell-text'}`}
+                >
+                  {f.id}
+                </button>
+              ))}
+              {options.length === 0 && (
+                <p className="px-[var(--token-spacing-2)] py-[var(--token-spacing-2)] text-[length:var(--token-font-size-caption)] text-[#666] italic">
+                  No matching flows
+                </p>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -758,23 +863,11 @@ export default function FlowViewAnnotationsPanel({
 
             {/* ── Flow-reference: target flow ── */}
             {nodeData.nodeType === 'flow-reference' && (
-              <div className="mb-[var(--token-spacing-lg)]">
-                <p className="text-[length:var(--token-font-size-caption)] text-shell-text-tertiary uppercase tracking-wider mb-[var(--token-spacing-1)]">
-                  Target Flow
-                </p>
-                <select
-                  value={(nodeData as { targetFlowId?: string }).targetFlowId ?? ''}
-                  onChange={(e) => {
-                    onNodeUpdate(selectedNode.id, { targetFlowId: e.target.value || null })
-                  }}
-                  className="w-full px-[var(--token-spacing-2)] py-[var(--token-spacing-1)] text-[length:var(--token-font-size-body-sm)] text-shell-text bg-shell-input border border-shell-border rounded-[var(--token-radius-sm)] outline-none focus:border-shell-selected-text cursor-pointer"
-                >
-                  <option value="">(None)</option>
-                  {getAllFlows().filter(f => f.id !== flow.id).map((f) => (
-                    <option key={f.id} value={f.id}>{f.id}</option>
-                  ))}
-                </select>
-              </div>
+              <FlowReferenceSelect
+                value={(nodeData as { targetFlowId?: string }).targetFlowId ?? ''}
+                currentFlowId={flow.id}
+                onChange={(val) => onNodeUpdate(selectedNode.id, { targetFlowId: val || null })}
+              />
             )}
 
             {/* ── Overlay node properties ── */}
