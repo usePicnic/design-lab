@@ -141,9 +141,9 @@ export async function renameFlowGraph(oldId: string, newId: string): Promise<voi
 
 // ── Update flow-reference nodes across ALL graphs ──
 
-export function updateFlowReferencesInAllGraphs(oldFlowId: string, newFlowId: string): void {
+export async function updateFlowReferencesInAllGraphs(oldFlowId: string, newFlowId: string): Promise<void> {
   const all = readAllGraphs()
-  let changed = false
+  const changedGraphIds: string[] = []
 
   for (const [graphFlowId, graph] of Object.entries(all)) {
     if (graphFlowId === newFlowId) continue // skip the renamed flow itself
@@ -156,12 +156,31 @@ export function updateFlowReferencesInAllGraphs(oldFlowId: string, newFlowId: st
       return n
     })
     if (graphChanged) {
-      all[graphFlowId] = { ...graph, nodes: updatedNodes, updatedAt: new Date().toISOString() }
-      changed = true
+      const updatedAt = new Date().toISOString()
+      all[graphFlowId] = { ...graph, nodes: updatedNodes, updatedAt }
+      changedGraphIds.push(graphFlowId)
     }
   }
 
-  if (changed) writeAllGraphs(all)
+  if (changedGraphIds.length > 0) {
+    writeAllGraphs(all)
+
+    // Push updated graphs to Supabase so remote stays in sync
+    if (isSupabaseConnected()) {
+      for (const gid of changedGraphIds) {
+        const g = all[gid]
+        await supabase!.from('flow_graphs').upsert(
+          {
+            flow_id: gid,
+            nodes: JSON.stringify(g.nodes),
+            edges: JSON.stringify(g.edges),
+            updated_at: g.updatedAt,
+          },
+          { onConflict: 'flow_id' },
+        )
+      }
+    }
+  }
 }
 
 // ── Supabase → localStorage hydration ──

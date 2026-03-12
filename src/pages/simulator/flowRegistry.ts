@@ -345,11 +345,17 @@ export async function renameFlowIdCascade(oldId: string, newId: string): Promise
   flows.set(newId, updatedFlow)
 
   // 3. Update linkedFlows arrays in OTHER flows that reference oldId
+  //    Persist to dynamic store so the fix survives reload/hydration.
   for (const [id, f] of flows.entries()) {
     if (id === newId) continue
     if (f.linkedFlows?.includes(oldId)) {
       const updatedLinks = f.linkedFlows.map((lf) => lf === oldId ? newId : lf)
       flows.set(id, { ...f, linkedFlows: updatedLinks })
+      // Persist updated linkedFlows to dynamic store
+      const dynDef = getDynamicFlow(id)
+      if (dynDef) {
+        saveDynamicFlow({ ...dynDef, linkedFlows: updatedLinks })
+      }
     }
   }
 
@@ -365,8 +371,8 @@ export async function renameFlowIdCascade(oldId: string, newId: string): Promise
   // 7. Re-key group memberships
   renameFlowInGroups(oldId, newId)
 
-  // 8. Update flow-reference nodes in ALL other flow graphs
-  updateFlowReferencesInAllGraphs(oldId, newId)
+  // 8. Update flow-reference nodes in ALL other flow graphs (+ push to Supabase)
+  await updateFlowReferencesInAllGraphs(oldId, newId)
 
   return true
 }
