@@ -284,7 +284,7 @@ export function createGroup(name: string, domainId: string): FlowGroup {
   }
 
   state.groups[id] = group
-  writeState(state)
+  writeState(state, true)
   return group
 }
 
@@ -299,7 +299,7 @@ export function deleteGroup(groupId: string): void {
     }
   }
 
-  writeState(state)
+  writeState(state, true)
 }
 
 export function renameGroup(groupId: string, name: string): void {
@@ -307,7 +307,7 @@ export function renameGroup(groupId: string, name: string): void {
   const group = state.groups[groupId]
   if (!group) return
   group.name = name
-  writeState(state)
+  writeState(state, true)
 }
 
 export function setGroupCollapsed(groupId: string, collapsed: boolean): void {
@@ -315,7 +315,7 @@ export function setGroupCollapsed(groupId: string, collapsed: boolean): void {
   const group = state.groups[groupId]
   if (!group) return
   group.collapsed = collapsed
-  writeState(state)
+  writeState(state, true)
 }
 
 // ── Public API: memberships ──
@@ -364,7 +364,7 @@ export function assignFlowToGroup(flowId: string, groupId: string, order?: numbe
     groupId,
     order: order ?? maxOrder + 1,
   }
-  writeState(state)
+  writeState(state, true)
 }
 
 export function removeFlowFromGroup(flowId: string, appendToDomainId?: string): void {
@@ -379,7 +379,7 @@ export function removeFlowFromGroup(flowId: string, appendToDomainId?: string): 
       state.ungroupedOrder[domainId] = [...order, flowId]
     }
   }
-  writeState(state)
+  writeState(state, true)
 }
 
 export function reorderFlowsInGroup(_groupId: string, orderedFlowIds: string[]): void {
@@ -390,7 +390,7 @@ export function reorderFlowsInGroup(_groupId: string, orderedFlowIds: string[]):
       state.memberships[flowId].order = i
     }
   }
-  writeState(state)
+  writeState(state, true)
 }
 
 export function reorderGroupsInDomain(domainId: string, orderedGroupIds: string[]): void {
@@ -401,7 +401,7 @@ export function reorderGroupsInDomain(domainId: string, orderedGroupIds: string[
       group.order = i
     }
   }
-  writeState(state)
+  writeState(state, true)
 }
 
 // ── Public API: archive ──
@@ -409,13 +409,13 @@ export function reorderGroupsInDomain(domainId: string, orderedGroupIds: string[
 export function archiveFlow(flowId: string, domainId: string): void {
   const state = readState()
   state.archivedFlows[flowId] = domainId
-  writeState(state)
+  writeState(state, true)
 }
 
 export function unarchiveFlow(flowId: string): void {
   const state = readState()
   delete state.archivedFlows[flowId]
-  writeState(state)
+  writeState(state, true)
 }
 
 export function archiveGroup(groupId: string): void {
@@ -430,7 +430,7 @@ export function archiveGroup(groupId: string): void {
   for (const fid of flowIds) {
     state.archivedFlows[fid] = group.domainId
   }
-  writeState(state)
+  writeState(state, true)
 }
 
 export function unarchiveGroup(groupId: string): void {
@@ -443,7 +443,7 @@ export function unarchiveGroup(groupId: string): void {
   for (const fid of flowIds) {
     delete state.archivedFlows[fid]
   }
-  writeState(state)
+  writeState(state, true)
 }
 
 export function isFlowArchived(flowId: string): boolean {
@@ -493,7 +493,7 @@ export function getUngroupedFlowOrder(domainId: string): string[] {
 export function setUngroupedFlowOrder(domainId: string, orderedIds: string[]): void {
   const state = readState()
   state.ungroupedOrder[domainId] = orderedIds
-  writeState(state)
+  writeState(state, true)
 }
 
 export function addToUngroupedOrder(domainId: string, flowId: string, beforeFlowId?: string): void {
@@ -508,13 +508,13 @@ export function addToUngroupedOrder(domainId: string, flowId: string, beforeFlow
     filtered.push(flowId)
   }
   state.ungroupedOrder[domainId] = filtered
-  writeState(state)
+  writeState(state, true)
 }
 
 export function removeFromUngroupedOrder(domainId: string, flowId: string): void {
   const state = readState()
   _removeFromUngroupedOrderInState(state, domainId, flowId)
-  writeState(state)
+  writeState(state, true)
 }
 
 // ── Rename flow in groups ──
@@ -547,7 +547,7 @@ export function renameFlowInGroups(oldId: string, newId: string): void {
     }
   }
 
-  if (changed) writeState(state)
+  if (changed) writeState(state, true)
 }
 
 // ── Seed from old parentFlowId hierarchy ──
