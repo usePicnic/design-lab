@@ -16,7 +16,8 @@ interface InsertableEdgeData {
 
 export default function InsertableEdge({
   id,
-  source,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  source: _source,
   target,
   sourceX,
   sourceY,

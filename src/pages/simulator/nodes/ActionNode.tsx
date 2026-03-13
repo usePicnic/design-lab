@@ -12,7 +12,7 @@ import { PiHandTap } from 'react-icons/pi'
 import { cn } from '@/lib/cn'
 import type { FlowNodeData, ActionType } from '../flowGraph.types'
 
-const actionIcons: Record<ActionType, ComponentType<{ size?: number; className?: string }>> = {
+const actionIcons: Record<ActionType, ComponentType<{ size?: number | string; className?: string }>> = {
   tap: PiHandTap,
   swipe: RiDragMoveLine,
   input: RiInputMethodLine,
