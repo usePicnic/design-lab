@@ -12,7 +12,8 @@ import { PiHandTap } from 'react-icons/pi'
 import { cn } from '@/lib/cn'
 import type { FlowNodeData, ActionType } from '../flowGraph.types'
 
-const actionIcons: Record<ActionType, ComponentType<{ size?: number | string; className?: string }>> = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const actionIcons: Record<ActionType, ComponentType<any>> = {
   tap: PiHandTap,
   swipe: RiDragMoveLine,
   input: RiInputMethodLine,

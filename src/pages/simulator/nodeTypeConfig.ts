@@ -12,8 +12,8 @@ import {
 import { PiHandTap } from 'react-icons/pi'
 import type { CreatableNodeType } from './flowGraph.types'
 
-/** Icon component that accepts at least size + className */
-export type NodeIcon = ComponentType<{ size?: number | string; className?: string }>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type NodeIcon = ComponentType<any>
 
 export interface NodeTypeEntry {
   type: CreatableNodeType
