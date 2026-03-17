@@ -239,7 +239,7 @@ function FlowCanvasInner({ flow, onNavigateToScreen, onNavigateToFlow, onFlowCha
       // Build a map of screenId → current interactiveElements from the flow definition,
       // falling back to all registered flows for shared/reused screens (dynamic flows may
       // not store interactiveElements on their screen entries).
-      const currentElementsByScreen = new Map<string, { id: string; component: string; label: string }[]>()
+      const currentElementsByScreen = new Map<string, readonly { id: string; component: string; label: string }[]>()
       for (const s of flow.screens) {
         if (s.interactiveElements?.length) {
           currentElementsByScreen.set(s.id, s.interactiveElements)
