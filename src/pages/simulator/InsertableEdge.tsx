@@ -16,7 +16,6 @@ interface InsertableEdgeData {
 
 export default function InsertableEdge({
   id,
-  source,
   target,
   sourceX,
   sourceY,
