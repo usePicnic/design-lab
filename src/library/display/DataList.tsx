@@ -80,7 +80,7 @@ function HorizontalRow({ item, isLast }: { item: DataListItem; isLast: boolean }
     >
       <div className="flex items-center justify-between py-[var(--token-spacing-3)]">
         <div className="flex items-center gap-[var(--token-spacing-1)]">
-          <span className="text-[length:var(--token-font-size-body-md)] leading-[var(--token-line-height-body-md)] text-content-secondary">
+          <span data-text-id={item.label} className="text-[length:var(--token-font-size-body-md)] leading-[var(--token-line-height-body-md)] text-content-secondary">
             {item.label}
           </span>
           {item.info && (
@@ -97,14 +97,14 @@ function HorizontalRow({ item, isLast }: { item: DataListItem; isLast: boolean }
         <div className="flex items-center gap-[var(--token-spacing-2)]">
           <div className="flex flex-col items-end">
             {typeof item.value === 'string' ? (
-              <span className="text-[length:var(--token-font-size-body-md)] leading-[var(--token-line-height-body-md)] font-medium text-content-primary tabular-nums">
+              <span data-text-id={item.value} className="text-[length:var(--token-font-size-body-md)] leading-[var(--token-line-height-body-md)] font-medium text-content-primary tabular-nums">
                 {item.value}
               </span>
             ) : (
               item.value
             )}
             {item.secondaryValue && (
-              <span className="text-[length:var(--token-font-size-body-sm)] leading-[var(--token-line-height-body-sm)] text-content-tertiary tabular-nums">
+              <span data-text-id={item.secondaryValue} className="text-[length:var(--token-font-size-body-sm)] leading-[var(--token-line-height-body-sm)] text-content-tertiary tabular-nums">
                 {item.secondaryValue}
               </span>
             )}
@@ -174,7 +174,7 @@ function VerticalCell({ item }: { item: DataListItem }) {
     <div className="flex flex-col gap-[var(--token-spacing-2)] flex-1 min-w-0">
       {/* Label */}
       <div className="flex items-center gap-[var(--token-spacing-1)] pr-[var(--token-spacing-2)]">
-        <span className="text-[length:var(--token-font-size-body-md)] leading-[var(--token-line-height-body-md)] text-content-secondary">
+        <span data-text-id={item.label} className="text-[length:var(--token-font-size-body-md)] leading-[var(--token-line-height-body-md)] text-content-secondary">
           {item.label}
         </span>
         {item.info && (
@@ -192,7 +192,7 @@ function VerticalCell({ item }: { item: DataListItem }) {
       <div className="flex items-center justify-between w-full">
         <div className="flex-1 min-w-0">
           {typeof item.value === 'string' ? (
-            <span className="text-[length:var(--token-font-size-body-md)] leading-[var(--token-line-height-body-md)] font-medium text-content-primary tabular-nums">
+            <span data-text-id={item.value} className="text-[length:var(--token-font-size-body-md)] leading-[var(--token-line-height-body-md)] font-medium text-content-primary tabular-nums">
               {item.value}
             </span>
           ) : (

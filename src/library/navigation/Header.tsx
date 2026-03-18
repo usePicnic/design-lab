@@ -51,11 +51,11 @@ export default function Header({
 
       {/* Title + description */}
       <div className="flex flex-col gap-[var(--token-spacing-2)]">
-        <h1 className="text-[length:var(--token-font-size-heading-lg)] leading-[var(--token-line-height-heading-lg)] font-semibold tracking-[-0.6px] text-content-primary m-0">
+        <h1 data-text-id={title} className="text-[length:var(--token-font-size-heading-lg)] leading-[var(--token-line-height-heading-lg)] font-semibold tracking-[-0.6px] text-content-primary m-0">
           {title}
         </h1>
         {description && (
-          <p className="text-[length:var(--token-font-size-body-md)] leading-[var(--token-line-height-body-md)] text-content-secondary m-0">
+          <p data-text-id={description} className="text-[length:var(--token-font-size-body-md)] leading-[var(--token-line-height-body-md)] text-content-secondary m-0">
             {description}
           </p>
         )}

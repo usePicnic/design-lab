@@ -12,6 +12,7 @@ export interface CanvasComment {
   y: number
   text: string
   createdAt: string
+  resolved?: boolean
 }
 
 const STORAGE_KEY = 'picnic-design-lab:canvas-comments'
@@ -63,6 +64,19 @@ export function updateCommentText(flowId: string, commentId: string, text: strin
     writeAll(all)
     markUnsynced()
   }
+}
+
+export function toggleCommentResolved(flowId: string, commentId: string): boolean {
+  const all = readAll()
+  const list = all[flowId] ?? []
+  const comment = list.find(c => c.id === commentId)
+  if (comment) {
+    comment.resolved = !comment.resolved
+    writeAll(all)
+    markUnsynced()
+    return comment.resolved
+  }
+  return false
 }
 
 /** Pull all canvas comments from Supabase into localStorage. */

@@ -42,6 +42,13 @@ const defaultTag: Record<TypographyVariant, TextProps['as']> = {
   caption: 'span',
 }
 
+/** Extract a stable text ID from children (string content only). */
+function deriveTextId(children: ReactNode): string | undefined {
+  if (typeof children === 'string') return children
+  if (typeof children === 'number') return String(children)
+  return undefined
+}
+
 export default function Text({
   variant = 'body-md',
   color,
@@ -55,8 +62,15 @@ export default function Text({
   const alignClass =
     align === 'center' ? 'text-center' : align === 'right' ? 'text-right' : 'text-left'
 
+  const textId = deriveTextId(children)
+
   return (
-    <Tag data-component="Text" className={cn(variantStyles[variant], alignClass, className)} style={colorStyle}>
+    <Tag
+      data-component="Text"
+      data-text-id={textId}
+      className={cn(variantStyles[variant], alignClass, className)}
+      style={colorStyle}
+    >
       {children}
     </Tag>
   )

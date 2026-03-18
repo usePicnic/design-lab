@@ -42,22 +42,22 @@ export default function ListItem({
       <div className="flex-1 min-w-0 flex flex-col justify-center">
         {inverted ? (
           <>
-            <span className="text-[length:var(--token-font-size-body-sm)] leading-[var(--token-line-height-body-sm)] text-[var(--color-content-secondary)] line-clamp-2">
+            <span data-text-id={title} className="text-[length:var(--token-font-size-body-sm)] leading-[var(--token-line-height-body-sm)] text-[var(--color-content-secondary)] line-clamp-2">
               {title}
             </span>
             {subtitle && (
-              <span className="text-[length:var(--token-font-size-body-md)] font-semibold leading-[var(--token-line-height-body-md)] tracking-[-0.16px] text-[var(--color-content-primary)] truncate">
+              <span data-text-id={subtitle} className="text-[length:var(--token-font-size-body-md)] font-semibold leading-[var(--token-line-height-body-md)] tracking-[-0.16px] text-[var(--color-content-primary)] truncate">
                 {subtitle}
               </span>
             )}
           </>
         ) : (
           <>
-            <span className="text-[length:var(--token-font-size-body-md)] font-semibold leading-[var(--token-line-height-body-md)] tracking-[-0.16px] text-[var(--color-content-primary)] truncate">
+            <span data-text-id={title} className="text-[length:var(--token-font-size-body-md)] font-semibold leading-[var(--token-line-height-body-md)] tracking-[-0.16px] text-[var(--color-content-primary)] truncate">
               {title}
             </span>
             {subtitle && (
-              <span className="text-[length:var(--token-font-size-body-sm)] leading-[var(--token-line-height-body-sm)] text-[var(--color-content-secondary)] line-clamp-2">
+              <span data-text-id={subtitle} className="text-[length:var(--token-font-size-body-sm)] leading-[var(--token-line-height-body-sm)] text-[var(--color-content-secondary)] line-clamp-2">
                 {subtitle}
               </span>
             )}

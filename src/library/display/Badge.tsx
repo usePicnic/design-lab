@@ -33,9 +33,12 @@ export default function Badge({
   icon,
   className = '',
 }: BadgeProps) {
+  const textId = typeof children === 'string' ? children : typeof children === 'number' ? String(children) : undefined
+
   return (
     <span
       data-component="Badge"
+      data-text-id={textId}
       className={`
         inline-flex items-center gap-1 font-medium rounded-[var(--token-radius-full)]
         ${variantStyles[variant]}

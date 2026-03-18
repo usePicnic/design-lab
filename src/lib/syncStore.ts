@@ -22,7 +22,18 @@ export type SyncStatus = 'idle' | 'syncing' | 'synced' | 'unsynced' | 'remote-up
 
 type Listener = (status: SyncStatus) => void
 
-let currentStatus: SyncStatus = isSupabaseConnected() ? 'idle' : 'local'
+const UNSYNCED_KEY = 'picnic-design-lab:unsynced'
+
+/** Restore unsynced flag from previous session so local changes survive reload. */
+function restoreInitialStatus(): SyncStatus {
+  if (!isSupabaseConnected()) return 'local'
+  try {
+    if (localStorage.getItem(UNSYNCED_KEY) === '1') return 'unsynced'
+  } catch { /* ignore */ }
+  return 'idle'
+}
+
+let currentStatus: SyncStatus = restoreInitialStatus()
 const listeners = new Set<Listener>()
 
 /** Cooldown window after push/pull to ignore our own Postgres change events. */
@@ -34,6 +45,11 @@ export function getSyncStatus(): SyncStatus {
 
 function setStatus(status: SyncStatus) {
   currentStatus = status
+  // Persist unsynced flag so it survives page reload
+  try {
+    if (status === 'unsynced') localStorage.setItem(UNSYNCED_KEY, '1')
+    else if (status === 'synced') localStorage.removeItem(UNSYNCED_KEY)
+  } catch { /* ignore */ }
   listeners.forEach((fn) => fn(status))
 }
 
@@ -48,10 +64,18 @@ export function subscribeSyncStatus(fn: Listener): () => void {
  * Pull all data from Supabase into localStorage.
  * Remote replaces local. Code defaults fill gaps (handled by each store's hydrate).
  * Returns true if at least one store hydrated successfully.
+ *
+ * @param force — if false (default), skip pull when there are unpushed local changes.
+ *                Manual pulls from the UI should pass `true`.
  */
-export async function pullFromSupabase(): Promise<boolean> {
+export async function pullFromSupabase(force = false): Promise<boolean> {
   if (!isSupabaseConnected()) {
     setStatus('local')
+    return false
+  }
+
+  // Don't overwrite unpushed local changes on automatic pulls (e.g. page reload)
+  if (!force && currentStatus === 'unsynced') {
     return false
   }
 
@@ -201,6 +225,7 @@ export async function pushAllToSupabase(): Promise<boolean> {
         comments: JSON.stringify(entry.comments),
         updated_at: now,
       }), 'flow_id'),
+
     ])).flat()
 
     if (allErrors.length > 0) {

@@ -17,7 +17,9 @@ import { type CaixinhaCurrency, CURRENCIES } from '../shared/data'
 export default function Screen4_Success({ onBack, onElementTap }: FlowScreenProps) {
   const { currency: dataCurrency } = useScreenData<{ currency?: CaixinhaCurrency }>()
   const currency = dataCurrency ?? 'USD'
-  const curr = CURRENCIES[currency]
+  const isEurMode = currency === 'EUR'
+  const usdCurr = CURRENCIES.USD
+  const eurCurr = CURRENCIES.EUR
 
   return (
     <FeedbackLayout onClose={onBack}>
@@ -32,8 +34,16 @@ export default function Screen4_Success({ onBack, onElementTap }: FlowScreenProp
         <Stack gap="none">
           <GroupHeader text="Resumo da operação" />
           <DataList data={[
-            { label: 'Valor guardado', value: `${curr.symbol} 100,00` },
-            { label: 'Rendimento atual', value: curr.apyDisplay },
+            ...(isEurMode
+              ? [
+                  { label: 'Valor enviado', value: `${eurCurr.symbol} 92,23` },
+                  { label: 'Valor guardado', value: `${usdCurr.symbol} 100,00` },
+                ]
+              : [
+                  { label: 'Valor guardado', value: `${usdCurr.symbol} 100,00` },
+                ]
+            ),
+            { label: 'Rendimento atual', value: usdCurr.apyDisplay },
             {
               label: 'Resgate',
               value: <span className="text-[var(--color-feedback-success)] font-medium">Imediato</span>,

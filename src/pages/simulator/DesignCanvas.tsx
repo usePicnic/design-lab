@@ -10,7 +10,7 @@ import {
   RiCursorFill, RiDragMoveFill, RiChat3Line,
   RiSmartphoneLine, RiExpandUpDownLine,
   RiAddLine, RiSubtractLine, RiDeleteBinLine,
-  RiFileCopyLine, RiCheckLine,
+  RiFileCopyLine, RiCheckLine, RiTextBlock,
 } from '@remixicon/react'
 import { getFlowGraph } from './flowGraphStore'
 import { deriveNavigationPath } from './flowGraphNavigation'
@@ -28,10 +28,13 @@ import {
   addComment,
   deleteComment,
   updateCommentText,
+  toggleCommentResolved,
 } from './canvasCommentStore'
+import { patchScreenText } from './flowFileApi'
+import { resolveFilePath } from './screenResolver'
 
 type FrameMode = 'device' | 'full-height'
-type CanvasTool = 'select' | 'pan' | 'comment'
+type CanvasTool = 'select' | 'pan' | 'comment' | 'text'
 
 interface DesignCanvasProps {
   flow: Flow
@@ -82,6 +85,14 @@ export default function DesignCanvas({ flow }: DesignCanvasProps) {
     setEditVersion((v) => v + 1)
   }, [flow.id])
 
+  // Text edit state
+  const [textEditor, setTextEditor] = useState<{
+    screenId: string
+    textId: string
+    rect: DOMRect
+    currentText: string
+  } | null>(null)
+
   // Comments state
   const [comments, setComments] = useState<CanvasComment[]>([])
   const [activeCommentId, setActiveCommentId] = useState<string | null>(null)
@@ -131,13 +142,14 @@ export default function DesignCanvas({ flow }: DesignCanvasProps) {
     return groups
   }, [navPath, flow.screens])
 
-  // Load comments when flow changes
+  // Load comments + text overrides when flow changes
   useEffect(() => {
     setPan({ x: 48, y: 48 })
     setZoom(0.85)
     setComments(getComments(flow.id))
     setActiveCommentId(null)
     setDraftPin(null)
+    setTextEditor(null)
   }, [flow.id])
 
   // Wheel handler — zoom only with ctrl/meta (no scroll-to-pan, it conflicts with screen content scroll)
@@ -227,12 +239,48 @@ export default function DesignCanvas({ flow }: DesignCanvasProps) {
     setComments(prev => prev.map(c => c.id === commentId ? { ...c, text } : c))
   }, [flow.id])
 
+  const handleToggleResolved = useCallback((commentId: string) => {
+    const resolved = toggleCommentResolved(flow.id, commentId)
+    setComments(prev => prev.map(c => c.id === commentId ? { ...c, resolved } : c))
+  }, [flow.id])
+
+  // Text edit click handler — find [data-text-id] element under cursor
+  const handleTextEditClick = useCallback((e: React.MouseEvent, screenId: string) => {
+    if (tool !== 'text') return
+    const target = (e.target as HTMLElement).closest('[data-text-id]') as HTMLElement | null
+    if (!target) return
+    const textId = target.getAttribute('data-text-id')
+    if (!textId) return
+
+    e.stopPropagation()
+    const rect = target.getBoundingClientRect()
+    setTextEditor({ screenId, textId, rect, currentText: textId })
+  }, [tool])
+
+  const handleTextEditorSave = useCallback(async (text: string) => {
+    if (!textEditor) return
+    const { screenId, textId } = textEditor
+    const trimmed = text.trim()
+    setTextEditor(null)
+    if (!trimmed || trimmed === textId) return
+
+    // Find the source file for this screen
+    const screen = flow.screens.find(s => s.id === screenId)
+    if (!screen) return
+    const filePath = resolveFilePath(screen.component)
+    if (!filePath) return
+
+    // Patch the TSX source — Vite HMR will update the canvas
+    await patchScreenText(filePath, textId, trimmed)
+  }, [textEditor, flow.screens])
+
   // Keyboard shortcuts
   useEffect(() => {
     let prevTool: CanvasTool | null = null
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't handle shortcuts when typing in a textarea
-      if ((e.target as HTMLElement).tagName === 'TEXTAREA') return
+      // Don't handle shortcuts when typing in an input or textarea
+      const tag = (e.target as HTMLElement).tagName
+      if (tag === 'TEXTAREA' || tag === 'INPUT') return
 
       if (e.code === 'Space' && !e.repeat && tool !== 'pan') {
         prevTool = tool
@@ -251,9 +299,13 @@ export default function DesignCanvas({ flow }: DesignCanvasProps) {
       if (e.code === 'KeyH' && !e.metaKey && !e.ctrlKey && document.activeElement === document.body) {
         setTool('pan')
       }
+      if (e.code === 'KeyT' && !e.metaKey && !e.ctrlKey && document.activeElement === document.body) {
+        setTool('text')
+      }
       if (e.code === 'Escape') {
         setDraftPin(null)
         setActiveCommentId(null)
+        setTextEditor(null)
       }
     }
     const handleKeyUp = (e: KeyboardEvent) => {
@@ -282,7 +334,9 @@ export default function DesignCanvas({ flow }: DesignCanvasProps) {
 
   const cursorClass = tool === 'pan'
     ? (isPanning ? 'cursor-grabbing' : 'cursor-grab')
-    : tool === 'comment' ? 'cursor-crosshair' : 'cursor-default'
+    : tool === 'comment' ? 'cursor-crosshair'
+    : tool === 'text' ? 'cursor-text'
+    : 'cursor-default'
 
   if (screenGroups.length === 0) {
     return (
@@ -340,6 +394,13 @@ export default function DesignCanvas({ flow }: DesignCanvasProps) {
             title="Comment (C)"
           >
             <RiChat3Line size={16} />
+          </ToolbarBtn>
+          <ToolbarBtn
+            active={tool === 'text'}
+            onClick={() => setTool('text')}
+            title="Edit text (T)"
+          >
+            <RiTextBlock size={16} />
           </ToolbarBtn>
 
           <div className="w-[1px] h-[20px] bg-[#444] mx-[4px]" />
@@ -445,6 +506,7 @@ export default function DesignCanvas({ flow }: DesignCanvasProps) {
                             ? 'h-[844px] overflow-hidden'
                             : 'min-h-[840px] overflow-hidden canvas-fullheight'
                         }`}
+                        onClick={(e) => handleTextEditClick(e, screen.id)}
                       >
                         <LayoutProvider level={1} breadcrumbs={[]} isDesktop={false}>
                           <AppShell sidebar={null}>
@@ -478,6 +540,7 @@ export default function DesignCanvas({ flow }: DesignCanvasProps) {
               <CommentPin
                 number={i + 1}
                 isActive={activeCommentId === comment.id}
+                resolved={comment.resolved}
                 onClick={() => setActiveCommentId(
                   activeCommentId === comment.id ? null : comment.id
                 )}
@@ -488,6 +551,7 @@ export default function DesignCanvas({ flow }: DesignCanvasProps) {
                   zoom={zoom}
                   onEdit={(text) => handleEditComment(comment.id, text)}
                   onDelete={() => handleDeleteComment(comment.id)}
+                  onToggleResolved={() => handleToggleResolved(comment.id)}
                   onClose={() => setActiveCommentId(null)}
                 />
               )}
@@ -511,6 +575,16 @@ export default function DesignCanvas({ flow }: DesignCanvasProps) {
           )}
         </div>
       </div>
+
+      {/* Floating text editor overlay */}
+      {textEditor && (
+        <FloatingTextEditor
+          rect={textEditor.rect}
+          currentText={textEditor.currentText}
+          onSave={handleTextEditorSave}
+          onCancel={() => setTextEditor(null)}
+        />
+      )}
     </div>
   )
 }
@@ -599,12 +673,18 @@ function EditableScreenLabel({
 function CommentPin({
   number,
   isActive,
+  resolved,
   onClick,
 }: {
   number: number
   isActive: boolean
+  resolved?: boolean
   onClick?: () => void
 }) {
+  const bg = resolved
+    ? 'bg-[#22c55e]'
+    : isActive ? 'bg-[#4a90d9] scale-110' : 'bg-[#e74c3c]'
+
   return (
     <button
       type="button"
@@ -615,12 +695,12 @@ function CommentPin({
         w-[24px] h-[24px] rounded-full
         text-[11px] font-bold text-white
         shadow-lg cursor-pointer
-        transition-transform hover:scale-110
+        transition-all hover:scale-110
         -translate-x-1/2 -translate-y-1/2
-        ${isActive ? 'bg-[#4a90d9] scale-110' : 'bg-[#e74c3c]'}
+        ${bg}
       `}
     >
-      {number}
+      {resolved ? <RiCheckLine size={14} /> : number}
     </button>
   )
 }
@@ -631,12 +711,14 @@ function CommentPopover({
   zoom,
   onEdit,
   onDelete,
+  onToggleResolved,
   onClose,
 }: {
   comment: CanvasComment
   zoom: number
   onEdit: (text: string) => void
   onDelete: () => void
+  onToggleResolved: () => void
   onClose: () => void
 }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -735,6 +817,18 @@ function CommentPopover({
               <div className="flex items-center gap-[2px]">
                 <button
                   type="button"
+                  onClick={(e) => { e.stopPropagation(); onToggleResolved() }}
+                  className={`flex items-center gap-[3px] px-[6px] py-[2px] text-[11px] rounded-[4px] cursor-pointer transition-colors ${
+                    comment.resolved
+                      ? 'text-[#22c55e] hover:bg-[#22c55e]/10'
+                      : 'text-shell-text-secondary hover:text-shell-text hover:bg-shell-hover'
+                  }`}
+                  title={comment.resolved ? 'Mark as unresolved' : 'Mark as resolved'}
+                >
+                  <RiCheckLine size={12} />
+                </button>
+                <button
+                  type="button"
                   onClick={(e) => { e.stopPropagation(); setIsEditing(true) }}
                   className="px-[6px] py-[2px] text-[11px] text-shell-text-secondary hover:text-shell-text hover:bg-shell-hover rounded-[4px] cursor-pointer transition-colors"
                 >
@@ -818,6 +912,79 @@ function DraftCommentInput({
           </button>
         </div>
       </div>
+    </div>
+  )
+}
+
+/** Floating text editor positioned over the target element */
+function FloatingTextEditor({
+  rect,
+  currentText,
+  onSave,
+  onCancel,
+}: {
+  rect: DOMRect
+  currentText: string
+  onSave: (text: string) => void
+  onCancel: () => void
+}) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      const el = textareaRef.current
+      if (el) {
+        el.focus()
+        el.select()
+        // Auto-size to content
+        el.style.height = 'auto'
+        el.style.height = `${el.scrollHeight}px`
+      }
+    }, 50)
+    return () => clearTimeout(t)
+  }, [])
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      onSave(textareaRef.current?.value ?? currentText)
+    }
+    if (e.key === 'Escape') {
+      onCancel()
+    }
+  }
+
+  const handleInput = () => {
+    const el = textareaRef.current
+    if (el) {
+      el.style.height = 'auto'
+      el.style.height = `${el.scrollHeight}px`
+    }
+  }
+
+  return (
+    <div
+      className="fixed z-50"
+      style={{
+        top: rect.top - 4,
+        left: rect.left - 4,
+        minWidth: Math.max(rect.width + 8, 120),
+        maxWidth: Math.max(rect.width + 40, 240),
+      }}
+    >
+      <textarea
+        ref={textareaRef}
+        defaultValue={currentText}
+        onKeyDown={handleKeyDown}
+        onInput={handleInput}
+        onBlur={() => onSave(textareaRef.current?.value ?? currentText)}
+        rows={1}
+        className="w-full px-[4px] py-[2px] text-[12px] leading-[1.4] bg-white text-[#111] border-2 border-[#4a90d9] rounded-[4px] outline-none shadow-lg resize-none overflow-hidden"
+        style={{
+          minHeight: rect.height,
+          wordBreak: 'break-word',
+        }}
+      />
     </div>
   )
 }

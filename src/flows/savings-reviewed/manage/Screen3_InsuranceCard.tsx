@@ -10,7 +10,7 @@ import InsurancePolicyCard from '../../../library/display/InsurancePolicyCard'
 import Summary from '../../../library/display/Summary'
 import GroupHeader from '../../../library/navigation/GroupHeader'
 import DataList from '../../../library/display/DataList'
-import { RiCodeLine, RiLineChartLine, RiShieldCheckLine, RiGovernmentLine } from '@remixicon/react'
+import { RiBugLine, RiAlertLine, RiRefundLine } from '@remixicon/react'
 
 export default function Screen3_InsuranceCard({ onBack }: FlowScreenProps) {
   return (
@@ -36,25 +36,24 @@ export default function Screen3_InsuranceCard({ onBack }: FlowScreenProps) {
         />
 
         <Stack gap="none">
-          <GroupHeader text="O que está coberto" />
+          <GroupHeader text="O que o seguro cobre" />
           <Summary
             data={[
-              { icon: <RiCodeLine size={20} />, title: 'Bugs em smart contracts', description: 'Falhas no código que resultem em uso não intencional e perda de fundos' },
-              { icon: <RiLineChartLine size={20} />, title: 'Falha e manipulação de oráculos', description: 'Dados de preço incorretos ou deliberadamente corrompidos' },
-              { icon: <RiShieldCheckLine size={20} />, title: 'Falha de liquidação', description: 'Problemas na liquidação de garantias que gerem dívida socializada' },
-              { icon: <RiGovernmentLine size={20} />, title: 'Tomada de governança', description: 'Ataques maliciosos que forcem atualizações indevidas nos smart contracts' },
+              { icon: <RiBugLine size={20} />, title: 'Falha técnica no sistema', description: 'Um erro na tecnologia afeta seu saldo? Você é reembolsado.' },
+              { icon: <RiAlertLine size={20} />, title: 'Dados de preço incorretos', description: 'Se uma informação errada causar perda, a cobertura entra em ação.' },
+              { icon: <RiRefundLine size={20} />, title: 'Problema na liquidação', description: 'Algo trava na hora de processar? O seguro garante a devolução.' },
             ]}
           />
         </Stack>
 
         <Stack gap="none">
-          <GroupHeader text="Detalhes da cobertura" />
+          <GroupHeader text="Detalhes" />
           <DataList data={[
-            { label: 'Provedor', value: 'OpenCover × Nexus Mutual' },
-            { label: 'Dedutível', value: '5% do valor coberto' },
-            { label: 'Carência após evento', value: '14 dias' },
-            { label: 'Prazo para resgate', value: '30 dias após aprovação' },
-            { label: 'Custo para você', value: 'Incluso no rendimento' },
+            { label: 'Provedor', value: 'Nexus Mutual' },
+            { label: 'Custo', value: 'Grátis' },
+            { label: 'Cobertura', value: '97% do valor investido' },
+            { label: 'Prazo de análise', value: 'Até 14 dias' },
+            { label: 'Reembolso após aprovação', value: 'Até 30 dias' },
           ]} />
         </Stack>
       </Stack>

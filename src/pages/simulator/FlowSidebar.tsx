@@ -218,6 +218,10 @@ export default function FlowSidebar({ selectedFlowId, onSelect, onFlowCreated, o
   }
 
   const handleDeleteFlow = (flowId: string) => {
+    // Remove from archive if archived
+    if (isFlowArchived(flowId)) {
+      unarchiveFlow(flowId)
+    }
     deleteDynamicFlow(flowId)
     deleteFlowGraph(flowId)
     markFlowDeleted(flowId)
@@ -322,6 +326,21 @@ export default function FlowSidebar({ selectedFlowId, onSelect, onFlowCreated, o
   }
 
   const handleDeleteGroup = (groupId: string) => {
+    if (isGroupArchived(groupId)) {
+      // Delete all flows in the archived group first
+      const flowIds = getFlowIdsInGroup(groupId)
+      for (const flowId of flowIds) {
+        if (isFlowArchived(flowId)) unarchiveFlow(flowId)
+        deleteDynamicFlow(flowId)
+        deleteFlowGraph(flowId)
+        markFlowDeleted(flowId)
+        unregisterFlow(flowId)
+        removeFlowFromGroup(flowId)
+        if (selectedFlowId === flowId) onSelect('')
+      }
+      unarchiveGroup(groupId)
+      onFlowDeleted?.()
+    }
     deleteGroup(groupId)
     setConfirmDeleteGroupId(null)
   }
@@ -554,14 +573,24 @@ export default function FlowSidebar({ selectedFlowId, onSelect, onFlowCreated, o
                 </button>
               </>
             ) : (
-              <button
-                type="button"
-                onClick={(e) => { e.stopPropagation(); unarchiveFlow(flow.id) }}
-                className="w-[20px] h-[20px] flex items-center justify-center rounded-[var(--token-radius-sm)] text-shell-text-tertiary hover:text-shell-selected-text hover:bg-shell-hover transition-colors cursor-pointer"
-                title="Unarchive flow"
-              >
-                <RiInboxUnarchiveLine size={12} />
-              </button>
+              <>
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); unarchiveFlow(flow.id) }}
+                  className="w-[20px] h-[20px] flex items-center justify-center rounded-[var(--token-radius-sm)] text-shell-text-tertiary hover:text-shell-selected-text hover:bg-shell-hover transition-colors cursor-pointer"
+                  title="Unarchive flow"
+                >
+                  <RiInboxUnarchiveLine size={12} />
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setConfirmDeleteId(flow.id) }}
+                  className="w-[20px] h-[20px] flex items-center justify-center rounded-[var(--token-radius-sm)] text-shell-text-tertiary hover:text-error hover:bg-error/10 transition-colors cursor-pointer"
+                  title="Delete flow"
+                >
+                  <RiDeleteBinLine size={12} />
+                </button>
+              </>
             )}
           </div>
         )}
@@ -644,7 +673,7 @@ export default function FlowSidebar({ selectedFlowId, onSelect, onFlowCreated, o
               <button
                 type="button"
                 onClick={() => setGroupCollapsed(group.id, !isCollapsed)}
-                className="flex items-center gap-[var(--token-spacing-1)] flex-1 min-w-0 text-left text-[length:13px] font-[500] text-shell-text-tertiary hover:text-shell-text transition-colors cursor-pointer"
+                className="flex items-center gap-[var(--token-spacing-1)] flex-1 min-w-0 text-left text-[length:13px] font-[500] text-shell-text hover:text-shell-text transition-colors cursor-pointer"
               >
                 <ChevronIcon size={12} className="shrink-0" />
                 <span className="truncate">{group.name}</span>
@@ -679,14 +708,32 @@ export default function FlowSidebar({ selectedFlowId, onSelect, onFlowCreated, o
                     </button>
                   </>
                 ) : (
-                  <button
-                    type="button"
-                    onClick={() => unarchiveGroup(group.id)}
-                    className="w-[16px] h-[16px] flex items-center justify-center text-shell-text-tertiary hover:text-shell-text cursor-pointer"
-                    title="Unarchive group"
-                  >
-                    <RiInboxUnarchiveLine size={10} />
-                  </button>
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => unarchiveGroup(group.id)}
+                      className="w-[16px] h-[16px] flex items-center justify-center text-shell-text-tertiary hover:text-shell-text cursor-pointer"
+                      title="Unarchive group"
+                    >
+                      <RiInboxUnarchiveLine size={10} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setRenamingGroupId(group.id); setRenameValue(group.name) }}
+                      className="w-[16px] h-[16px] flex items-center justify-center text-shell-text-tertiary hover:text-shell-text cursor-pointer"
+                      title="Rename group"
+                    >
+                      <RiPencilLine size={10} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setConfirmDeleteGroupId(group.id)}
+                      className="w-[16px] h-[16px] flex items-center justify-center text-shell-text-tertiary hover:text-error cursor-pointer"
+                      title="Delete group and all flows"
+                    >
+                      <RiDeleteBinLine size={10} />
+                    </button>
+                  </>
                 )}
               </div>
             </>
@@ -696,7 +743,7 @@ export default function FlowSidebar({ selectedFlowId, onSelect, onFlowCreated, o
         {isConfirmingDelete && (
           <div className="flex items-center gap-[var(--token-spacing-1)] px-[var(--token-spacing-md)] py-[var(--token-spacing-1)] bg-error/5 border-y border-error/20">
             <span className="text-[length:var(--token-font-size-caption)] text-error flex-1">
-              Delete group? Flows become ungrouped.
+              {isGroupArchived(group.id) ? 'Delete group and all its flows?' : 'Delete group? Flows become ungrouped.'}
             </span>
             <button
               type="button"

@@ -109,7 +109,7 @@ export default function Banner({
 
         <div className="flex-1 flex flex-col gap-[8px]">
           <div className="flex items-center justify-between h-[24px]">
-            <span className="text-[16px] leading-[24px] font-semibold text-[var(--color-content-primary)] tracking-[-0.16px]">
+            <span data-text-id={title} className="text-[16px] leading-[24px] font-semibold text-[var(--color-content-primary)] tracking-[-0.16px]">
               {title}
             </span>
             <span
@@ -121,7 +121,7 @@ export default function Banner({
           </div>
 
           {expanded && description && (
-            <p className="text-[14px] leading-[1.4] font-medium text-[var(--color-content-secondary)]">
+            <p data-text-id={description} className="text-[14px] leading-[1.4] font-medium text-[var(--color-content-secondary)]">
               {description}
             </p>
           )}
@@ -130,6 +130,7 @@ export default function Banner({
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); onLinkPress() }}
+              data-text-id={linkText}
               className="text-[14px] leading-[22px] font-semibold underline text-[var(--color-content-primary)] hover:opacity-70 cursor-pointer w-fit"
             >
               {linkText}
@@ -155,11 +156,11 @@ export default function Banner({
       </div>
 
       <div className="flex-1 flex flex-col gap-[4px]">
-        <span className={`text-[16px] leading-[24px] font-semibold tracking-[-0.16px] ${config.titleColor}`}>
+        <span data-text-id={title} className={`text-[16px] leading-[24px] font-semibold tracking-[-0.16px] ${config.titleColor}`}>
           {title}
         </span>
         {description && (
-          <p className={`text-[14px] leading-[1.5] ${config.descColor}`}>
+          <p data-text-id={description} className={`text-[14px] leading-[1.5] ${config.descColor}`}>
             {description}
           </p>
         )}
@@ -167,6 +168,7 @@ export default function Banner({
           <button
             type="button"
             onClick={onLinkPress}
+            data-text-id={linkText}
             className={`text-[14px] leading-[22px] font-semibold underline ${config.linkColor} hover:opacity-70 cursor-pointer w-fit`}
           >
             {linkText}

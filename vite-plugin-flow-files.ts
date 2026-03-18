@@ -264,6 +264,32 @@ export default function flowFilesPlugin(): Plugin {
         return { data: { updated: true } }
       }))
 
+      // Patch text in a screen file (find-and-replace a string literal)
+      server.middlewares.use(...createJsonEndpoint('/__flow-api/patch-text', (body) => {
+        const { filePath, oldText, newText } = body as { filePath: string; oldText: string; newText: string }
+        const absolutePath = resolve(projectRoot, 'src', 'flows', filePath)
+
+        if (!existsSync(absolutePath)) {
+          return { status: 404, data: { patched: false, reason: 'not found' } }
+        }
+
+        const source = readFileSync(absolutePath, 'utf-8')
+
+        // Escape special regex chars in the old text for literal matching
+        const escaped = oldText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+        // Match the text as a string literal value (inside quotes or JSX text)
+        const regex = new RegExp(escaped, 'g')
+        const matches = source.match(regex)
+
+        if (!matches || matches.length === 0) {
+          return { data: { patched: false, reason: 'text not found' } }
+        }
+
+        const updated = source.replace(regex, newText)
+        writeFileSync(absolutePath, updated, 'utf-8')
+        return { data: { patched: true, count: matches.length } }
+      }))
+
       // Copy screen file to a new flow directory
       server.middlewares.use(...createJsonEndpoint('/__flow-api/copy-screen', (body) => {
         const { sourceFilePath, targetFlowId, targetFileName } = body as {

@@ -39,6 +39,13 @@ const sizeStyles = {
   lg: 'h-[52px] px-[32px] text-[17px] rounded-[12px]',
 } as const
 
+/** Extract a stable text ID from children (string content only). */
+function deriveTextId(children: ReactNode): string | undefined {
+  if (typeof children === 'string') return children
+  if (typeof children === 'number') return String(children)
+  return undefined
+}
+
 export default function Button({
   variant = 'primary',
   size = 'md',
@@ -52,10 +59,12 @@ export default function Button({
   style,
 }: ButtonProps) {
   const isDisabled = disabled || loading
+  const textId = deriveTextId(children)
 
   return (
     <motion.button
       data-component="Button"
+      data-text-id={textId}
       whileTap={isDisabled ? undefined : { scale: 0.97 }}
       transition={{ duration: 0.15, ease: 'easeOut' }}
       onClick={onPress}

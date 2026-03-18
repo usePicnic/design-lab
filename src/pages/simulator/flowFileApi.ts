@@ -96,6 +96,22 @@ export async function deleteScreenFile(filePath: string): Promise<boolean> {
 }
 
 /**
+ * Patch text in a screen .tsx file (find-and-replace a string literal).
+ * Vite HMR will pick up the change automatically.
+ */
+export async function patchScreenText(
+  filePath: string,
+  oldText: string,
+  newText: string,
+): Promise<boolean> {
+  const data = await fetchFlowApi<{ patched: boolean; count?: number; reason?: string }>(
+    'patch-text',
+    { filePath, oldText, newText },
+  )
+  return data?.patched ?? false
+}
+
+/**
  * Copy a screen .tsx file (and its .parts.tsx companion) to a new flow directory.
  * Returns the new relative filePath, e.g. 'new-flow/Screen1_MyScreen.tsx'.
  */

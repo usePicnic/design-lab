@@ -17,7 +17,9 @@ import { type CaixinhaCurrency, CURRENCIES } from '../shared/data'
 export default function Screen2_Review({ onNext, onBack, onElementTap }: FlowScreenProps) {
   const { currency: dataCurrency } = useScreenData<{ currency?: CaixinhaCurrency }>()
   const currency = dataCurrency ?? 'USD'
-  const curr = CURRENCIES[currency]
+  const isEurMode = currency === 'EUR'
+  const usdCurr = CURRENCIES.USD
+  const eurCurr = CURRENCIES.EUR
 
   return (
     <BaseLayout>
@@ -27,9 +29,17 @@ export default function Screen2_Review({ onNext, onBack, onElementTap }: FlowScr
         <Stack gap="none">
           <GroupHeader text="Detalhes da operação" />
           <DataList data={[
-            { label: 'Você está guardando', value: `${curr.symbol} 100,00` },
-            { label: 'Caixinha', value: 'Reserva de emergência' },
-            { label: 'Prazo', value: 'Instantâneo' },
+            ...(isEurMode
+              ? [
+                  { label: 'Você envia', value: `${eurCurr.symbol} 92,23` },
+                  { label: 'Você está guardando', value: `${usdCurr.symbol} 100,00` },
+                  { label: 'Prazo de conversão', value: 'Até 3 minutos' },
+                ]
+              : [
+                  { label: 'Você está guardando', value: `${usdCurr.symbol} 100,00` },
+                  { label: 'Prazo', value: 'Instantâneo' },
+                ]
+            ),
             {
               label: 'Nossa taxa',
               value: <span className="text-[var(--color-feedback-success)] font-medium">Grátis</span>,
@@ -40,8 +50,8 @@ export default function Screen2_Review({ onNext, onBack, onElementTap }: FlowScr
         <Stack gap="none">
           <GroupHeader text="Sobre o rendimento" />
           <DataList data={[
-            { label: 'Rendimento atual', value: curr.apyDisplay },
-            { label: 'Rendimento a partir de', value: 'Hoje' },
+            { label: 'Rendimento atual', value: usdCurr.apyDisplay },
+            { label: 'Rendimento a partir de', value: isEurMode ? 'Após conversão' : 'Hoje' },
             {
               label: 'Resgate',
               value: <span className="text-[var(--color-feedback-success)] font-medium">Imediato</span>,

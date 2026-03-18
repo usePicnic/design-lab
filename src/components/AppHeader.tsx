@@ -41,7 +41,7 @@ export default function AppHeader({ center, actions, onSynced }: AppHeaderProps)
 
   const executePull = useCallback(async () => {
     setShowPullConfirm(false)
-    const ok = await pullFromSupabase()
+    const ok = await pullFromSupabase(true)
     if (ok) onSynced?.()
     setShowPopover(false)
   }, [onSynced])
