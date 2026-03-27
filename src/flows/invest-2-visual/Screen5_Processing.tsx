@@ -8,13 +8,14 @@ import type { FlowScreenProps } from '@/pages/simulator/flowRegistry'
 import { useScreenData } from '@/lib/ScreenDataContext'
 import { getAsset, getAssetColor } from './shared/data'
 import type { AssetTicker } from './shared/data'
-import { BG, TEXT_PRIMARY, TEXT_SECONDARY, TEXT_TERTIARY, BG_GLASS, BORDER } from './shared/theme'
+import { BG, TEXT_PRIMARY, TEXT_TERTIARY, BG_GLASS, BORDER } from './shared/theme'
 import { playSuccess } from './shared/sounds'
 
 // ── Types ──
 
 interface ScreenData {
   assetTicker?: string
+  [key: string]: unknown
 }
 
 // ── Processing steps ──

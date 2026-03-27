@@ -17,10 +17,8 @@ import type { AssetTicker } from './shared/data'
 import {
   BG,
   BORDER,
-  BG_GLASS,
   TEXT_PRIMARY,
   TEXT_SECONDARY,
-  TEXT_TERTIARY,
   GREEN,
   SAFE_TOP,
   SAFE_BOTTOM,
@@ -36,6 +34,7 @@ import { playSuccess } from './shared/sounds'
 interface ScreenData {
   assetTicker?: string
   mode?: 'buy' | 'sell'
+  [key: string]: unknown
 }
 
 // ── Confetti particle generator ──

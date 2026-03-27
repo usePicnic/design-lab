@@ -95,7 +95,7 @@ export const digitSwap: Variants = {
 
 export const digitTransition: Transition = {
   duration: 0.15,
-  ease: [0.25, 0.1, 0.25, 1],
+  ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
 }
 
 // ── Chart animations ──
@@ -129,7 +129,7 @@ export const stagger = (baseDelay: number, index: number) => ({
   transition: {
     duration: 0.3,
     delay: baseDelay + index * 0.05,
-    ease: [0.25, 0.1, 0.25, 1],
+    ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
   },
 })
 

@@ -27,7 +27,6 @@ import {
   getAsset,
   getPosition,
   isVolatile,
-  formatBRL,
   formatPercentChange,
   CATEGORY_INFO,
   CATEGORY_BADGE_VARIANT,

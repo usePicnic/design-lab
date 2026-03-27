@@ -202,7 +202,7 @@ export function registerDynamicFlow(def: DynamicFlowDef): void {
   if (existingFlow && def.screens.length > 0) {
     for (const s of existingFlow.screens) {
       if (!dynScreenIds.has(s.id)) {
-        resolvedScreens.push(s)
+        resolvedScreens.push({ ...s, componentsUsed: [...s.componentsUsed], pageId: s.pageId, states: s.states, interactiveElements: s.interactiveElements })
       }
     }
   }

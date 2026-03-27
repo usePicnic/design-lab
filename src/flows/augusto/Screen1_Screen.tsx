@@ -66,7 +66,7 @@ export default function Screen({ onNext, onBack, onElementTap }: FlowScreenProps
       imageHeader={
         <Stack gap="sm">
           <Text variant="heading-lg" color="content-inverse">Namoradas do Augusto</Text>
-          <Text variant="body" color="content-inverse">Encontre o match perfeito</Text>
+          <Text variant="body-md" color="content-inverse">Encontre o match perfeito</Text>
         </Stack>
       }
       onClose={onBack}

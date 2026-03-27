@@ -24,7 +24,7 @@ export const ENTER_SPRING = { type: 'spring' as const, stiffness: 300, damping: 
 export const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.35, delay, ease: [0.25, 0.1, 0.25, 1] },
+  transition: { duration: 0.35, delay, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] },
 })
 
 /** Glow background — disabled in brutalist theme */

@@ -97,6 +97,7 @@ export function DetailsTab({ asset, position }: DetailsTabProps) {
 
       <Banner
         variant="neutral"
+        title=""
         description={
           vol
             ? 'Investimentos em ativos voláteis podem resultar em perda parcial ou total do valor investido.'
@@ -138,6 +139,7 @@ export function InfoTab({ asset }: InfoTabProps) {
 
       <Banner
         variant="neutral"
+        title=""
         description={
           vol
             ? 'Investimentos em ativos voláteis podem resultar em perda parcial ou total do valor investido.'

@@ -263,19 +263,19 @@ registerFlow({
 
     { id: 'g-onboard', type: 'group', position: { x: GX_ONBOARD, y: 0 },
       style: { width: 520, height: ROW * 3 + GH + GP * 2 },
-      data: { label: 'Onboarding', screenId: null, nodeType: 'group', groupColor: CLR_ONBOARD } as FlowNodeData },
+      data: { label: 'Onboarding', screenId: null, nodeType: 'group', groupColor: CLR_ONBOARD } as unknown as FlowNodeData },
 
     { id: 'g-manage', type: 'group', position: { x: GX_MANAGE, y: 0 },
       style: { width: 520, height: ROW * 5 + GH + GP * 2 },
-      data: { label: 'Manage', screenId: null, nodeType: 'group', groupColor: CLR_MANAGE } as FlowNodeData },
+      data: { label: 'Manage', screenId: null, nodeType: 'group', groupColor: CLR_MANAGE } as unknown as FlowNodeData },
 
     { id: 'g-deposit', type: 'group', position: { x: GX_DEPOSIT, y: ROW * 3 },
       style: { width: 300, height: ROW * 8 + GH + GP * 2 },
-      data: { label: 'Deposit', screenId: null, nodeType: 'group', groupColor: CLR_DEPOSIT } as FlowNodeData },
+      data: { label: 'Deposit', screenId: null, nodeType: 'group', groupColor: CLR_DEPOSIT } as unknown as FlowNodeData },
 
     { id: 'g-withdraw', type: 'group', position: { x: GX_WITHDRAW, y: ROW * 3 },
       style: { width: 300, height: ROW * 8 + GH + GP * 2 },
-      data: { label: 'Withdraw', screenId: null, nodeType: 'group', groupColor: CLR_WITHDRAW } as FlowNodeData },
+      data: { label: 'Withdraw', screenId: null, nodeType: 'group', groupColor: CLR_WITHDRAW } as unknown as FlowNodeData },
 
     // ═══════════════════════════════════════════════════════════
     // ONBOARDING (children of g-onboard, relative positions)

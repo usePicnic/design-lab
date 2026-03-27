@@ -40,6 +40,7 @@ import { TokenLogo } from './shared/TokenLogo'
 
 interface DashboardState {
   dashboard?: 'portfolio' | 'empty' | 'first-access'
+  [key: string]: unknown
 }
 
 // Generate 30-day portfolio chart — 3 data points per day = 90 points

@@ -5,12 +5,12 @@
 import { motion } from 'framer-motion'
 import { RiStarFill, RiStarLine } from '@remixicon/react'
 import {
-  BG_CARD, BORDER_LIGHT, TEXT_PRIMARY, TEXT_SECONDARY, TEXT_TERTIARY,
+  BORDER_LIGHT, TEXT_PRIMARY, TEXT_SECONDARY, TEXT_TERTIARY,
   GREEN, RED,
 } from './shared/theme'
-import { listItem, hoverScale, starMorph } from './shared/animations'
+import { listItem, starMorph } from './shared/animations'
 import { formatBRL, formatPercentChange, isVolatile } from './shared/data'
-import type { Asset } from '../../invest-2/shared/data'
+import type { Asset } from './shared/data'
 import { Sparkline } from './Screen0_Dashboard.parts'
 
 // ── Asset Row ──

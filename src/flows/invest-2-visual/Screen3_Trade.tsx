@@ -9,7 +9,7 @@ import { useScreenData } from '@/lib/ScreenDataContext'
 import type { FlowScreenProps } from '@/pages/simulator/flowRegistry'
 import {
   BG, BG_CARD, BORDER, TEXT_PRIMARY, TEXT_TERTIARY, TEXT_MUTED,
-  GREEN, RED, SAFE_TOP, SAFE_BOTTOM,
+  RED, SAFE_TOP, SAFE_BOTTOM,
   fadeUp, glass,
 } from './shared/theme'
 import {

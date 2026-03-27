@@ -28,7 +28,7 @@ function pctFromPrice(base: number, target: number): string {
   return `${pct >= 0 ? '+' : ''}${pct.toFixed(1)}%`
 }
 
-function priceToY(base: number, target: number, range: { min: number; max: number }): number {
+function priceToY(_base: number, target: number, range: { min: number; max: number }): number {
   // Map price to y% within chart area (inverted: higher price = lower y)
   const total = range.max - range.min
   if (total <= 0) return 50

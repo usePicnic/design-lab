@@ -15,9 +15,9 @@ export default function Screen({ onNext, onBack, screenTitle, screenDescription 
       <Header title={screenTitle ?? 'New Screen'} onBack={onBack} />
       <Stack>
         {screenDescription ? (
-          <Text variant="body">{screenDescription}</Text>
+          <Text variant="body-md">{screenDescription}</Text>
         ) : (
-          <Text variant="body" color="content-tertiary">No description yet. Edit this screen or update the description in the flow canvas sidebar.</Text>
+          <Text variant="body-md" color="content-tertiary">No description yet. Edit this screen or update the description in the flow canvas sidebar.</Text>
         )}
       </Stack>
       <StickyFooter>

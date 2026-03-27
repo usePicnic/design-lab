@@ -42,6 +42,7 @@ import {
 interface ScreenData {
   assetTicker?: string
   mode?: 'buy' | 'sell'
+  [key: string]: unknown
 }
 
 interface SummaryRow {
@@ -259,17 +260,15 @@ export default function Screen4_Review({
         style={{ paddingBottom: SAFE_BOTTOM }}
       >
         <motion.div
-          ref={trackRef}
+          ref={(el: HTMLDivElement | null) => {
+            (trackRef as React.MutableRefObject<HTMLDivElement | null>).current = el
+            if (el) setTrackWidth(el.offsetWidth)
+          }}
           className="relative rounded-full overflow-hidden"
           style={{
             height: 56,
             ...glass,
             border: `1px solid ${BORDER}`,
-          }}
-          onLayout={() => {
-            if (trackRef.current) {
-              setTrackWidth(trackRef.current.offsetWidth)
-            }
           }}
           {...fadeUp(0.45)}
         >

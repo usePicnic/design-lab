@@ -59,6 +59,7 @@ export default function Screen2_Intro({ onNext, onElementTap }: FlowScreenProps)
 
         <Banner
           variant="neutral"
+          title=""
           description="Investimentos envolvem riscos. Rentabilidade passada não é garantia de resultados futuros."
         />
 

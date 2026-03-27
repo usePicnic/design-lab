@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 import { RiArrowLeftLine, RiInboxLine } from '@remixicon/react'
 import type { FlowScreenProps } from '@/pages/simulator/flowRegistry'
 import {
-  getActiveOrders, getAsset, getAssetColor, formatBRL, formatQuantity,
+  getActiveOrders, getAsset, formatBRL, formatQuantity,
 } from './shared/data'
 import {
   BG, BG_CARD, BORDER, TEXT_PRIMARY, TEXT_SECONDARY, TEXT_TERTIARY,
@@ -130,7 +130,7 @@ export default function Screen7_OpenOrders({ onBack, onElementTap, onNext }: Flo
 
         {/* Order rows */}
         <motion.div variants={listContainer} initial="hidden" animate="visible" className="flex flex-col gap-2.5 px-5">
-          {orders.map((order, i) => {
+          {orders.map((order) => {
             const asset = getAsset(order.asset)
             const isTP = order.type === 'take-profit'
             const dotColor = isTP ? GREEN : RED

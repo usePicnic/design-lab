@@ -1,5 +1,6 @@
 // Re-export + extend invest-2 data with visual properties (colors, sparklines)
 export {
+  type Asset,
   type AssetCategory,
   type AssetTicker,
   type Position,

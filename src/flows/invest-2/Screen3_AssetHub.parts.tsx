@@ -171,11 +171,11 @@ const TX_COLOR = {
   yield: 'text-[var(--color-feedback-info)]',
 }
 
-const TX_DOT_BG = {
-  buy: 'bg-[var(--color-feedback-success)]',
-  sell: 'bg-[var(--color-feedback-error)]',
-  yield: 'bg-[var(--color-feedback-info)]',
-}
+// const TX_DOT_BG = {
+//   buy: 'bg-[var(--color-feedback-success)]',
+//   sell: 'bg-[var(--color-feedback-error)]',
+//   yield: 'bg-[var(--color-feedback-info)]',
+// }
 
 export function HistoryTab({ asset }: { asset: Asset }) {
   const transactions = getMockTransactions(asset.ticker)
@@ -206,12 +206,7 @@ export function HistoryTab({ asset }: { asset: Asset }) {
             return (
               <ListItem
                 key={tx.id}
-                title={
-                  <Stack direction="row" gap="sm" align="center">
-                    <span className={`inline-block w-2 h-2 rounded-full ${TX_DOT_BG[tx.type]}`} />
-                    <span>{tx.title}</span>
-                  </Stack>
-                }
+                title={tx.title}
                 subtitle={tx.status === 'processing' ? 'Processando...' : tx.date}
                 left={<Avatar icon={<Icon size={20} />} size="md" />}
                 right={

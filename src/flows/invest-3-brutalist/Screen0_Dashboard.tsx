@@ -12,12 +12,12 @@ import type { FlowScreenProps } from '@/pages/simulator/flowRegistry'
 import { useScreenData } from '@/lib/ScreenDataContext'
 import {
   MOCK_POSITIONS, getAsset, getPortfolioTotal, formatBRL, isVolatile,
-  getAssetColor, getSparkline,
+  getSparkline,
 } from './shared/data'
 import type { AssetTicker } from './shared/data'
 import {
   BG, BG_CARD, BORDER, BORDER_LIGHT, TEXT_PRIMARY, TEXT_SECONDARY,
-  TEXT_TERTIARY, GREEN, ACCENT, fadeUp,
+  TEXT_TERTIARY, fadeUp,
 } from './shared/theme'
 import {
   BrutalistValue, BrutalistAssetRow, BrutalistPillButton, BrutalistGridCard,
@@ -26,6 +26,7 @@ import {
 
 interface DashboardState {
   dashboard?: 'portfolio' | 'empty' | 'first-access'
+  [key: string]: unknown
 }
 
 // ── More Actions Modal (brutalist flat sheet) ──

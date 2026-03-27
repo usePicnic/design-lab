@@ -72,7 +72,7 @@ export default function Screen2_AssetPage({ onNext, onBack, onElementTap }: Flow
   const [activeTab, setActiveTab] = useState(0)
   const [isFav, setIsFav] = useState(() => isFavorite(assetTicker))
   const change = asset.change24h ?? 0
-  const isPositive = change >= 0
+  // const isPositive = change >= 0
 
   // Chart data
   const chartData = useMemo(() => {
@@ -253,7 +253,7 @@ export default function Screen2_AssetPage({ onNext, onBack, onElementTap }: Flow
             variant="area"
             color={palette.bg}
             smooth
-            lineWidth={2.5}
+            lineWidth={2}
             showPriceScale={false}
             showTimeScale={false}
           />

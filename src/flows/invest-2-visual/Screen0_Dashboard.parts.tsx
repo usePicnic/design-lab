@@ -160,7 +160,7 @@ interface FavChipProps {
   onPress?: () => void
 }
 
-export function FavChip({ icon, ticker, change, color, onPress }: FavChipProps) {
+export function FavChip({ icon, ticker, change, onPress }: FavChipProps) {
   const isPositive = change >= 0
 
   return (

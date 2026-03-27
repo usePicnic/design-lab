@@ -31,7 +31,7 @@ function AssetCard({ asset, onPress }: { asset: Asset; onPress: () => void }) {
       <Avatar src={asset.icon} size="md" />
       <Stack gap="none">
         <Text variant="body-sm" className="font-semibold">{asset.name}</Text>
-        <Text variant="body-xs" color="content-secondary">
+        <Text variant="body-sm" color="content-secondary">
           {isVolatile(asset)
             ? formatPercentChange(asset.change24h!)
             : asset.apyDisplay}
@@ -59,7 +59,7 @@ export default function Screen3_Discovery({ onNext, onBack, onElementTap }: Flow
 
   return (
     <BaseLayout>
-      <Header onBack={onBack} />
+      <Header title="" onBack={onBack} />
 
       <Stack gap="default" className="-mt-2">
         <SearchBar

@@ -10,7 +10,7 @@ import {
 } from '@remixicon/react'
 import type { FlowScreenProps } from '@/pages/simulator/flowRegistry'
 import {
-  getMockTransactions, ASSETS, getAsset,
+  getMockTransactions, getAsset,
 } from './shared/data'
 import { getAssetPalette } from './shared/assetPalette'
 import type { AssetTicker, Transaction } from './shared/data'
@@ -57,8 +57,8 @@ TX_TICKERS.forEach(t => { ASSET_NAME_TO_TICKER[getAsset(t).name] = t })
 
 // ── Dropdown Pill Component ──
 
-function FilterPill({ label, value, options, open, onToggle, onSelect }: {
-  label: string
+function FilterPill({ value, options, open, onToggle, onSelect }: {
+  label?: string
   value: string
   options: string[]
   open: boolean
@@ -297,7 +297,7 @@ export default function Screen9_Statement({ onBack, onElementTap, onNext }: Flow
           </motion.div>
         ) : (
           <motion.div variants={listContainer} initial="hidden" animate="visible" className="flex flex-col">
-            {filtered.map((tx, i) => {
+            {filtered.map((tx) => {
               const color = TYPE_COLORS[tx.type] ?? TEXT_SECONDARY
               const typeLabel = TYPE_LABELS[tx.type] ?? tx.type
 

@@ -208,9 +208,9 @@ export function PriceSheet({ open, onClose, title, currentPrice, direction, onCo
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className="absolute bottom-0 left-0 right-0 z-50 flex flex-col"
             style={{
+              ...glass,
               background: BG,
               borderRadius: '24px 24px 0 0',
-              ...glass,
               borderTop: `1px solid ${BORDER}`,
             }}
           >

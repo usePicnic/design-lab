@@ -15,6 +15,7 @@ import { playSuccess } from './shared/sounds'
 
 interface ScreenData {
   assetTicker?: string
+  [key: string]: unknown
 }
 
 // ── Processing steps ──

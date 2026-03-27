@@ -9,7 +9,7 @@ import { useScreenData } from '@/lib/ScreenDataContext'
 import { getAsset } from './shared/data'
 import type { AssetTicker } from './shared/data'
 import { getAssetPalette } from './shared/assetPalette'
-import { BG, TEXT_PRIMARY, TEXT_SECONDARY, TEXT_TERTIARY, BG_GLASS, BORDER } from './shared/theme'
+import { BG, TEXT_PRIMARY, TEXT_TERTIARY, BG_GLASS, BORDER } from './shared/theme'
 import { TokenLogo } from './shared/TokenLogo'
 import { playSuccess } from './shared/sounds'
 
@@ -17,6 +17,7 @@ import { playSuccess } from './shared/sounds'
 
 interface ScreenData {
   assetTicker?: string
+  [key: string]: unknown
 }
 
 // ── Processing steps ──

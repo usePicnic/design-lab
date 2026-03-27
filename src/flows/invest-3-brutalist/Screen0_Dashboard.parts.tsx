@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { RiShieldCheckLine } from '@remixicon/react'
 import {
-  BG_CARD, BORDER, BORDER_LIGHT, TEXT_PRIMARY, TEXT_SECONDARY, TEXT_TERTIARY, TEXT_MUTED, GREEN, RED, ACCENT,
+  BG_CARD, BORDER, BORDER_LIGHT, TEXT_PRIMARY, TEXT_SECONDARY, TEXT_TERTIARY, GREEN, RED, ACCENT,
 } from './shared/theme'
 import { formatBRL, formatPercentChange, formatQuantity, isVolatile, getAsset } from './shared/data'
 import type { AssetTicker } from './shared/data'

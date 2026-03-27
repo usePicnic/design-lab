@@ -7,19 +7,19 @@ import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   RiExchangeLine, RiDownloadLine, RiUploadLine, RiMoreLine,
-  RiFileListLine, RiHistoryLine, RiArrowRightLine, RiCoinLine,
+  RiFileListLine, RiHistoryLine, RiArrowRightLine,
   RiCloseLine, RiLineChartLine,
 } from '@remixicon/react'
 import type { FlowScreenProps } from '@/pages/simulator/flowRegistry'
 import { useScreenData } from '@/lib/ScreenDataContext'
 import {
   MOCK_POSITIONS, getAsset, getPortfolioTotal, getFavoriteAssets,
-  formatBRL, isVolatile, getAssetColor, getSparkline, ASSETS,
+  formatBRL, isVolatile, getAssetColor, getSparkline,
 } from './shared/data'
 import type { AssetTicker } from './shared/data'
 import {
-  BG, BG_CARD, BORDER, BORDER_LIGHT, TEXT_PRIMARY, TEXT_SECONDARY,
-  TEXT_TERTIARY, TEXT_MUTED, GREEN, fadeUp, glowBg, glass,
+  BG, BG_CARD, BORDER, TEXT_PRIMARY, TEXT_SECONDARY,
+  TEXT_TERTIARY, GREEN, fadeUp, glowBg, glass,
 } from './shared/theme'
 import investHeroBg from '@/assets/images/invest-header-bg.jpg'
 import {
@@ -29,6 +29,7 @@ import {
 
 interface DashboardState {
   dashboard?: 'portfolio' | 'empty' | 'first-access'
+  [key: string]: unknown
 }
 
 // Generate deterministic portfolio chart points

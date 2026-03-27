@@ -11,7 +11,7 @@ import {
 } from './shared/theme'
 import { listItem, starMorph } from './shared/animations'
 import { formatBRL, formatPercentChange, isVolatile } from './shared/data'
-import type { Asset } from '../../invest-2/shared/data'
+import type { Asset } from './shared/data'
 import { Sparkline } from './Screen0_Dashboard.parts'
 
 // ── Asset Row ──
@@ -26,7 +26,7 @@ interface AssetRowProps {
   onFavToggle?: () => void
 }
 
-export function AssetRow({ asset, color, sparkline, showFav, isFav, onPress, onFavToggle }: AssetRowProps) {
+export function AssetRow({ asset, sparkline, showFav, isFav, onPress, onFavToggle }: AssetRowProps) {
   const volatile = isVolatile(asset)
   const change = asset.change24h ?? 0
   const isPositive = change >= 0

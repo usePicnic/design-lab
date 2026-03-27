@@ -11,7 +11,7 @@ import {
 } from '@remixicon/react'
 import type { FlowScreenProps } from '@/pages/simulator/flowRegistry'
 import {
-  BG, BG_CARD, BG_GLASS, BORDER, TEXT_PRIMARY, TEXT_SECONDARY, TEXT_TERTIARY,
+  BG, BG_CARD, BORDER, TEXT_PRIMARY, TEXT_SECONDARY, TEXT_TERTIARY,
   TEXT_MUTED, GREEN, SAFE_TOP, SAFE_BOTTOM, fadeUp, glass,
 } from '../shared/theme'
 import { dropdownContainer, dropdownItem, stagger } from '../shared/animations'

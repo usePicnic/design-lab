@@ -346,7 +346,7 @@ export default function LineChart({
         crosshairMarkerRadius: 6,
         crosshairMarkerBackgroundColor: dark ? lineColor : '#000000',
         crosshairMarkerBorderColor: dark ? '#0a0a0f' : '#FFFFFF',
-        crosshairMarkerBorderWidth: 2,
+        // crosshairMarkerBorderWidth: 2, // Not available in this version of lightweight-charts
       })
       series.setData(timestamps)
     } else {

@@ -11,7 +11,6 @@ import {
   formatBRL, formatPercentChange,
 } from './shared/data'
 import { getAssetPalette } from './shared/assetPalette'
-import type { AssetTicker } from './shared/data'
 import {
   BG, BG_CARD, BORDER_LIGHT, TEXT_PRIMARY, TEXT_SECONDARY, TEXT_TERTIARY,
   GREEN, RED, SAFE_TOP, SAFE_BOTTOM, fadeUp,

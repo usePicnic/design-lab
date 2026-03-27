@@ -10,11 +10,11 @@ import { useScreenData } from '@/lib/ScreenDataContext'
 import type { FlowScreenProps } from '@/pages/simulator/flowRegistry'
 import {
   BG, BG_CARD, BORDER, TEXT_PRIMARY, TEXT_TERTIARY, TEXT_MUTED,
-  RED, SAFE_TOP, SAFE_BOTTOM,
+  SAFE_TOP, SAFE_BOTTOM,
   fadeUp,
 } from './shared/theme'
 import {
-  getAsset, getAssetColor, isVolatile, formatBRL,
+  getAsset, isVolatile, formatBRL,
 } from './shared/data'
 import type { AssetTicker } from './shared/data'
 
@@ -127,7 +127,6 @@ export default function Screen3_Trade({ onNext, onBack, onElementTap }: FlowScre
   }>()
 
   const asset = getAsset(assetTicker)
-  const color = getAssetColor(assetTicker)
   const volatile = isVolatile(asset)
   const isBuy = mode === 'buy'
 

@@ -132,7 +132,7 @@ export default function Screen7_OpenOrders({ onBack, onElementTap, onNext }: Flo
 
         {/* Order rows */}
         <motion.div variants={listContainer} initial="hidden" animate="visible" className="flex flex-col gap-2.5 px-5">
-          {orders.map((order, i) => {
+          {orders.map((order) => {
             const asset = getAsset(order.asset)
             const isTP = order.type === 'take-profit'
             const dotColor = isTP ? GREEN : RED

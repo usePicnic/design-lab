@@ -9,7 +9,6 @@ import type { FlowScreenProps } from '@/pages/simulator/flowRegistry'
 import { useScreenData } from '@/lib/ScreenDataContext'
 import {
   getAsset,
-  getAssetColor,
   isVolatile,
   formatBRL,
   formatQuantity,
@@ -34,6 +33,7 @@ import { playSuccess } from './shared/sounds'
 interface ScreenData {
   assetTicker?: string
   mode?: 'buy' | 'sell'
+  [key: string]: unknown
 }
 
 // ── Component ──
@@ -44,7 +44,6 @@ export default function Screen6_Success({
 }: FlowScreenProps) {
   const { assetTicker = 'BTC', mode = 'buy' } = useScreenData<ScreenData>()
   const asset = getAsset(assetTicker as AssetTicker)
-  const _color = getAssetColor(assetTicker)
   const volatile = isVolatile(asset)
   const isBuy = mode === 'buy'
 

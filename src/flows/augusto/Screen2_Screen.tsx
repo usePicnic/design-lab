@@ -29,7 +29,7 @@ export default function Screen({ onBack, onNext, onElementTap }: FlowScreenProps
     >
       <Stack>
         <Text variant="heading-lg">Maria Clara</Text>
-        <Text variant="body" color="content-secondary">
+        <Text variant="body-md" color="content-secondary">
           26 anos · São Paulo, SP
         </Text>
       </Stack>
@@ -71,7 +71,7 @@ export default function Screen({ onBack, onNext, onElementTap }: FlowScreenProps
       {/* Confirm date */}
       <BottomSheet open={dateSheet} onClose={() => setDateSheet(false)} title="Começar a namorar?">
         <Stack>
-          <Text variant="body" color="content-secondary">
+          <Text variant="body-md" color="content-secondary">
             Você e Maria Clara vão iniciar um relacionamento. Tem certeza?
           </Text>
           <Button variant="primary" fullWidth onPress={() => {
@@ -87,7 +87,7 @@ export default function Screen({ onBack, onNext, onElementTap }: FlowScreenProps
       {/* Confirm delete */}
       <BottomSheet open={deleteSheet} onClose={() => setDeleteSheet(false)} title="Remover candidata?">
         <Stack>
-          <Text variant="body" color="content-secondary">
+          <Text variant="body-md" color="content-secondary">
             Maria Clara será removida da sua lista. Essa ação não pode ser desfeita.
           </Text>
           <Button variant="primary" fullWidth onPress={() => {

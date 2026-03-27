@@ -16,7 +16,7 @@ import {
 } from './shared/data'
 import type { AssetCategory } from './shared/data'
 import {
-  BG, BG_CARD, BORDER, BORDER_LIGHT, TEXT_PRIMARY, TEXT_SECONDARY, TEXT_TERTIARY,
+  BG, BG_CARD, BORDER, TEXT_PRIMARY, TEXT_SECONDARY, TEXT_TERTIARY,
   fadeUp,
 } from './shared/theme'
 import { AssetRow, FeaturedCard, CategoryPill, FavChip } from './Screen1_Discover.parts'
