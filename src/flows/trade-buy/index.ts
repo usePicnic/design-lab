@@ -7,6 +7,7 @@ import { registerPage } from '@/pages/gallery/pageRegistry'
 import { bootstrapFlowGraph } from '@/pages/simulator/flowGraphStore'
 import { createGroup, assignFlowToGroup, getGroupsForDomain } from '@/pages/simulator/flowGroupStore'
 import type { FlowNodeData } from '@/pages/simulator/flowGraph.types'
+import type { PageStateDefinition } from '@/pages/gallery/pageRegistry'
 
 import Screen1_Trade from './Screen1_Trade'
 import Screen2_Review from './Screen2_Review'
@@ -73,7 +74,7 @@ const seen = new Set<string>()
 for (const s of screenDefs) {
   if (seen.has(s.id)) continue
   seen.add(s.id)
-  const states = 'states' in s && Array.isArray(s.states) ? s.states : undefined
+  const states = 'states' in s && Array.isArray(s.states) ? s.states as PageStateDefinition[] : undefined
   registerPage({
     id: s.id,
     name: s.title,

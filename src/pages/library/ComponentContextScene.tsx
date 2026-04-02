@@ -1,41 +1,13 @@
 import { type ReactNode } from 'react'
 import type { ComponentMeta } from '../../library/registry'
 import { LayoutProvider } from '../../library/layout/LayoutProvider'
-import Header from '../../library/navigation/Header'
-import Skeleton from '../../library/feedback/Skeleton'
-import Button from '../../library/inputs/Button'
-import TextInput from '../../library/inputs/TextInput'
-import Toggle from '../../library/inputs/Toggle'
-import Card from '../../library/display/Card'
-import Badge from '../../library/display/Badge'
 import ListItem from '../../library/display/ListItem'
-import DataList from '../../library/display/DataList'
 import Toast from '../../library/feedback/Toast'
 import Text from '../../library/foundations/Text'
-import ProgressBar from '../../library/display/ProgressBar'
-import Amount from '../../library/display/Amount'
 import Avatar from '../../library/display/Avatar'
-import Tag from '../../library/display/Tag'
-import Select from '../../library/inputs/Select'
-import Checkbox from '../../library/inputs/Checkbox'
-import SearchBar from '../../library/inputs/SearchBar'
-import Slider from '../../library/inputs/Slider'
-import IconButton from '../../library/inputs/IconButton'
-import ShortcutButton from '../../library/inputs/ShortcutButton'
-import RadioGroup from '../../library/inputs/RadioGroup'
-import Summary from '../../library/display/Summary'
-import Banner from '../../library/display/Banner'
-import EmptyState from '../../library/feedback/EmptyState'
 import LoadingSpinner from '../../library/feedback/LoadingSpinner'
-import Tooltip from '../../library/feedback/Tooltip'
-import GroupHeader from '../../library/navigation/GroupHeader'
-import Subheader from '../../library/navigation/Subheader'
 import TabBar from '../../library/navigation/TabBar'
-import Breadcrumb from '../../library/navigation/Breadcrumb'
-import BaseLayout from '../../library/layout/BaseLayout'
-import Stack from '../../library/layout/Stack'
-import Section from '../../library/layout/Section'
-import { RiHomeLine, RiWalletLine, RiUserLine, RiSettingsLine, RiSendPlaneLine, RiAddLine, RiInformationLine } from '@remixicon/react'
+import { RiHomeLine, RiWalletLine, RiUserLine, RiSendPlaneLine, RiAddLine, RiInformationLine } from '@remixicon/react'
 
 interface Props {
   meta: ComponentMeta
@@ -100,19 +72,6 @@ function Scene({ children }: { children: ReactNode }) {
         <div className="flex-1 px-[var(--token-spacing-6)] pt-[var(--token-spacing-4)] pb-[48px] flex flex-col gap-[var(--token-spacing-6)]">
           <SkeletonHeader />
           {children}
-        </div>
-      </div>
-    </LayoutProvider>
-  )
-}
-
-function NavScene({ children, content }: { children: ReactNode; content?: ReactNode }) {
-  return (
-    <LayoutProvider isDesktop={false}>
-      <div className="bg-surface-primary min-h-full flex flex-col relative" style={{ paddingTop: 'var(--safe-area-top, 62px)', color: '#171717', '--color-content-primary': '#171717' } as React.CSSProperties}>
-        {children}
-        <div className="flex-1 px-[var(--token-spacing-6)] pt-[var(--token-spacing-4)] pb-[48px] flex flex-col gap-[var(--token-spacing-6)]">
-          {content || <SkeletonLines count={4} />}
         </div>
       </div>
     </LayoutProvider>
@@ -245,9 +204,9 @@ function getScene(meta: ComponentMeta): ReactNode {
     case 'ListItem':
       return (
         <Scene>
-          <C title="Café Starbucks" subtitle="Hoje, 14:30" right={<Text variant="body-sm" color="content-primary">-US$ 5,40</Text>} left={<Avatar size="sm" fallback="CS" />} />
-          <C title="Depósito Pix" subtitle="Ontem" right={<Text variant="body-sm" color="content-primary">+R$ 500,00</Text>} left={<Avatar size="sm" fallback="DP" />} />
-          <C title="Mercado Livre" subtitle="28 mar" right={<Text variant="body-sm" color="content-primary">-US$ 32,00</Text>} left={<Avatar size="sm" fallback="ML" />} />
+          <C title="Café Starbucks" subtitle="Hoje, 14:30" right={<Text variant="body-sm" color="content-primary">-US$ 5,40</Text>} left={<Avatar size="sm" initials="CS" />} />
+          <C title="Depósito Pix" subtitle="Ontem" right={<Text variant="body-sm" color="content-primary">+R$ 500,00</Text>} left={<Avatar size="sm" initials="DP" />} />
+          <C title="Mercado Livre" subtitle="28 mar" right={<Text variant="body-sm" color="content-primary">-US$ 32,00</Text>} left={<Avatar size="sm" initials="ML" />} />
         </Scene>
       )
     case 'Badge':
@@ -262,7 +221,7 @@ function getScene(meta: ComponentMeta): ReactNode {
       return (
         <Scene>
           <div className="flex gap-[12px] items-center">
-            <C size="lg" fallback="JP" />
+            <C size="lg" initials="JP" />
             <div><Text variant="body-md">João Pedro</Text><Text variant="caption" color="content-secondary">joao@email.com</Text></div>
           </div>
           <SkeletonListItems count={2} />
@@ -524,7 +483,7 @@ function getScene(meta: ComponentMeta): ReactNode {
     // ── Fallback ──
     default:
       return (
-        <Scene headerTitle={meta.name}>
+        <Scene>
           <SkeletonLines count={2} />
           <SkeletonCard />
           <SkeletonLines count={1} />

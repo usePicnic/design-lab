@@ -22,25 +22,25 @@ import Button from '@/library/inputs/Button'
 import ShortcutButton from '@/library/inputs/ShortcutButton'
 import {
   ASSETS, MOCK_POSITIONS, getAsset, getPortfolioTotal, getFavoriteAssets,
-  formatBRL, getSparkline,
+  formatBRL,
 } from './shared/data'
 import type { AssetTicker } from './shared/data'
-import { getAssetPalette } from './shared/assetPalette'
+// getAssetPalette used transitively via parts/AssetListItem
 import {
-  BG, BORDER, TEXT_PRIMARY, TEXT_SECONDARY,
+  BG, TEXT_PRIMARY, TEXT_SECONDARY,
   TEXT_TERTIARY, GREEN, RED, fadeUp,
 } from './shared/theme'
 import { buildSmoothPath, formatChartDate } from './shared/chartUtils'
 import type { ChartDataPoint } from './shared/chartUtils'
 import investFirstAccessBg from '@/assets/images/invest-first-access.png'
 import {
-  FavoriteCard, Sparkline,
+  FavoriteCard,
   SocialProofCounter,
 } from './Screen0_Dashboard.parts'
 import AssetListItem from './shared/AssetListItem'
 import Subheader from '@/library/navigation/Subheader'
 import Header from '@/library/navigation/Header'
-import Stack from '@/library/layout/Stack'
+// Stack available via library but unused in this screen
 
 interface DashboardState {
   dashboard?: 'portfolio' | 'portfolio-3day' | 'portfolio-new' | 'empty' | 'first-access'
@@ -544,7 +544,7 @@ export default function Screen0_Dashboard({ onNext, onElementTap }: FlowScreenPr
     )
     // First real datapoint is at index 23 (day user started investing)
     const investStartValue = data7d[23].value
-    const last7d = data7d[data7d.length - 1].value
+    const _last7d = data7d[data7d.length - 1].value
 
     // Scrub interaction (same pattern as portfolio)
     const chart7dRef = useRef<SVGSVGElement>(null)

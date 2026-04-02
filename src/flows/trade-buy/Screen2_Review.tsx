@@ -13,7 +13,7 @@ import Button from '@/library/inputs/Button'
 import DataList from '@/library/display/DataList'
 import GroupHeader from '@/library/navigation/GroupHeader'
 import Banner from '@/library/display/Banner'
-import Text from '@/library/foundations/Text'
+// Text available via library but unused in this screen
 import {
   getAsset, isVolatile, formatUSD, formatQuantity,
 } from '../invest-2-light/shared/data'
@@ -28,6 +28,7 @@ interface ScreenData {
   payWith?: AssetTicker
   tpPrice?: number
   slPrice?: number
+  [key: string]: unknown
 }
 
 export default function Screen4_Review({ onNext, onBack, onElementTap }: FlowScreenProps) {

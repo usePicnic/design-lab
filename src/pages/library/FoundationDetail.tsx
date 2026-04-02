@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { colors, spacing, spacingNamed, typography, radii } from '../../tokens'
+import { colors, typography, radii } from '../../tokens'
 import {
   RiHomeLine, RiSearchLine, RiSettingsLine, RiUserLine, RiNotificationLine,
   RiArrowLeftLine, RiArrowRightLine, RiCheckLine, RiCloseLine, RiAddLine,

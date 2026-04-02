@@ -18,7 +18,7 @@ import CurrencyInput from '@/library/inputs/CurrencyInput'
 import Divider from '@/library/foundations/Divider'
 import ListItem from '@/library/display/ListItem'
 import DataList from '@/library/display/DataList'
-import Text from '@/library/foundations/Text'
+// Text available via library but unused in this screen
 import { DataListSkeleton } from '@/library/feedback/Skeleton'
 import {
   getAsset, isVolatile, formatUSD, rawDigitsFromAmount,
@@ -172,8 +172,6 @@ export default function Screen3_Sell({ onNext, onBack, onElementTap, onStateChan
     return () => { if (timerRef.current) clearTimeout(timerRef.current) }
   }, [isValid, exceedsBalance, cryptoAmount])
 
-  const balanceLabel = `${cryptoBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 6 })} ${assetTicker}`
-
   const summaryData = [
     { label: 'Preço atual', value: formatUSD(currentPrice) },
     {
@@ -187,7 +185,7 @@ export default function Screen3_Sell({ onNext, onBack, onElementTap, onStateChan
 
   return (
     <BaseLayout>
-      <Header onClose={onBack} />
+      <Header title="" onClose={onBack} />
 
       <Section>
         <Stack gap="none">

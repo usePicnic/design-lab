@@ -58,7 +58,7 @@ function OrderAvatar({ order }: { order: Order }) {
   )
 }
 
-export default function Screen7_OpenOrders({ onBack, onElementTap, onNext }: FlowScreenProps) {
+export default function Screen7_OpenOrders({ onBack }: FlowScreenProps) {
   const [cancelledIds, setCancelledIds] = useState<Set<string>>(new Set())
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
   const [toastVisible, setToastVisible] = useState(false)

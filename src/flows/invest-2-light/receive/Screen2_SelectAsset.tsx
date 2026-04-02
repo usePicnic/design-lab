@@ -35,7 +35,7 @@ export default function Screen2_SelectAsset({ onNext, onBack, onElementTap }: Fl
   return (
     <BaseLayout>
       <Header title="Selecione a criptomoeda" description={`Escolha entre ${ASSETS.filter(a => a.category !== 'fixed-income').length} criptomoedas disponíveis.`} onBack={onBack} />
-      <SearchBar value={search} onChange={setSearch} placeholder="Pesquise por nome ou ticker..." />
+      <SearchBar value={search} onChange={(e) => setSearch((e.target as HTMLInputElement).value)} placeholder="Pesquise por nome ou ticker..." />
       <div>
         {assets.map(asset => {
           const palette = getAssetPalette(asset.ticker)

@@ -49,10 +49,10 @@ export default function Screen3_Trade({ onNext, onBack, onElementTap, onStateCha
   // Amount state — two fields, one drives the other
   const [usdAmount, setUsdAmount] = useState('')
   const [cryptoAmount, setCryptoAmount] = useState('')
-  const [activeField, setActiveField] = useState<ActiveField>('usd')
+  const [, setActiveField] = useState<ActiveField>('usd')
 
   const parsedUsd = parseInt(usdAmount || '0', 10) / 100
-  const parsedCrypto = parseInt(cryptoAmount || '0', 10) / Math.pow(10, CRYPTO_DECIMALS)
+  const _parsedCrypto = parseInt(cryptoAmount || '0', 10) / Math.pow(10, CRYPTO_DECIMALS)
   const isValid = parsedUsd >= 1
   const exceedsBalance = parsedUsd > MOCK_CARD_BALANCE
 
@@ -139,7 +139,7 @@ export default function Screen3_Trade({ onNext, onBack, onElementTap, onStateCha
 
   return (
     <BaseLayout>
-      <Header onClose={onBack} />
+      <Header title="" onClose={onBack} />
 
       <Stack gap="none">
         <CurrencyInput
