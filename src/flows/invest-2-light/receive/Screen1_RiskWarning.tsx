@@ -68,10 +68,10 @@ export default function Screen1_RiskWarning({ onNext, onBack, onElementTap }: Fl
           <button
             type="button"
             onClick={() => setAccepted(!accepted)}
-            className="flex items-center gap-3 cursor-pointer bg-transparent border-none p-0 text-left"
+            className="flex items-start gap-3 cursor-pointer bg-transparent border-none p-0 text-left"
           >
             <Checkbox checked={accepted} onChange={setAccepted} />
-            <Text variant="body-md" color="content-primary" className="font-medium">
+            <Text variant="body-sm" color="content-primary" className="font-medium">
               Entendo que erros podem resultar em perda total dos ativos e quero continuar
             </Text>
           </button>

@@ -191,36 +191,36 @@ export default function Screen3_Sell({ onNext, onBack, onElementTap, onStateChan
 
       <Section>
         <Stack gap="none">
-          {/* Crypto input (top) — what you're buying */}
+          {/* Crypto input (top) — what you're selling */}
           <CurrencyInput
-            label="Compre"
+            label="Venda"
             value={cryptoAmount}
             onChange={handleCryptoChange}
             tokenIcon={tokenSvg}
             currencySymbol={assetTicker}
             decimals={CRYPTO_DECIMALS}
             secondaryValue={parsedCrypto > 0 ? `≈ ${formatUSD(parsedCrypto * currentPrice)}` : undefined}
+            balance={balanceLabel}
+            onBalanceTap={handleMaxTap}
+            balanceError={exceedsBalance}
           />
 
           <Divider />
 
-          {/* Pay input (bottom) — USD or crypto token */}
+          {/* Receive input (bottom) — USD or crypto token */}
           <CurrencyInput
-            label="Pague"
+            label="Receba"
             value={payAmount}
             onChange={handlePayChange}
             tokenIcon={payTokenSvg ?? USD_FLAG}
             currencySymbol={payWith ?? 'US$'}
             decimals={payWith ? (payAsset?.category === 'stablecoin' ? 2 : CRYPTO_DECIMALS) : 2}
-            balance={payWith && payAsset ? `${(1800).toLocaleString('pt-BR', { minimumFractionDigits: 2 })} ${payWith}` : 'US$ 12.450,00'}
-            onBalanceTap={handleMaxTap}
-            balanceError={exceedsBalance}
           />
         </Stack>
 
-        {/* Payment method */}
+        {/* Receive method */}
         <ListItem
-          title="Meio de pagamento"
+          title="Receber em"
           subtitle={currentPayment.title}
           inverted
           right={
@@ -249,7 +249,7 @@ export default function Screen3_Sell({ onNext, onBack, onElementTap, onStateChan
       </StickyFooter>
 
       {/* Payment method sheet */}
-      <BottomSheet open={paymentSheetOpen} onClose={() => setPaymentSheetOpen(false)} title="Como quer pagar?">
+      <BottomSheet open={paymentSheetOpen} onClose={() => setPaymentSheetOpen(false)} title="Receber em">
         <Stack gap="none">
           {paymentOptions.map(opt => (
             <ListItem

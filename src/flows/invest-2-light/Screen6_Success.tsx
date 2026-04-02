@@ -54,7 +54,7 @@ export default function Screen6_Success({ onBack, onElementTap }: FlowScreenProp
         <GroupHeader text="Resumo da operação" />
         <DataList data={[
           {
-            label: 'Você compra',
+            label: isBuy ? 'Você compra' : 'Você vende',
             value: (
               <span className="inline-flex items-center gap-1.5 font-medium">
                 <TokenLogoCircle ticker={assetTicker} fallbackUrl={asset.icon} size={20} color={palette.bg} />
@@ -63,7 +63,7 @@ export default function Screen6_Success({ onBack, onElementTap }: FlowScreenProp
             ),
           },
           {
-            label: 'Você paga',
+            label: isBuy ? 'Você paga' : 'Você recebe',
             value: payWith && payAsset && payPalette ? (
               <span className="inline-flex items-center gap-1.5 font-medium">
                 <TokenLogoCircle ticker={payWith} fallbackUrl={payAsset.icon} size={20} color={payPalette.bg} />

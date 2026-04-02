@@ -35,14 +35,8 @@ export default function Screen6_Awaiting({ onNext, onBack, onElementTap }: FlowS
   }, [toastVisible])
 
   return (
-    <FeedbackLayout animation={null} onClose={onBack}>
+    <FeedbackLayout animation={null} imageSrc={pendingImg} onClose={onBack}>
       <Stack gap="default">
-        {/* Illustration — cover, fills container width */}
-        <div className="rounded-full overflow-hidden" style={{ width: 240, height: 240 }}>
-          <img src={pendingImg} alt="" className="w-full h-full object-cover" />
-        </div>
-
-        {/* Title + description */}
         <Stack gap="sm">
           <Text variant="display">Estamos processando seu depósito...</Text>
           <Text variant="body-md" color="content-secondary">

@@ -71,7 +71,7 @@ export default function Screen4_Review({ onNext, onBack, onElementTap }: FlowScr
           <GroupHeader text="Detalhes da operação" />
           <DataList data={[
             {
-              label: 'Você compra',
+              label: 'Você vende',
               value: (
                 <span className="inline-flex items-center gap-1.5 font-medium">
                   <TokenLogoCircle ticker={assetTicker} fallbackUrl={asset.icon} size={20} color={palette.bg} />
@@ -80,7 +80,7 @@ export default function Screen4_Review({ onNext, onBack, onElementTap }: FlowScr
               ),
             },
             {
-              label: 'Você paga',
+              label: 'Você recebe',
               value: payWith && payAsset && payPalette ? (
                 <span className="inline-flex items-center gap-1.5 font-medium">
                   <TokenLogoCircle ticker={payWith} fallbackUrl={payAsset.icon} size={20} color={payPalette.bg} />
@@ -102,8 +102,10 @@ export default function Screen4_Review({ onNext, onBack, onElementTap }: FlowScr
 
         <Banner
           variant="neutral"
-          title="O valor final pode variar"
-          description="A ordem será executada ao melhor preço disponível. Para ativos voláteis, o preço final pode diferir ligeiramente do exibido."
+          title={payWith ? `Você receberá em ${payAsset?.name ?? 'criptomoeda'}` : 'Você receberá em Dólar'}
+          description={payWith
+            ? `O valor será creditado em ${payAsset?.name ?? 'USDT'} no seu portfólio de criptomoedas.`
+            : 'O valor será creditado no saldo da sua conta e estará disponível para uso imediato.'}
         />
 
         <StickyFooter>
