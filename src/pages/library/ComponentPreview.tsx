@@ -241,10 +241,11 @@ function ButtonPreview() {
   const [dark, setDark] = useState(false)
 
   const variants = [
-    { key: 'primary',     label: 'Primary' },
-    { key: 'secondary',   label: 'Secondary' },
-    { key: 'minimal',     label: 'Minimal' },
-    { key: 'destructive', label: 'Destructive' },
+    { key: 'primary',           label: 'Primary' },
+    { key: 'secondary',         label: 'Secondary' },
+    { key: 'minimal',           label: 'Minimal' },
+    { key: 'minimal-secondary', label: 'Minimal Secondary' },
+    { key: 'destructive',       label: 'Destructive' },
   ] as const
 
   const sectionLabelCls = cn(
@@ -657,24 +658,24 @@ const avatarGridRows = [
   {
     type: 'Icon',
     cells: {
-      sm: <Avatar badge overlay={overlayImg} />,
-      md: <Avatar badge overlay={overlayImg} />,
+      sm: <Avatar size="sm" badge overlay={overlayImg} />,
+      md: <Avatar size="md" badge overlay={overlayImg} />,
       lg: <Avatar size="lg" badge overlay={overlayImg} />,
     },
   },
   {
     type: 'Image',
     cells: {
-      sm: <Avatar src="https://i.pravatar.cc/80?u=alice" badge overlay={overlayImg} />,
-      md: <Avatar src="https://i.pravatar.cc/80?u=alice" badge overlay={overlayImg} />,
+      sm: <Avatar size="sm" src="https://i.pravatar.cc/80?u=alice" badge overlay={overlayImg} />,
+      md: <Avatar size="md" src="https://i.pravatar.cc/80?u=alice" badge overlay={overlayImg} />,
       lg: <Avatar size="lg" src="https://i.pravatar.cc/80?u=alice" badge overlay={overlayImg} />,
     },
   },
   {
     type: 'Text',
     cells: {
-      sm: <Avatar initials="PN" badge overlay={overlayImg} />,
-      md: <Avatar initials="PN" badge overlay={overlayImg} />,
+      sm: <Avatar size="sm" initials="PN" badge overlay={overlayImg} />,
+      md: <Avatar size="md" initials="PN" badge overlay={overlayImg} />,
       lg: <Avatar size="lg" initials="PN" badge overlay={overlayImg} />,
     },
   },

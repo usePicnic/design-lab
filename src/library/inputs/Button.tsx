@@ -4,7 +4,7 @@ import { RiLoader4Line, RiLoader5Line } from '@remixicon/react'
 import { cn } from '@/lib/cn'
 import { registerComponent } from '../registry'
 
-export type ButtonVariant = 'primary' | 'secondary' | 'minimal' | 'destructive'
+export type ButtonVariant = 'primary' | 'secondary' | 'minimal' | 'minimal-secondary' | 'destructive'
 export type ButtonSize = 'xs' | 'sm' | 'base'
 
 export interface ButtonProps {
@@ -46,26 +46,29 @@ const LOADING_PX: Record<ButtonSize, string> = {
 
 // Background + hover per variant+inverse (only for filled variants)
 const BG: Record<ButtonVariant, Record<'default' | 'inverse', string>> = {
-  primary:     { default: 'bg-[var(--color-action)] hover:bg-[var(--color-action-accent)]', inverse: 'bg-[var(--color-surface-inverse-level-0)] hover:bg-[var(--color-surface-inverse-level-1)]' },
-  secondary:   { default: 'bg-[var(--color-surface-items)] hover:bg-[var(--color-surface-level-1)]', inverse: 'bg-[var(--color-surface-inverse-level-2)] hover:bg-[var(--color-surface-inverse-level-1)]' },
-  minimal:     { default: '', inverse: '' },
+  primary:     { default: 'bg-[var(--color-action)] hover:bg-[var(--color-action-accent)]', inverse: 'bg-[var(--color-action)] hover:bg-[var(--color-action-accent)]' },
+  secondary:   { default: 'bg-[var(--color-surface-level-2)] hover:bg-[var(--color-surface-items)]', inverse: 'bg-[var(--color-surface-inverse-level-2)] hover:bg-[var(--token-neutral-700)]' },
+  minimal:             { default: '', inverse: '' },
+  'minimal-secondary': { default: '', inverse: '' },
   destructive: { default: 'bg-[var(--color-feedback-error)] hover:bg-[var(--color-feedback-error-accent)]', inverse: 'bg-[var(--color-feedback-error)] hover:bg-[var(--color-feedback-error-accent)]' },
 }
 
 // Text color per variant+inverse (active state, not disabled/loading)
 const TEXT: Record<ButtonVariant, Record<'default' | 'inverse', string>> = {
-  primary:     { default: 'text-[var(--color-content-primary)]', inverse: 'text-[var(--color-content-inverse-primary)]' },
+  primary:     { default: 'text-[var(--color-content-primary)]', inverse: 'text-[var(--color-content-primary)]' },
   secondary:   { default: 'text-[var(--color-content-primary)]', inverse: 'text-[var(--color-content-inverse-primary)]' },
-  minimal:     { default: 'text-[var(--color-content-primary)]', inverse: 'text-[var(--color-content-inverse-primary)]' },
-  destructive: { default: 'text-[var(--color-content-inverse-primary)]', inverse: 'text-[var(--color-content-inverse-primary)]' },
+  minimal:             { default: 'text-[var(--color-content-primary)]', inverse: 'text-[var(--color-content-inverse-primary)]' },
+  'minimal-secondary': { default: 'text-[var(--color-content-primary)]', inverse: 'text-[var(--color-content-inverse-primary)]' },
+  destructive:         { default: 'text-[var(--color-content-inverse-primary)]', inverse: 'text-[var(--color-content-inverse-primary)]' },
 }
 
 // Text color when loading
 const LOADING_TEXT: Record<ButtonVariant, Record<'default' | 'inverse', string>> = {
-  primary:     { default: 'text-[var(--color-brand-800)]', inverse: 'text-[var(--color-surface-level-2)]' },
-  secondary:   { default: 'text-[var(--color-content-secondary)]', inverse: 'text-[var(--color-surface-level-2)]' },
-  minimal:     { default: 'text-[var(--color-content-primary)]', inverse: 'text-[var(--color-content-inverse-primary)]' },
-  destructive: { default: 'text-[var(--color-apple-100)]', inverse: 'text-[var(--color-apple-100)]' },
+  primary:             { default: 'text-[var(--color-brand-800)]', inverse: 'text-[var(--color-brand-800)]' },
+  secondary:           { default: 'text-[var(--color-content-secondary)]', inverse: 'text-[var(--color-surface-level-2)]' },
+  minimal:             { default: 'text-[var(--color-content-primary)]', inverse: 'text-[var(--color-content-inverse-primary)]' },
+  'minimal-secondary': { default: 'text-[var(--color-content-primary)]', inverse: 'text-[var(--color-content-inverse-primary)]' },
+  destructive:         { default: 'text-[var(--color-apple-100)]', inverse: 'text-[var(--color-apple-100)]' },
 }
 
 // Icon color (CSS var string) when loading — must match LOADING_TEXT
@@ -73,13 +76,13 @@ function loadingIconColor(variant: ButtonVariant, inverse: boolean): string {
   if (variant === 'primary')     return 'var(--color-brand-800)'
   if (variant === 'secondary')   return 'var(--color-content-secondary)'
   if (variant === 'destructive') return 'var(--color-brand-800)'
-  // minimal: needs inverse treatment since it has no background
   return inverse ? 'var(--color-content-inverse-primary)' : 'var(--color-content-primary)'
 }
 
-// Minimal underline/highlight color
-function minimalUnderline(inverse: boolean): string {
-  return inverse ? 'var(--color-content-tertiary)' : 'var(--color-action)'
+// Minimal underline color per variant
+function minimalUnderline(variant: ButtonVariant, inverse: boolean): string {
+  if (variant === 'minimal-secondary') return inverse ? 'var(--color-content-inverse-primary)' : 'var(--color-content-primary)'
+  return 'var(--color-action)'
 }
 
 function deriveTextId(children: ReactNode): string | undefined {
@@ -91,16 +94,16 @@ function deriveTextId(children: ReactNode): string | undefined {
 // ─── Minimal variant ──────────────────────────────────────────────────────────
 
 function MinimalButton({
-  size, inverse, loading, disabled, fullWidth, children, icon, trailingIcon, onPress, style, className, textId,
+  variant, size, inverse, loading, disabled, fullWidth, children, icon, trailingIcon, onPress, style, className, textId,
 }: {
-  size: ButtonSize; inverse: boolean; loading: boolean; disabled: boolean; fullWidth: boolean
+  variant: ButtonVariant; size: ButtonSize; inverse: boolean; loading: boolean; disabled: boolean; fullWidth: boolean
   children: ReactNode; icon?: ReactNode; trailingIcon?: ReactNode
   onPress?: () => void; style?: React.CSSProperties; className?: string; textId?: string
 }) {
   const s = SIZES[size]
   const ctx = inverse ? 'inverse' : 'default'
-  const textColor = disabled ? 'text-[var(--color-action-disabled)]' : loading ? LOADING_TEXT.minimal[ctx] : TEXT.minimal[ctx]
-  const underline = minimalUnderline(inverse)
+  const textColor = disabled ? 'text-[var(--color-action-disabled)]' : loading ? LOADING_TEXT[variant][ctx] : TEXT[variant][ctx]
+  const underline = minimalUnderline(variant, inverse)
 
   return (
     <motion.button
@@ -123,7 +126,7 @@ function MinimalButton({
       {icon && !loading && <span className="flex-shrink-0">{icon}</span>}
       {loading ? (
         <>
-          <LoadingIcon size={s.iconPx} iconColor={loadingIconColor('minimal', inverse)} />
+          <LoadingIcon size={s.iconPx} iconColor={loadingIconColor(variant, inverse)} />
           <span style={{ borderBottom: `2px solid ${underline}` }} className="inline-flex items-center">
             {children}
           </span>
@@ -164,10 +167,10 @@ export default function Button({
   const isDisabled = disabled || loading
   const textId = deriveTextId(children)
 
-  if (variant === 'minimal') {
+  if (variant === 'minimal' || variant === 'minimal-secondary') {
     return (
       <MinimalButton
-        size={size} inverse={inverse} loading={loading} disabled={disabled} fullWidth={fullWidth}
+        variant={variant} size={size} inverse={inverse} loading={loading} disabled={disabled} fullWidth={fullWidth}
         icon={icon} trailingIcon={trailingIcon} onPress={onPress} style={style} className={className} textId={textId}
       >
         {children}
@@ -240,7 +243,7 @@ registerComponent({
   reviewed: true,
   description: 'Triggers an action. `primary` (green/black) for main CTA, `secondary` (gray) for alternatives, `minimal` (underline) for inline actions, `destructive` for irreversible. Use `inverse` on dark backgrounds.',
   component: Button,
-  variants: ['primary', 'secondary', 'minimal', 'destructive'],
+  variants: ['primary', 'secondary', 'minimal', 'minimal-secondary', 'destructive'],
   sizes: ['xs', 'sm', 'base'],
   props: [
     { name: 'variant', type: '"primary" | "secondary" | "minimal" | "destructive"', required: false, defaultValue: 'primary', description: 'Visual priority' },
