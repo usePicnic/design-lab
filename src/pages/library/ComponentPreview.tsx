@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { cn } from '@/lib/cn'
-import { RiHomeLine, RiWalletLine, RiArrowLeftRightLine, RiLineChartLine, RiUserLine, RiQrCodeLine, RiBankCardLine, RiInboxLine, RiSettings3Line, RiShieldLine, RiStarLine, RiFlashlightLine, RiGlobalLine, RiSendPlaneLine, RiArrowRightUpLine, RiArrowLeftDownLine, RiExternalLinkLine, RiAddLine, RiArrowRightLine, RiInformationLine, RiCheckLine, RiErrorWarningLine, RiAlertLine } from '@remixicon/react'
+import { RiHomeLine, RiWalletLine, RiArrowLeftRightLine, RiLineChartLine, RiUserLine, RiQrCodeLine, RiBankCardLine, RiInboxLine, RiSettings3Line, RiShieldLine, RiStarLine, RiFlashlightLine, RiGlobalLine, RiSendPlaneLine, RiArrowRightUpLine, RiArrowLeftDownLine, RiExternalLinkLine, RiAddLine, RiArrowRightLine, RiInformationLine, RiCheckLine, RiErrorWarningLine, RiAlertLine, RiSearchLine, RiEyeLine } from '@remixicon/react'
 import { tokenIcons } from '../../library/display/tokenIcons'
 import type { ComponentMeta } from '../../library/registry'
 
@@ -336,13 +336,72 @@ function ButtonPreview() {
 }
 
 function TextInputPreview() {
-  const [val, setVal] = useState('')
+  const sectionLabelCls = 'text-[16px] font-semibold leading-[24px] tracking-[-0.01em] w-[160px] shrink-0 pt-[10px] text-[var(--color-content-tertiary)]'
+  const dividerCls = 'border-t border-[var(--color-border)]'
+  const colCls = 'flex flex-col gap-[16px] w-[360px] shrink-0'
+
+  const sections: { label: string; content: ReactNode }[] = [
+    {
+      label: 'Tamanhos',
+      content: (
+        <>
+          <TextInput label="Padrão (48px)" placeholder="Texto aqui..." />
+          <TextInput size="lg" label="Grande (56px)" placeholder="Texto aqui..." />
+        </>
+      ),
+    },
+    {
+      label: 'Rótulo',
+      content: (
+        <>
+          <TextInput label="Só rótulo" placeholder="Valor..." />
+          <TextInput label="Rótulo + dica" hint="Opcional" placeholder="Valor..." />
+        </>
+      ),
+    },
+    {
+      label: 'Ícones',
+      content: (
+        <>
+          <TextInput label="Ícone líder" placeholder="Pesquisar..." leadingIcon={<RiSearchLine size={20} />} />
+          <TextInput label="Ícone após (preenchido)" value="João Silva" trailingIcon={<RiCheckLine size={20} />} />
+          <TextInput label="Senha" type="password" placeholder="••••••••" leadingIcon={<RiUserLine size={20} />} trailingIcon={<RiEyeLine size={20} />} />
+        </>
+      ),
+    },
+    {
+      label: 'Texto auxiliar',
+      content: (
+        <>
+          <TextInput label="Com ajuda" placeholder="seu@email.com" helperText="Nunca compartilharemos seu e-mail" />
+          <TextInput label="Com erro" value="abc123" error="Formato de e-mail inválido" />
+        </>
+      ),
+    },
+    {
+      label: 'Desabilitado',
+      content: (
+        <>
+          <TextInput label="Campo bloqueado" placeholder="Não editável" disabled />
+          <TextInput label="Bloqueado preenchido" value="valor fixo" disabled />
+        </>
+      ),
+    },
+  ]
+
   return (
-    <div className="flex flex-col gap-[var(--token-gap-lg)] max-w-[360px]">
-      <TextInput label="Full name" placeholder="Enter your name" value={val} onChange={setVal} />
-      <TextInput label="Email" placeholder="you@email.com" helperText="We'll never share your email" prefix={<span>@</span>} />
-      <TextInput label="Amount" error="Minimum deposit is R$ 10.00" value="5" suffix={<span>BRL</span>} />
-      <TextInput label="Disabled" placeholder="Can't edit" disabled />
+    <div className="flex flex-col gap-0">
+      <div className="rounded-[var(--token-radius-lg)] p-5 bg-[var(--color-surface-level-0)] border border-[var(--color-border)] flex flex-col gap-0">
+        {sections.map(({ label, content }, i) => (
+          <div key={label}>
+            {i > 0 && <div className={cn(dividerCls, 'my-8')} />}
+            <div className="flex items-start gap-8 py-[12px]">
+              <p className={sectionLabelCls}>{label}</p>
+              <div className={colCls}>{content}</div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

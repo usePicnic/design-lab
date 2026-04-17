@@ -12,7 +12,7 @@ export { default as Slider } from './Slider'
 export { default as RadioGroup } from './RadioGroup'
 
 export type { ButtonProps } from './Button'
-export type { TextInputProps } from './TextInput'
+export type { TextInputProps, TextInputSize } from './TextInput'
 export type { CurrencyInputProps } from './CurrencyInput'
 export type { PinInputProps } from './PinInput'
 export type { CheckboxProps } from './Checkbox'

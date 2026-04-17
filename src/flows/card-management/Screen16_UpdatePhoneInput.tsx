@@ -23,7 +23,7 @@ export default function Screen16_UpdatePhoneInput({ onBack, onNext, onElementTap
           label="Novo telefone"
           value={phone}
           onChange={(v) => setPhone(v)}
-          prefix="+55"
+          leadingIcon={<span className="text-[var(--color-content-secondary)] text-[length:var(--token-font-size-body-md)]">+55</span>}
           helperText="Informe o DDD + número"
         />
       </Stack>

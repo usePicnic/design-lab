@@ -5,7 +5,7 @@ import ListItem from '../../library/display/ListItem'
 import Text from '../../library/foundations/Text'
 import Avatar from '../../library/display/Avatar'
 import LoadingSpinner from '../../library/feedback/LoadingSpinner'
-import { RiHomeLine, RiWalletLine, RiUserLine, RiSendPlaneLine, RiAddLine } from '@remixicon/react'
+import { RiHomeLine, RiWalletLine, RiUserLine, RiSendPlaneLine, RiAddLine, RiSearchLine } from '@remixicon/react'
 
 interface Props {
   meta: ComponentMeta
@@ -97,9 +97,8 @@ function getScene(meta: ComponentMeta): ReactNode {
     case 'TextInput':
       return (
         <Scene>
-          <SkeletonLines count={1} />
-          <C label="Email" placeholder="seu@email.com" />
           <C label="Nome completo" placeholder="João Silva" />
+          <C label="Email" hint="Obrigatório" placeholder="seu@email.com" leadingIcon={<RiSearchLine size={20} />} helperText="Usado para login" />
           <Bar width="100%" height="44px" />
         </Scene>
       )
