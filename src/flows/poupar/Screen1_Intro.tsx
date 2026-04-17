@@ -4,7 +4,7 @@ import StickyFooter from '../../library/layout/StickyFooter'
 import Stack from '../../library/layout/Stack'
 import Button from '../../library/inputs/Button'
 import Text from '../../library/foundations/Text'
-import Badge from '../../library/display/Badge'
+import Badge from '../../library/display/Chip'
 import Summary from '../../library/display/Summary'
 import GroupHeader from '../../library/navigation/GroupHeader'
 import { RiExchangeDollarLine, RiTimeLine, RiShieldCheckLine, RiFlashlightFill } from '@remixicon/react'
@@ -20,9 +20,9 @@ export default function Screen1_Intro({ onNext, onBack, onElementTap }: FlowScre
     <FeatureLayout
       imageSrc={savingsPiggy}
       imageAlt="Piggy bank savings"
-      imageOverlay={<Badge variant="lime" size="md" icon={<RiFlashlightFill size={16} />}>Novidade</Badge>}
+      imageOverlay={<Badge variant="positive" icon={<RiFlashlightFill size={16} />}>Novidade</Badge>}
       onClose={() => {
-        const handled = onElementTap?.('IconButton: Fechar')
+        const handled = onElementTap?.('Avatar: Fechar')
         if (!handled) onBack?.()
       }}
     >

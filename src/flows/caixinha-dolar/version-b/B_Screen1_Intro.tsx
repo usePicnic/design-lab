@@ -5,8 +5,8 @@ import StickyFooter from '../../../library/layout/StickyFooter'
 import Stack from '../../../library/layout/Stack'
 import Button from '../../../library/inputs/Button'
 import Text from '../../../library/foundations/Text'
-import Badge from '../../../library/display/Badge'
-import Banner from '../../../library/display/Banner'
+import Badge from '../../../library/display/Chip'
+import Alert from '../../../library/display/Alert'
 import Summary from '../../../library/display/Summary'
 
 import { TAX_DESCRIPTION } from '../shared/data'
@@ -17,7 +17,7 @@ export default function B_Screen1_Intro({ onNext, onBack }: FlowScreenProps) {
       imageSrc="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&q=80"
       imageAlt="Dollar bills representing savings"
       onClose={onBack}
-      imageOverlay={<Badge variant="lime" size="md">5% a.a.</Badge>}
+      imageOverlay={<Badge variant="positive">5% a.a.</Badge>}
     >
       <Stack gap="sm">
         <Text variant="display">Caixinha do Dólar</Text>
@@ -51,7 +51,7 @@ export default function B_Screen1_Intro({ onNext, onBack }: FlowScreenProps) {
         ]}
       />
 
-      <Banner
+      <Alert
         variant="neutral"
         title="Informações fiscais"
         description={TAX_DESCRIPTION}

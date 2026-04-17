@@ -5,9 +5,9 @@ import BaseLayout from '../../../library/layout/BaseLayout'
 import Stack from '../../../library/layout/Stack'
 import ShortcutButton from '../../../library/inputs/ShortcutButton'
 import Amount from '../../../library/display/Amount'
-import Badge from '../../../library/display/Badge'
+import Badge from '../../../library/display/Chip'
 import DataList from '../../../library/display/DataList'
-import Banner from '../../../library/display/Banner'
+import Alert from '../../../library/display/Alert'
 import ProgressBar from '../../../library/display/ProgressBar'
 import LineChart from '../../../library/display/LineChart'
 import Text from '../../../library/foundations/Text'
@@ -28,7 +28,7 @@ export default function D_Screen4_CaixinhaDetail({ onNext, onBack, onElementTap 
         {/* Hero */}
         <Stack gap="sm" align="center">
           <span style={{ fontSize: 40 }}>{caixinha.emoji}</span>
-          <Badge variant="lime" size="sm">5% a.a.</Badge>
+          <Badge variant="positive">5% a.a.</Badge>
           <Amount value={caixinha.balance} currency="US$" size="lg" />
           <Text variant="caption" className="text-[#22c55e]">
             +{formatUsd(caixinha.yieldToday)} hoje
@@ -86,7 +86,7 @@ export default function D_Screen4_CaixinhaDetail({ onNext, onBack, onElementTap 
         />
 
         {/* Tax */}
-        <Banner
+        <Alert
           variant="neutral"
           title="Informações fiscais"
           description={TAX_DESCRIPTION}

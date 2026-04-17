@@ -16,9 +16,9 @@ import ShortcutButton from '@/library/inputs/ShortcutButton'
 import Text from '@/library/foundations/Text'
 import Divider from '@/library/foundations/Divider'
 import Amount from '@/library/display/Amount'
-import Badge from '@/library/display/Badge'
+import Badge from '@/library/display/Chip'
 import DataList from '@/library/display/DataList'
-import Banner from '@/library/display/Banner'
+import Alert from '@/library/display/Alert'
 import Card from '@/library/display/Card'
 
 import {
@@ -46,7 +46,7 @@ export default function Screen({ onNext, onBack, onElementTap }: FlowScreenProps
             <Stack gap="sm">
               <Stack direction="row" align="between">
                 <Text variant="caption" color="content-secondary">Saldo investido</Text>
-                <Badge variant="success" size="sm">Segurado</Badge>
+                <Badge variant="positive">Segurado</Badge>
               </Stack>
               <Amount value={MOCK_BALANCE} currency="US$" size="lg" />
               <Text variant="caption" className="text-[var(--color-feedback-success)]">
@@ -87,7 +87,7 @@ export default function Screen({ onNext, onBack, onElementTap }: FlowScreenProps
             />
           </Stack>
 
-          <Banner
+          <Alert
             variant="success"
             collapsable
             title="Seus fundos são segurados"
@@ -103,7 +103,7 @@ export default function Screen({ onNext, onBack, onElementTap }: FlowScreenProps
       <Header title="Renda Protegida" onBack={onBack} />
       <Stack gap="default">
         <Stack gap="sm" align="center">
-          <Badge variant="success" size="md">Segurado</Badge>
+          <Badge variant="positive">Segurado</Badge>
           <Text variant="display">~{formatPct(NET_APY)} a.a.</Text>
           <Text variant="body-sm" color="content-secondary">
             sDAI na Gnosis Chain com seguro automático
@@ -138,7 +138,7 @@ export default function Screen({ onNext, onBack, onElementTap }: FlowScreenProps
           />
         </Stack>
 
-        <Banner
+        <Alert
           variant="neutral"
           title="Informação importante"
           description="Rendimentos passados não garantem resultados futuros. O seguro cobre eventos específicos de protocolo, não flutuações de mercado."

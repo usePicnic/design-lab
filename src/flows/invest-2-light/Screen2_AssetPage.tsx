@@ -12,14 +12,13 @@ import LineChart from '@/library/display/LineChart'
 import DataList from '@/library/display/DataList'
 import GroupHeader from '@/library/navigation/GroupHeader'
 import Button from '@/library/inputs/Button'
-import IconButton from '@/library/inputs/IconButton'
+import Avatar from '@/library/display/Avatar'
 import SegmentedControl from '@/library/navigation/SegmentedControl'
 import BottomSheet from '@/library/layout/BottomSheet'
 import ListItem from '@/library/display/ListItem'
-import Avatar from '@/library/display/Avatar'
 import Stack from '@/library/layout/Stack'
 import Text from '@/library/foundations/Text'
-import Badge from '@/library/display/Badge'
+import Badge from '@/library/display/Chip'
 import {
   BG, TEXT_PRIMARY, TEXT_SECONDARY, TEXT_TERTIARY, BORDER_LIGHT,
   GREEN, RED, SAFE_TOP, SAFE_BOTTOM,
@@ -155,13 +154,13 @@ export default function Screen2_AssetPage({ onNext, onBack, onElementTap }: Flow
 
         {/* Top bar — back + favorite */}
         <motion.div className="flex items-center justify-between px-5 pt-2 mb-2" {...fadeUp(0)}>
-          <IconButton
-            variant="base"
+          <Avatar
+           
             icon={<RiArrowLeftLine size={24} className="text-content-primary" />}
             onPress={onBack}
           />
-          <IconButton
-            variant="no_background"
+          <Avatar
+           
             icon={isFav
               ? <RiHeartFill size={24} color="#F43F5E" />
               : <RiHeartLine size={24} className="text-content-tertiary" />
@@ -383,7 +382,7 @@ export default function Screen2_AssetPage({ onNext, onBack, onElementTap }: Flow
                               icon={tx.type === 'buy' || tx.type === 'yield'
                                 ? <RiArrowDownLine size={20} />
                                 : <RiArrowUpLine size={20} />}
-                              size="md"
+                             
                             />
                           }
                           right={
@@ -392,7 +391,7 @@ export default function Screen2_AssetPage({ onNext, onBack, onElementTap }: Flow
                                 {tx.amount}
                               </Text>
                               {tx.status === 'processing' && (
-                                <Badge variant="warning" size="sm">Processando</Badge>
+                                <Badge variant="warning">Processando</Badge>
                               )}
                             </Stack>
                           }
@@ -457,7 +456,7 @@ export default function Screen2_AssetPage({ onNext, onBack, onElementTap }: Flow
         }}
       >
         <Button
-          variant="accent"
+          variant="primary"
           size="lg"
           fullWidth
           onPress={() => {
@@ -502,13 +501,13 @@ export default function Screen2_AssetPage({ onNext, onBack, onElementTap }: Flow
           <ListItem
             title="Depositar cripto"
             subtitle="Enviar ativos de outra carteira"
-            left={<Avatar icon={<RiDownloadLine size={20} />} size="md" />}
+            left={<Avatar icon={<RiDownloadLine size={20} />} />}
             onPress={() => handleMoreAction('Depositar cripto')}
           />
           <ListItem
             title="Sacar cripto"
             subtitle="Enviar para outra carteira"
-            left={<Avatar icon={<RiUploadLine size={20} />} size="md" />}
+            left={<Avatar icon={<RiUploadLine size={20} />} />}
             onPress={() => handleMoreAction('Sacar cripto')}
           />
         </div>

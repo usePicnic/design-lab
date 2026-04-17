@@ -19,7 +19,7 @@ import StickyFooter from '@/library/layout/StickyFooter'
 import Button from '@/library/inputs/Button'
 import Text from '@/library/foundations/Text'
 import Stack from '@/library/layout/Stack'
-import Badge from '@/library/display/Badge'
+import Badge from '@/library/display/Chip'
 import Avatar from '@/library/display/Avatar'
 import ProgressBar from '@/library/display/ProgressBar'
 
@@ -54,7 +54,7 @@ export default function Screen({ onNext, onElementTap }: FlowScreenProps) {
   return (
     <BaseLayout className="!bg-[#FAF7F0] !gap-0">
       {/* ══════ REWARD HERO ══════ */}
-      <div className="-mx-[var(--token-spacing-6)] -mt-[var(--token-spacing-6)] relative overflow-hidden">
+      <div className="-mx-[var(--token-spacing-24)] -mt-[var(--token-spacing-24)] relative overflow-hidden">
         {/* Lime gradient hero */}
         <div className="bg-gradient-to-b from-[#c8f91f] to-[#a8d916] px-[24px] pt-[40px] pb-[32px] text-center relative">
           {/* Decorative circles */}
@@ -113,7 +113,7 @@ export default function Screen({ onNext, onElementTap }: FlowScreenProps) {
         <div className="bg-white rounded-[16px] p-[16px] border border-[var(--color-border-default)]">
           <div className="flex items-center justify-between mb-[8px]">
             <Text variant="body-sm" color="content-secondary">Seus ganhos</Text>
-            <Badge variant="lime" size="sm">Meta: US$ 500</Badge>
+            <Badge variant="positive">Meta: US$ 500</Badge>
           </div>
           <div className="flex items-baseline gap-[4px] mb-[10px]">
             <span className="text-[28px] font-bold text-[var(--color-content-primary)] leading-none">US$ 30</span>
@@ -138,7 +138,7 @@ export default function Screen({ onNext, onElementTap }: FlowScreenProps) {
 
         {/* ── 3 Steps ── */}
         <div>
-          <Text variant="heading-sm" className="mb-[12px]">Como funciona</Text>
+          <Text variant="h3" className="mb-[12px]">Como funciona</Text>
           <div className="flex flex-col gap-[0px]">
             {steps.map((step, i) => (
               <div key={step.num} className="flex gap-[14px]">
@@ -165,7 +165,7 @@ export default function Screen({ onNext, onElementTap }: FlowScreenProps) {
         <div className="flex items-center gap-[10px] bg-white rounded-[12px] p-[14px] border border-[var(--color-border-default)]">
           <div className="flex -space-x-2 shrink-0">
             {['Ana', 'Pedro', 'Carla', 'Lucas'].map((name) => (
-              <Avatar key={name} initials={name.slice(0, 2)} size="sm" />
+              <Avatar key={name} initials={name.slice(0, 2)} />
             ))}
           </div>
           <Text variant="body-sm" color="content-secondary">
@@ -175,7 +175,7 @@ export default function Screen({ onNext, onElementTap }: FlowScreenProps) {
 
         {/* ── FAQ Accordion ── */}
         <div>
-          <Text variant="heading-sm" className="mb-[12px]">Perguntas frequentes</Text>
+          <Text variant="h3" className="mb-[12px]">Perguntas frequentes</Text>
           <div className="flex flex-col gap-[8px]">
             {faqs.map((faq, i) => (
               <button
@@ -207,7 +207,7 @@ export default function Screen({ onNext, onElementTap }: FlowScreenProps) {
       {/* ══════ STICKY CTA ══════ */}
       <StickyFooter>
         <Stack gap="sm">
-          <Button variant="accent" size="lg" onPress={handleShare} fullWidth>
+          <Button variant="primary" size="lg" onPress={handleShare} fullWidth>
             Compartilhar convite <RiArrowRightLine size={18} className="inline ml-[4px] -mt-[2px]" />
           </Button>
           <Text variant="caption" color="content-tertiary" align="center">

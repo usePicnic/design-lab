@@ -11,7 +11,7 @@ import Stack from '@/library/layout/Stack'
 import Text from '@/library/foundations/Text'
 import DataList from '@/library/display/DataList'
 import GroupHeader from '@/library/navigation/GroupHeader'
-import Badge from '@/library/display/Badge'
+import Badge from '@/library/display/Chip'
 import Tag from '@/library/display/Tag'
 import BottomSheet from '@/library/layout/BottomSheet'
 import Button from '@/library/inputs/Button'
@@ -25,10 +25,10 @@ export default function Screen({ onBack, onNext, onElementTap }: FlowScreenProps
       imageSrc="https://i.pravatar.cc/600?img=5"
       imageMaxHeight={320}
       onClose={onBack}
-      imageOverlay={<Badge variant="success">Ótimo match</Badge>}
+      imageOverlay={<Badge variant="positive">Ótimo match</Badge>}
     >
       <Stack>
-        <Text variant="heading-lg">Maria Clara</Text>
+        <Text variant="h1">Maria Clara</Text>
         <Text variant="body-md" color="content-secondary">
           26 anos · São Paulo, SP
         </Text>
@@ -36,7 +36,7 @@ export default function Screen({ onBack, onNext, onElementTap }: FlowScreenProps
 
       <Stack gap="none">
         <GroupHeader text="Interesses" />
-        <div className="flex flex-wrap gap-[var(--token-spacing-2)] px-[var(--token-spacing-4)] py-[var(--token-spacing-3)]">
+        <div className="flex flex-wrap gap-[var(--token-spacing-8)] px-[var(--token-spacing-16)] py-[var(--token-spacing-12)]">
           <Tag label="Viagens" />
           <Tag label="Culinária japonesa" />
           <Tag label="Fotografia" />
@@ -59,10 +59,10 @@ export default function Screen({ onBack, onNext, onElementTap }: FlowScreenProps
 
       <StickyFooter>
         <Stack gap="sm">
-          <Button variant="accent" fullWidth onPress={() => setDateSheet(true)}>
+          <Button variant="primary" fullWidth onPress={() => setDateSheet(true)}>
             Namorar
           </Button>
-          <Button variant="ghost" fullWidth onPress={() => setDeleteSheet(true)}>
+          <Button variant="minimal" fullWidth onPress={() => setDeleteSheet(true)}>
             Remover da lista
           </Button>
         </Stack>
@@ -74,7 +74,7 @@ export default function Screen({ onBack, onNext, onElementTap }: FlowScreenProps
           <Text variant="body-md" color="content-secondary">
             Você e Maria Clara vão iniciar um relacionamento. Tem certeza?
           </Text>
-          <Button variant="accent" fullWidth onPress={() => {
+          <Button variant="primary" fullWidth onPress={() => {
             setDateSheet(false)
             const handled = onElementTap?.('Button: Confirmar namoro')
             if (!handled) onNext()
@@ -90,7 +90,7 @@ export default function Screen({ onBack, onNext, onElementTap }: FlowScreenProps
           <Text variant="body-md" color="content-secondary">
             Maria Clara será removida da sua lista. Essa ação não pode ser desfeita.
           </Text>
-          <Button variant="accent" fullWidth onPress={() => {
+          <Button variant="primary" fullWidth onPress={() => {
             setDeleteSheet(false)
             const handled = onElementTap?.('Button: Confirmar remoção')
             if (!handled) onNext()

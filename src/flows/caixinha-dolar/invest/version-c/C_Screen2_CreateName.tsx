@@ -23,12 +23,12 @@ export default function C_Screen2_CreateName({ onNext, onBack }: FlowScreenProps
 
       <Stack gap="default">
         <Stack gap="sm">
-          <Text variant="heading-sm">Escolha um ícone</Text>
+          <Text variant="h3">Escolha um ícone</Text>
           <Stack direction="row" gap="sm" className="flex-wrap">
             {EMOJI_OPTIONS.map((emoji) => (
               <Button
                 key={emoji}
-                variant={selectedEmoji === emoji ? 'accent' : 'primary'}
+                variant={selectedEmoji === emoji ? 'primary' : 'secondary'}
                 size="sm"
                 onPress={() => setSelectedEmoji(emoji)}
               >
@@ -41,7 +41,7 @@ export default function C_Screen2_CreateName({ onNext, onBack }: FlowScreenProps
         <Card variant="flat">
           <Stack gap="sm" align="center">
             <span style={{ fontSize: 48 }}>{selectedEmoji}</span>
-            <Text variant="heading-md" align="center">
+            <Text variant="h2" align="center">
               {name || 'Minha Caixinha'}
             </Text>
           </Stack>

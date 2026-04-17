@@ -13,9 +13,9 @@ import CurrencyInput from '../../library/inputs/CurrencyInput'
 import Divider from '../../library/foundations/Divider'
 import ListItem from '../../library/display/ListItem'
 import Avatar from '../../library/display/Avatar'
-import Badge from '../../library/display/Badge'
+import Badge from '../../library/display/Chip'
 import DataList from '../../library/display/DataList'
-import Banner from '../../library/display/Banner'
+import Alert from '../../library/display/Alert'
 import { DataListSkeleton } from '../../library/feedback/Skeleton'
 
 const MOCK_RATE = 5.4583
@@ -112,7 +112,7 @@ export default function Screen1_AmountEntry({ onNext, onBack, onElementTap, onSt
             subtitle={currentMethod.title}
             inverted
             left={null}
-            right={<Button variant="primary" size="sm" onPress={() => setSheetOpen(true)}>Mudar</Button>}
+            right={<Button variant="primary" inverse onPress={() => setSheetOpen(true)}>Mudar</Button>}
             trailing={null}
           />
         </Stack>
@@ -142,7 +142,7 @@ export default function Screen1_AmountEntry({ onNext, onBack, onElementTap, onSt
         )}
 
         <motion.div layout transition={{ duration: 0.3, ease: 'easeOut' }}>
-          <Banner
+          <Alert
             variant="neutral"
             title="Rendimento automático"
             description="Seu dinheiro rende 4.37% ao ano e você resgata quando quiser."
@@ -166,7 +166,7 @@ export default function Screen1_AmountEntry({ onNext, onBack, onElementTap, onSt
               key={m.id}
               title={m.title}
               subtitle={m.blocked ? m.blockedReason : m.subtitle}
-              left={<Avatar src={m.icon} size="md" />}
+              left={<Avatar src={m.icon} />}
               right={m.blocked ? <Badge variant="neutral">Indisponível</Badge> : undefined}
               onPress={m.blocked ? undefined : () => handleSelectMethod(m)}
               disabled={m.blocked}

@@ -5,7 +5,7 @@ import ListItem from '../../library/display/ListItem'
 import Text from '../../library/foundations/Text'
 import Avatar from '../../library/display/Avatar'
 import LoadingSpinner from '../../library/feedback/LoadingSpinner'
-import { RiHomeLine, RiWalletLine, RiUserLine, RiSendPlaneLine, RiAddLine, RiInformationLine } from '@remixicon/react'
+import { RiHomeLine, RiWalletLine, RiUserLine, RiSendPlaneLine, RiAddLine, RiSearchLine } from '@remixicon/react'
 
 interface Props {
   meta: ComponentMeta
@@ -66,8 +66,8 @@ function SkeletonHeader() {
 function Scene({ children }: { children: ReactNode }) {
   return (
     <LayoutProvider isDesktop={false}>
-      <div className="bg-surface-primary min-h-full flex flex-col relative" style={{ paddingTop: 'var(--safe-area-top, 62px)', color: '#171717', '--color-content-primary': '#171717' } as React.CSSProperties}>
-        <div className="flex-1 px-[var(--token-spacing-6)] pt-[var(--token-spacing-4)] pb-[48px] flex flex-col gap-[var(--token-spacing-6)]">
+      <div className="bg-surface-level-0 min-h-full flex flex-col relative" style={{ paddingTop: 'var(--safe-area-top, 62px)', color: '#171717', '--color-content-primary': '#171717' } as React.CSSProperties}>
+        <div className="flex-1 px-[var(--token-spacing-24)] pt-[var(--token-spacing-16)] pb-[48px] flex flex-col gap-[var(--token-spacing-24)]">
           <SkeletonHeader />
           {children}
         </div>
@@ -90,16 +90,15 @@ function getScene(meta: ComponentMeta): ReactNode {
           <SkeletonLines count={2} />
           <SkeletonCard />
           <div className="mt-auto pt-[16px]">
-            <C variant="accent" fullWidth>Confirmar</C>
+            <C variant="primary" fullWidth>Confirmar</C>
           </div>
         </Scene>
       )
     case 'TextInput':
       return (
         <Scene>
-          <SkeletonLines count={1} />
-          <C label="Email" placeholder="seu@email.com" />
           <C label="Nome completo" placeholder="João Silva" />
+          <C label="Email" hint="Obrigatório" placeholder="seu@email.com" leadingIcon={<RiSearchLine size={20} />} helperText="Usado para login" />
           <Bar width="100%" height="44px" />
         </Scene>
       )
@@ -151,17 +150,6 @@ function getScene(meta: ComponentMeta): ReactNode {
           <SkeletonListItems count={3} />
         </Scene>
       )
-    case 'IconButton':
-      return (
-        <Scene>
-          <SkeletonLines count={2} />
-          <div className="flex gap-[12px] justify-center py-[8px]">
-            <C icon={<RiSendPlaneLine size={20} />} />
-            <C icon={<RiAddLine size={20} />} />
-            <C icon={<RiInformationLine size={20} />} />
-          </div>
-        </Scene>
-      )
     case 'ShortcutButton':
       return (
         <Scene>
@@ -194,7 +182,7 @@ function getScene(meta: ComponentMeta): ReactNode {
         <Scene>
           <C variant="elevated">
             <Text variant="body-sm" color="content-secondary">Saldo disponível</Text>
-            <Text variant="heading-md">US$ 2.450,00</Text>
+            <Text variant="h2">US$ 2.450,00</Text>
           </C>
           <SkeletonCard />
         </Scene>
@@ -207,12 +195,20 @@ function getScene(meta: ComponentMeta): ReactNode {
           <C title="Mercado Livre" subtitle="28 mar" right={<Text variant="body-sm" color="content-primary">-US$ 32,00</Text>} left={<Avatar size="sm" initials="ML" />} />
         </Scene>
       )
-    case 'Badge':
+    case 'Badge': // legacy fallback
       return (
         <Scene>
-          <ListItem title="Cartão físico" right={<C variant="success">Ativo</C>} />
+          <ListItem title="Cartão físico" right={<C variant="positive">Ativo</C>} />
           <ListItem title="Verificação" right={<C variant="warning">Pendente</C>} />
-          <ListItem title="Conta virtual" right={<C variant="info">Novo</C>} />
+          <ListItem title="Conta virtual" right={<C variant="neutral">Novo</C>} />
+        </Scene>
+      )
+    case 'Chip':
+      return (
+        <Scene>
+          <ListItem title="Cartão físico" right={<C variant="positive">Ativo</C>} />
+          <ListItem title="Verificação" right={<C variant="warning">Pendente</C>} />
+          <ListItem title="Conta virtual" right={<C variant="neutral">Novo</C>} />
         </Scene>
       )
     case 'Avatar':
@@ -275,7 +271,7 @@ function getScene(meta: ComponentMeta): ReactNode {
           <SkeletonCard />
         </Scene>
       )
-    case 'Banner':
+    case 'Alert':
       return (
         <Scene>
           <C variant="neutral" title="Novidade" description="Agora você pode enviar dólares para outros países." />
@@ -296,7 +292,7 @@ function getScene(meta: ComponentMeta): ReactNode {
         <Scene>
           <SkeletonLines count={2} />
           <SkeletonCard />
-          <C message="Copiado com sucesso!" variant="success" visible />
+          <C message="Copiado com sucesso!" variant="positive" visible />
         </Scene>
       )
     case 'EmptyState':
@@ -350,8 +346,8 @@ function getScene(meta: ComponentMeta): ReactNode {
     case 'TabBar':
       return (
         <LayoutProvider isDesktop={false}>
-          <div className="bg-surface-primary min-h-full flex flex-col" style={{ paddingTop: 'var(--safe-area-top, 62px)' }}>
-            <div className="flex-1 px-[var(--token-spacing-6)] pt-[var(--token-spacing-4)] flex flex-col gap-[var(--token-spacing-6)]">
+          <div className="bg-surface-level-0 min-h-full flex flex-col" style={{ paddingTop: 'var(--safe-area-top, 62px)' }}>
+            <div className="flex-1 px-[var(--token-spacing-24)] pt-[var(--token-spacing-16)] flex flex-col gap-[var(--token-spacing-24)]">
               <SkeletonHeader />
               <SkeletonLines count={4} />
             </div>
@@ -457,7 +453,7 @@ function getScene(meta: ComponentMeta): ReactNode {
     case 'Text':
       return (
         <Scene>
-          <C variant="heading-md">Título principal</C>
+          <C variant="h2">Título principal</C>
           <C variant="body-md" color="content-secondary">Texto de descrição com mais detalhes sobre o conteúdo.</C>
           <C variant="caption" color="content-tertiary">Legenda ou informação secundária</C>
         </Scene>

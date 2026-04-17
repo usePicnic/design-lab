@@ -9,6 +9,7 @@ export interface ComponentMeta {
   variants?: string[]
   sizes?: string[]
   props: PropMeta[]
+  reviewed?: boolean
 }
 
 export interface PropMeta {
@@ -30,7 +31,9 @@ export function getComponent(name: string): ComponentMeta | undefined {
 }
 
 export function getComponentsByCategory(category: ComponentMeta['category']): ComponentMeta[] {
-  return Array.from(registry.values()).filter((c) => c.category === category)
+  return Array.from(registry.values())
+    .filter((c) => c.category === category)
+    .sort((a, b) => a.name.localeCompare(b.name))
 }
 
 export function getAllComponents(): ComponentMeta[] {

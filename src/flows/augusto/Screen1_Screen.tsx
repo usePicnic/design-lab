@@ -10,7 +10,7 @@ import Stack from '@/library/layout/Stack'
 import Text from '@/library/foundations/Text'
 import ListItem from '@/library/display/ListItem'
 import Avatar from '@/library/display/Avatar'
-import Badge from '@/library/display/Badge'
+import Badge from '@/library/display/Chip'
 import GroupHeader from '@/library/navigation/GroupHeader'
 import Button from '@/library/inputs/Button'
 
@@ -52,10 +52,10 @@ const MATCHES = [
   },
 ]
 
-const MATCH_BADGE: Record<string, { label: string; variant: 'success' | 'warning' | 'error' }> = {
-  high: { label: 'Ótimo match', variant: 'success' },
+const MATCH_BADGE: Record<string, { label: string; variant: 'positive' | 'warning' | 'critical' }> = {
+  high: { label: 'Ótimo match', variant: 'positive' },
   medium: { label: 'Match médio', variant: 'warning' },
-  low: { label: 'Match baixo', variant: 'error' },
+  low: { label: 'Match baixo', variant: 'critical' },
 }
 
 export default function Screen({ onNext, onBack, onElementTap }: FlowScreenProps) {
@@ -65,7 +65,7 @@ export default function Screen({ onNext, onBack, onElementTap }: FlowScreenProps
       imageMaxHeight={180}
       imageHeader={
         <Stack gap="sm">
-          <Text variant="heading-lg" color="content-inverse">Namoradas do Augusto</Text>
+          <Text variant="h1" color="content-inverse">Namoradas do Augusto</Text>
           <Text variant="body-md" color="content-inverse">Encontre o match perfeito</Text>
         </Stack>
       }
@@ -80,8 +80,8 @@ export default function Screen({ onNext, onBack, onElementTap }: FlowScreenProps
               key={person.id}
               title={person.name}
               subtitle={person.desc}
-              left={<Avatar src={person.avatar} size="md" />}
-              right={<Badge variant={badge.variant} size="sm">{badge.label}</Badge>}
+              left={<Avatar src={person.avatar} />}
+              right={<Badge variant={badge.variant}>{badge.label}</Badge>}
               onPress={() => {
                 const handled = onElementTap?.(`ListItem: ${person.name}`)
                 if (!handled) onNext()
@@ -92,7 +92,7 @@ export default function Screen({ onNext, onBack, onElementTap }: FlowScreenProps
       </Stack>
 
       <StickyFooter>
-        <Button variant="primary" fullWidth onPress={() => {
+        <Button variant="primary" inverse fullWidth onPress={() => {
           const handled = onElementTap?.('Button: Adicionar')
           if (!handled) onNext()
         }}>

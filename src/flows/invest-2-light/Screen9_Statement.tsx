@@ -16,7 +16,7 @@ import { TokenLogoCircle } from './shared/TokenLogo'
 import Header from '@/library/navigation/Header'
 import GroupHeader from '@/library/navigation/GroupHeader'
 import ListItem from '@/library/display/ListItem'
-import IconButton from '@/library/inputs/IconButton'
+import Avatar from '@/library/display/Avatar'
 import Stack from '@/library/layout/Stack'
 
 // ── Overlay badge config ──
@@ -71,8 +71,8 @@ export default function Screen9_Statement({ onBack, onElementTap, onNext }: Flow
           description="Histórico de todas as suas operações de investimento."
           onBack={onBack}
           rightAction={
-            <IconButton
-              variant="base"
+            <Avatar
+             
               icon={<RiDownloadCloud2Line size={22} className="text-content-primary" />}
               onPress={handleExport}
             />
@@ -83,13 +83,13 @@ export default function Screen9_Statement({ onBack, onElementTap, onNext }: Flow
         <div className="full-bleed mt-4">
           {dateGroups.map(group => (
             <Stack gap="none" key={group.date}>
-              <GroupHeader text={group.date} className="px-[var(--token-spacing-6)]" />
+              <GroupHeader text={group.date} className="px-[var(--token-spacing-24)]" />
               {group.transactions.map(tx => (
                 <ListItem
                   key={tx.id}
                   title={tx.title}
                   subtitle={tx.subtitle}
-                  className="[--token-font-size-body-lg:16px] px-[var(--token-spacing-6)]"
+                  className="[--token-font-size-body-lg:16px] px-[var(--token-spacing-24)]"
                   left={<TxAvatar type={tx.type} asset={tx.asset} />}
                   trailing={null}
                 />

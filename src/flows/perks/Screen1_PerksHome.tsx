@@ -4,10 +4,10 @@ import FeatureLayout from '../../library/layout/FeatureLayout'
 import StickyFooter from '../../library/layout/StickyFooter'
 import Stack from '../../library/layout/Stack'
 import Text from '../../library/foundations/Text'
-import Badge from '../../library/display/Badge'
+import Badge from '../../library/display/Chip'
 import Button from '../../library/inputs/Button'
 import Summary from '../../library/display/Summary'
-import Banner from '../../library/display/Banner'
+import Alert from '../../library/display/Alert'
 
 export default function Screen1_PerksHome({ onNext, onBack }: FlowScreenProps) {
   return (
@@ -16,7 +16,7 @@ export default function Screen1_PerksHome({ onNext, onBack }: FlowScreenProps) {
       imageAlt="Picnic benefits"
       onClose={onBack}
       imageOverlay={
-        <Badge variant="lime" icon={<RiSparklingLine size={16} />}>Benefícios</Badge>
+        <Badge variant="positive" icon={<RiSparklingLine size={16} />}>Benefícios</Badge>
       }
     >
       <Stack gap="sm">
@@ -37,7 +37,7 @@ export default function Screen1_PerksHome({ onNext, onBack }: FlowScreenProps) {
         ]}
       />
 
-      <Banner
+      <Alert
         variant="neutral"
         title="Aproveite todos os benefícios"
         description="Quanto mais você usa o Picnic, mais vantagens desbloqueia."
@@ -45,7 +45,7 @@ export default function Screen1_PerksHome({ onNext, onBack }: FlowScreenProps) {
 
       <StickyFooter>
         <Button fullWidth size="lg" onPress={onNext}>
-          <span className="flex items-center gap-[var(--token-spacing-2)]">
+          <span className="flex items-center gap-[var(--token-spacing-8)]">
             Ver mais benefícios
             <RiArrowRightLine size={18} />
           </span>

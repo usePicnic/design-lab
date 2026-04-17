@@ -5,10 +5,10 @@ import BaseLayout from '../../library/layout/BaseLayout'
 import Header from '../../library/navigation/Header'
 import Stack from '../../library/layout/Stack'
 import Text from '../../library/foundations/Text'
-import Badge from '../../library/display/Badge'
+import Badge from '../../library/display/Chip'
 import Amount from '../../library/display/Amount'
 import DataList from '../../library/display/DataList'
-import Banner from '../../library/display/Banner'
+import Alert from '../../library/display/Alert'
 import LineChart from '../../library/display/LineChart'
 import ShortcutButton from '../../library/inputs/ShortcutButton'
 
@@ -45,7 +45,7 @@ export default function Screen3_Hub({ onNext, onBack, onElementTap }: FlowScreen
         >
           <Stack direction="row" align="between">
             <Text variant="caption" className="text-[#8a8a8a]">Renda Protegida</Text>
-            <Badge variant="success" size="sm">Protegido</Badge>
+            <Badge variant="positive">Protegido</Badge>
           </Stack>
 
           <Amount value={MOCK_BALANCE} currency="US$" size="lg" className="text-white" />
@@ -88,7 +88,7 @@ export default function Screen3_Hub({ onNext, onBack, onElementTap }: FlowScreen
           ]}
         />
 
-        <Banner
+        <Alert
           variant="neutral"
           collapsable
           title="Informações fiscais"

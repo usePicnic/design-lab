@@ -6,11 +6,11 @@ import Header from '../../library/navigation/Header'
 import GroupHeader from '../../library/navigation/GroupHeader'
 import Text from '../../library/foundations/Text'
 import Amount from '../../library/display/Amount'
-import Badge from '../../library/display/Badge'
+import Badge from '../../library/display/Chip'
 import Card from '../../library/display/Card'
 import ListItem from '../../library/display/ListItem'
 import Avatar from '../../library/display/Avatar'
-import Banner from '../../library/display/Banner'
+import Alert from '../../library/display/Alert'
 
 import { NET_APY, GROSS_APY, formatPct } from '../yields2/shared/data'
 
@@ -29,7 +29,7 @@ const EARN_PRODUCTS = [
     icon: <RiShieldCheckLine size={20} className="text-[var(--color-feedback-success)]" />,
     title: 'Renda Protegida',
     subtitle: `~${formatPct(NET_APY)} a.a. · Segurado`,
-    badge: <Badge variant="success" size="sm">Segurado</Badge>,
+    badge: <Badge variant="positive">Segurado</Badge>,
     balance: 'US$ 2.150,00',
     label: 'Renda Protegida',
   },
@@ -47,7 +47,7 @@ const EARN_PRODUCTS = [
     icon: <RiCoinLine size={20} className="text-content-secondary" />,
     title: 'Staking',
     subtitle: 'Até 8% a.a. · Vários tokens',
-    badge: <Badge variant="neutral" size="sm">Em breve</Badge>,
+    badge: <Badge variant="neutral">Em breve</Badge>,
     balance: null,
     label: 'Staking',
   },
@@ -75,7 +75,7 @@ export default function Screen1_EarnDashboard({ onNext, onBack, onElementTap }: 
           </Stack>
         </Card>
 
-        <Banner
+        <Alert
           variant="success"
           title="Seus fundos são segurados"
           description="97,5% de cobertura via OpenCover / Nexus Mutual no produto Renda Protegida."
@@ -90,7 +90,7 @@ export default function Screen1_EarnDashboard({ onNext, onBack, onElementTap }: 
               title={product.title}
               subtitle={product.subtitle}
               left={
-                <Avatar icon={product.icon} size="md" />
+                <Avatar icon={product.icon} />
               }
               right={
                 product.balance
@@ -103,7 +103,7 @@ export default function Screen1_EarnDashboard({ onNext, onBack, onElementTap }: 
           ))}
         </Stack>
 
-        <Banner
+        <Alert
           variant="neutral"
           collapsable
           title="Como funcionam os rendimentos?"

@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import { RiHomeLine, RiWalletLine, RiArrowLeftRightLine, RiLineChartLine, RiUserLine, RiQrCodeLine, RiBankCardLine, RiSearchLine, RiNotificationLine, RiInboxLine, RiSettings3Line, RiShieldLine, RiStarLine, RiFlashlightLine, RiGlobalLine, RiSendPlaneLine, RiArrowRightUpLine, RiArrowLeftDownLine, RiExternalLinkLine, RiAddLine, RiCloseLine } from '@remixicon/react'
+import { useState, type ReactNode } from 'react'
+import { cn } from '@/lib/cn'
+import { RiHomeLine, RiWalletLine, RiArrowLeftRightLine, RiLineChartLine, RiUserLine, RiQrCodeLine, RiBankCardLine, RiInboxLine, RiSettings3Line, RiShieldLine, RiStarLine, RiFlashlightLine, RiGlobalLine, RiSendPlaneLine, RiArrowRightUpLine, RiArrowLeftDownLine, RiExternalLinkLine, RiAddLine, RiArrowRightLine, RiInformationLine, RiCheckLine, RiErrorWarningLine, RiAlertLine, RiSearchLine, RiEyeLine } from '@remixicon/react'
 import { tokenIcons } from '../../library/display/tokenIcons'
 import type { ComponentMeta } from '../../library/registry'
 
@@ -13,7 +14,6 @@ import PinInput from '../../library/inputs/PinInput'
 import Checkbox from '../../library/inputs/Checkbox'
 import Toggle from '../../library/inputs/Toggle'
 import Select from '../../library/inputs/Select'
-import IconButton from '../../library/inputs/IconButton'
 // ButtonNavigation removed — merged into ListItem
 import SearchBar from '../../library/inputs/SearchBar'
 import ShortcutButton from '../../library/inputs/ShortcutButton'
@@ -21,7 +21,6 @@ import Slider from '../../library/inputs/Slider'
 import RadioGroup from '../../library/inputs/RadioGroup'
 import Card from '../../library/display/Card'
 import ListItem from '../../library/display/ListItem'
-import Badge from '../../library/display/Badge'
 import Avatar from '../../library/display/Avatar'
 import Tag from '../../library/display/Tag'
 import ProgressBar from '../../library/display/ProgressBar'
@@ -32,7 +31,8 @@ import Toast from '../../library/feedback/Toast'
 import EmptyState from '../../library/feedback/EmptyState'
 import LoadingSpinner from '../../library/feedback/LoadingSpinner'
 import Skeleton from '../../library/feedback/Skeleton'
-import Banner from '../../library/display/Banner'
+import Alert, { AlertLink } from '../../library/display/Alert'
+import Chip from '../../library/display/Chip'
 import LineChart from '../../library/display/LineChart'
 import Tooltip from '../../library/feedback/Tooltip'
 import Countdown from '../../library/feedback/Countdown'
@@ -63,7 +63,7 @@ interface ComponentPreviewProps {
 
 export default function ComponentPreview({ meta }: ComponentPreviewProps) {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-lg)]">
+    <div className="flex flex-col gap-[var(--token-padding-lg)] w-fit max-w-full mx-auto">
       <PreviewContent name={meta.name} />
     </div>
   )
@@ -71,7 +71,7 @@ export default function ComponentPreview({ meta }: ComponentPreviewProps) {
 
 function SectionLabel({ children }: { children: string }) {
   return (
-    <p className="text-[length:var(--token-font-size-caption)] font-medium text-text-secondary uppercase tracking-wider mb-[var(--token-spacing-2)]">
+    <p className="text-[length:var(--token-font-size-caption)] font-medium text-text-secondary uppercase tracking-wider mb-[var(--token-spacing-8)]">
       {children}
     </p>
   )
@@ -99,8 +99,6 @@ function PreviewContent({ name }: { name: string }) {
       return <TogglePreview />
     case 'Select':
       return <SelectPreview />
-    case 'IconButton':
-      return <IconButtonPreview />
     case 'SearchBar':
       return <SearchBarPreview />
     case 'ShortcutButton':
@@ -113,8 +111,8 @@ function PreviewContent({ name }: { name: string }) {
       return <CardPreview />
     case 'ListItem':
       return <ListItemPreview />
-    case 'Badge':
-      return <BadgePreview />
+    case 'Chip':
+      return <ChipPreview />
     case 'Avatar':
       return <AvatarPreview />
     case 'Tag':
@@ -137,8 +135,8 @@ function PreviewContent({ name }: { name: string }) {
       return <LoadingSpinnerPreview />
     case 'Skeleton':
       return <SkeletonPreview />
-    case 'Banner':
-      return <BannerPreview />
+    case 'Alert':
+      return <AlertPreview />
     case 'Tooltip':
       return <TooltipPreview />
     case 'Countdown':
@@ -186,11 +184,11 @@ function PreviewContent({ name }: { name: string }) {
 
 function TextPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-2)] bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)]">
+    <div className="flex flex-col gap-[var(--token-spacing-8)] bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)]">
       <Text variant="display">Display — R$ 12,450.00</Text>
-      <Text variant="heading-lg">Heading Large</Text>
-      <Text variant="heading-md">Heading Medium</Text>
-      <Text variant="heading-sm">Heading Small</Text>
+      <Text variant="h1">Heading Large</Text>
+      <Text variant="h2">Heading Medium</Text>
+      <Text variant="h3">Heading Small</Text>
       <Text variant="body-lg">Body Large — regular paragraph text</Text>
       <Text variant="body-md">Body Medium — standard content</Text>
       <Text variant="body-sm">Body Small — secondary information</Text>
@@ -202,7 +200,7 @@ function TextPreview() {
 
 function DividerPreview() {
   return (
-    <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)]">
+    <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)]">
       <Text variant="body-sm">Content above</Text>
       <Divider spacing="sm" />
       <Text variant="body-sm">Spacing SM</Text>
@@ -216,7 +214,7 @@ function DividerPreview() {
 
 function LinkPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-md)] bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)]">
+    <div className="flex flex-col gap-[var(--token-gap-lg)] bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)]">
       <div>
         <SectionLabel>xs (default)</SectionLabel>
         <Link linkText="View details" size="xs" />
@@ -240,38 +238,171 @@ function LinkPreview() {
 /* ===================== INPUTS ===================== */
 
 function ButtonPreview() {
+  const [dark, setDark] = useState(false)
+
+  const variants = [
+    { key: 'primary',           label: 'Primary' },
+    { key: 'secondary',         label: 'Secondary' },
+    { key: 'minimal',           label: 'Minimal' },
+    { key: 'minimal-secondary', label: 'Minimal Secondary' },
+    { key: 'destructive',       label: 'Destructive' },
+  ] as const
+
+  const sectionLabelCls = cn(
+    'text-[16px] font-semibold leading-[24px] tracking-[-0.01em] w-[200px] shrink-0 pt-[16px]',
+    dark ? 'text-[var(--color-content-inverse-tertiary)]' : 'text-[var(--color-content-tertiary)]'
+  )
+
+  const dividerCls = cn(
+    'border-t',
+    dark ? 'border-[var(--color-surface-inverse-level-2)]' : 'border-[var(--color-border)]'
+  )
+
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-md)]">
-      {(['accent', 'primary', 'secondary', 'ghost', 'destructive'] as const).map((v) => (
-        <div key={v}>
-          <SectionLabel>{v}</SectionLabel>
-          <div className="flex flex-wrap gap-[var(--token-spacing-2)] items-center">
-            {(['sm', 'md', 'lg'] as const).map((s) => (
-              <Button key={s} variant={v} size={s}>
-                {v} {s}
-              </Button>
-            ))}
-            <Button variant={v} loading>Loading</Button>
-            <Button variant={v} disabled>Disabled</Button>
+    <div className="flex flex-col gap-6">
+
+      {/* ── Toggle light / dark ── */}
+      <div className="flex items-center gap-3">
+        <span className="text-xs text-[var(--color-shell-text-secondary)]">Background</span>
+        <div className="flex rounded-full bg-[var(--color-shell-surface)] p-[3px] gap-[2px]">
+          {(['Light', 'Dark'] as const).map((label) => {
+            const active = label === 'Light' ? !dark : dark
+            return (
+              <button
+                key={label}
+                onClick={() => setDark(label === 'Dark')}
+                className={cn(
+                  'px-3 py-[3px] rounded-full text-xs font-medium transition-all cursor-pointer',
+                  active
+                    ? label === 'Light'
+                      ? 'bg-white text-[#111]'
+                      : 'bg-[var(--token-brand-black)] text-[var(--color-content-inverse-primary)]'
+                    : 'text-[var(--color-shell-text-tertiary)] hover:text-[var(--color-shell-text-secondary)]'
+                )}
+              >
+                {label}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* ── All sections in one container ── */}
+      <div
+        className={cn(
+          'rounded-[var(--token-radius-lg)] p-5 transition-colors flex flex-col gap-0',
+          dark
+            ? 'bg-[var(--color-surface-inverse-level-1)]'
+            : 'bg-[var(--color-surface-level-0)] border border-[var(--color-border)]'
+        )}
+      >
+        {/* Variant rows */}
+        {variants.map(({ key, label }, i) => (
+          <div key={key}>
+            {i > 0 && <div className={cn(dividerCls, 'my-8')} />}
+            <div className="flex items-start gap-8 py-[12px]">
+              <p className={sectionLabelCls}>{label}</p>
+              <div className="flex flex-col gap-[16px] w-[393px] shrink-0">
+                <div className="flex items-center gap-[16px] flex-wrap">
+                  <Button variant={key} size="xs" inverse={dark}>Size xs</Button>
+                  <Button variant={key} inverse={dark}>Size sm</Button>
+                  <Button variant={key} size="base" inverse={dark}>Size base</Button>
+                </div>
+                <div className="flex items-center gap-[16px] flex-wrap">
+                  <Button variant={key} icon={<RiAddLine size={16} />} inverse={dark}>Com ícone</Button>
+                  <Button variant={key} trailingIcon={<RiArrowRightLine size={16} />} inverse={dark}>Trailing</Button>
+                  <Button variant={key} loading inverse={dark}>Loading</Button>
+                  <Button variant={key} disabled inverse={dark}>Disabled</Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Full width */}
+        <div className={cn(dividerCls, 'mt-8')} />
+        <div className="mt-[12px] py-[12px] flex items-start gap-8">
+          <p className={sectionLabelCls}>Full width</p>
+          <div className="flex flex-col gap-[16px] w-[393px] shrink-0">
+            <Button fullWidth size="base" inverse={dark}>Confirmar</Button>
+            <Button fullWidth size="base" variant="secondary" inverse={dark}>Cancelar</Button>
+            <Button fullWidth size="base" subtitle="R$ 150,00" inverse={dark}>Confirmar transferência</Button>
           </div>
         </div>
-      ))}
-      <div>
-        <SectionLabel>with subtitle</SectionLabel>
-        <Button fullWidth subtitle="R$ 150.00">Confirm transfer</Button>
+
       </div>
+
     </div>
   )
 }
 
 function TextInputPreview() {
-  const [val, setVal] = useState('')
+  const sectionLabelCls = 'text-[16px] font-semibold leading-[24px] tracking-[-0.01em] w-[160px] shrink-0 pt-[10px] text-[var(--color-content-tertiary)]'
+  const dividerCls = 'border-t border-[var(--color-border)]'
+  const colCls = 'flex flex-col gap-[16px] w-[360px] shrink-0'
+
+  const sections: { label: string; content: ReactNode }[] = [
+    {
+      label: 'Tamanhos',
+      content: (
+        <>
+          <TextInput label="Padrão (48px)" placeholder="Texto aqui..." />
+          <TextInput size="lg" label="Grande (56px)" placeholder="Texto aqui..." />
+        </>
+      ),
+    },
+    {
+      label: 'Rótulo',
+      content: (
+        <>
+          <TextInput label="Só rótulo" placeholder="Valor..." />
+          <TextInput label="Rótulo + dica" hint="Opcional" placeholder="Valor..." />
+        </>
+      ),
+    },
+    {
+      label: 'Ícones',
+      content: (
+        <>
+          <TextInput label="Ícone líder" placeholder="Pesquisar..." leadingIcon={<RiSearchLine size={20} />} />
+          <TextInput label="Ícone após (preenchido)" value="João Silva" trailingIcon={<RiCheckLine size={20} />} />
+          <TextInput label="Senha" type="password" placeholder="••••••••" leadingIcon={<RiUserLine size={20} />} trailingIcon={<RiEyeLine size={20} />} />
+        </>
+      ),
+    },
+    {
+      label: 'Texto auxiliar',
+      content: (
+        <>
+          <TextInput label="Com ajuda" placeholder="seu@email.com" helperText="Nunca compartilharemos seu e-mail" />
+          <TextInput label="Com erro" value="abc123" error="Formato de e-mail inválido" />
+        </>
+      ),
+    },
+    {
+      label: 'Desabilitado',
+      content: (
+        <>
+          <TextInput label="Campo bloqueado" placeholder="Não editável" disabled />
+          <TextInput label="Bloqueado preenchido" value="valor fixo" disabled />
+        </>
+      ),
+    },
+  ]
+
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-md)] max-w-[360px]">
-      <TextInput label="Full name" placeholder="Enter your name" value={val} onChange={setVal} />
-      <TextInput label="Email" placeholder="you@email.com" helperText="We'll never share your email" prefix={<span>@</span>} />
-      <TextInput label="Amount" error="Minimum deposit is R$ 10.00" value="5" suffix={<span>BRL</span>} />
-      <TextInput label="Disabled" placeholder="Can't edit" disabled />
+    <div className="flex flex-col gap-0">
+      <div className="rounded-[var(--token-radius-lg)] p-5 bg-[var(--color-surface-level-0)] border border-[var(--color-border)] flex flex-col gap-0">
+        {sections.map(({ label, content }, i) => (
+          <div key={label}>
+            {i > 0 && <div className={cn(dividerCls, 'my-8')} />}
+            <div className="flex items-start gap-8 py-[12px]">
+              <p className={sectionLabelCls}>{label}</p>
+              <div className={colCls}>{content}</div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
@@ -279,7 +410,7 @@ function TextInputPreview() {
 function CurrencyInputPreview() {
   const [val, setVal] = useState('15000')
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-md)] max-w-[360px]">
+    <div className="flex flex-col gap-[var(--token-gap-lg)] max-w-[360px]">
       <CurrencyInput label="Amount to deposit" value={val} onChange={setVal} currencySymbol="R$" helperText="Min R$ 10.00" />
       <CurrencyInput label="With error" value="0" currencySymbol="US$" error="Amount must be greater than zero" />
       <CurrencyInput label="Receba" value="100000" currencySymbol="US$" />
@@ -292,7 +423,7 @@ function PinInputPreview() {
   const [pin4, setPin4] = useState('')
   const [pin6, setPin6] = useState('')
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-lg)] items-center">
+    <div className="flex flex-col gap-[var(--token-padding-lg)] items-center">
       <div>
         <SectionLabel>4 digits</SectionLabel>
         <PinInput length={4} value={pin4} onChange={setPin4} />
@@ -311,7 +442,7 @@ function PinInputPreview() {
 
 function CheckboxPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-2)] max-w-[400px]">
+    <div className="flex flex-col gap-[var(--token-spacing-8)] max-w-[400px]">
       <ListItem title="Email marketing" subtitle="Receive promotional emails" right={<Checkbox checked={false} />} trailing={null} />
       <ListItem title="SMS alerts" subtitle="Get text message notifications" right={<Checkbox checked />} trailing={null} />
       <ListItem title="Accept terms" subtitle="Required to continue" right={<Checkbox checked disabled />} trailing={null} disabled />
@@ -321,7 +452,7 @@ function CheckboxPreview() {
 
 function TogglePreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-2)] max-w-[400px]">
+    <div className="flex flex-col gap-[var(--token-spacing-8)] max-w-[400px]">
       <ListItem title="Push notifications" subtitle="Get notified about transactions" right={<Toggle checked />} trailing={null} />
       <ListItem title="Dark mode" subtitle="Switch to dark theme" right={<Toggle checked={false} />} trailing={null} />
       <ListItem title="Biometric login" subtitle="Use Face ID or fingerprint" right={<Toggle checked disabled />} trailing={null} disabled />
@@ -332,7 +463,7 @@ function TogglePreview() {
 function SelectPreview() {
   const [val, setVal] = useState('')
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-md)] max-w-[360px]">
+    <div className="flex flex-col gap-[var(--token-gap-lg)] max-w-[360px]">
       <Select
         label="Account type"
         options={[
@@ -350,38 +481,6 @@ function SelectPreview() {
   )
 }
 
-function IconButtonPreview() {
-  return (
-    <div className="flex flex-col gap-[var(--token-spacing-md)]">
-      {(['large', 'base', 'small', 'no_background'] as const).map((v) => (
-        <div key={v}>
-          <SectionLabel>{v}</SectionLabel>
-          <div className="flex gap-[var(--token-spacing-3)] items-end">
-            <IconButton icon={<RiSettings3Line size={v === 'small' ? 16 : 20} />} variant={v} backgroundColor="#ECEFEB" />
-            <IconButton icon={<RiNotificationLine size={v === 'small' ? 16 : 20} />} variant={v} backgroundColor="#ECEFEB" />
-            <IconButton icon={<RiSearchLine size={v === 'small' ? 16 : 20} />} variant={v} backgroundColor="#ECEFEB" />
-          </div>
-        </div>
-      ))}
-      <div>
-        <SectionLabel>inverted (on image)</SectionLabel>
-        <div className="relative w-fit rounded-[var(--token-radius-md)] overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=300&h=80&fit=crop&q=80" alt="" className="w-[300px] h-[80px] object-cover" />
-          <div className="absolute top-2 right-2 flex gap-[var(--token-spacing-2)]">
-            <IconButton icon={<RiCloseLine size={20} />} variant="base" inverted />
-            <IconButton icon={<RiSettings3Line size={20} />} variant="base" inverted />
-          </div>
-        </div>
-      </div>
-      <div>
-        <SectionLabel>disabled</SectionLabel>
-        <div className="flex gap-[var(--token-spacing-3)]">
-          <IconButton icon={<RiSettings3Line size={20} />} variant="base" disabled />
-        </div>
-      </div>
-    </div>
-  )
-}
 
 function SearchBarPreview() {
   const [val, setVal] = useState('')
@@ -397,10 +496,10 @@ function SearchBarPreview() {
 
 function ShortcutButtonPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-md)]">
+    <div className="flex flex-col gap-[var(--token-gap-lg)]">
       <div>
         <SectionLabel>primary</SectionLabel>
-        <div className="flex gap-[var(--token-spacing-4)]">
+        <div className="flex gap-[var(--token-spacing-16)]">
           <ShortcutButton icon={<RiArrowRightUpLine size={22} className="text-[#1d211a]" />} label="Send" variant="primary" />
           <ShortcutButton icon={<RiArrowLeftDownLine size={22} className="text-[#1d211a]" />} label="Receive" variant="primary" />
           <ShortcutButton icon={<RiArrowLeftRightLine size={22} className="text-[#1d211a]" />} label="Swap" variant="primary" />
@@ -409,7 +508,7 @@ function ShortcutButtonPreview() {
       </div>
       <div>
         <SectionLabel>secondary</SectionLabel>
-        <div className="flex gap-[var(--token-spacing-4)]">
+        <div className="flex gap-[var(--token-spacing-16)]">
           <ShortcutButton icon={<RiQrCodeLine size={22} />} label="PIX" variant="secondary" />
           <ShortcutButton icon={<RiBankCardLine size={22} />} label="Card" variant="secondary" />
         </div>
@@ -426,11 +525,11 @@ function SliderPreview() {
   const [val1, setVal1] = useState(500)
   const [val2, setVal2] = useState(50)
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-lg)] max-w-[400px]">
+    <div className="flex flex-col gap-[var(--token-padding-lg)] max-w-[400px]">
       <div>
         <SectionLabel>with labels</SectionLabel>
-        <Text variant="heading-sm" align="center">{val1.toLocaleString()}</Text>
-        <div className="h-[var(--token-spacing-sm)]" />
+        <Text variant="h3" align="center">{val1.toLocaleString()}</Text>
+        <div className="h-[var(--token-gap-md)]" />
         <Slider value={val1} minimumValue={100} maximumValue={5000} step={100} onValueChange={setVal1} />
       </div>
       <div>
@@ -448,7 +547,7 @@ function SliderPreview() {
 function RadioGroupPreview() {
   const [val, setVal] = useState<string | number>('pix')
   return (
-    <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+    <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
       <RadioGroup
         label="Payment method"
         value={val}
@@ -468,12 +567,12 @@ function RadioGroupPreview() {
 
 function CardPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-md)]">
+    <div className="flex flex-col gap-[var(--token-gap-lg)]">
       {(['elevated', 'flat'] as const).map((v) => (
         <div key={v}>
           <SectionLabel>{v}</SectionLabel>
           <Card variant={v}>
-            <Text variant="heading-sm">Account Balance</Text>
+            <Text variant="h3">Account Balance</Text>
             <Text variant="display">R$ 12,450.00</Text>
           </Card>
         </div>
@@ -490,11 +589,11 @@ function CardPreview() {
 
 function ListItemPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-lg)]">
+    <div className="flex flex-col gap-[var(--token-padding-lg)]">
       {/* Box variant (default) */}
       <div>
         <SectionLabel>box variant (default)</SectionLabel>
-        <div className="flex flex-col gap-[var(--token-spacing-2)] max-w-[400px]">
+        <div className="flex flex-col gap-[var(--token-spacing-8)] max-w-[400px]">
           <ListItem
             title="Account & Security"
             subtitle="Manage your account settings"
@@ -504,14 +603,14 @@ function ListItemPreview() {
           <ListItem
             title="Rewards"
             subtitle="View your cashback and perks"
-            left={<Avatar size="md" icon={<RiStarLine size={20} />} />}
-            right={<Badge variant="lime" size="sm">3 new</Badge>}
+            left={<Avatar icon={<RiStarLine size={20} />} />}
+            right={<Chip variant="positive">3 new</Chip>}
             onPress={() => {}}
           />
           <ListItem
             title="Bitcoin"
             subtitle="BTC"
-            left={<Avatar size="md" src={tokenIcons.BTC} />}
+            left={<Avatar src={tokenIcons.BTC} />}
             right={<div className="flex flex-col items-end"><span className="text-base font-semibold text-[var(--color-content-primary)]">R$ 5,280</span><span className="text-sm text-[var(--color-content-secondary)]">+2.4%</span></div>}
             onPress={() => {}}
           />
@@ -521,12 +620,12 @@ function ListItemPreview() {
       {/* Inverted */}
       <div>
         <SectionLabel>inverted (subtitle is bold)</SectionLabel>
-        <div className="flex flex-col gap-[var(--token-spacing-2)] max-w-[400px]">
+        <div className="flex flex-col gap-[var(--token-spacing-8)] max-w-[400px]">
           <ListItem
             inverted
             title="Picnic Account"
             subtitle="R$ 12,450.00"
-            left={<Avatar size="md" initials="PA" />}
+            left={<Avatar initials="PA" />}
             onPress={() => {}}
           />
         </div>
@@ -535,7 +634,7 @@ function ListItemPreview() {
       {/* With right slots */}
       <div>
         <SectionLabel>right slot variations</SectionLabel>
-        <div className="flex flex-col gap-[var(--token-spacing-2)] max-w-[400px]">
+        <div className="flex flex-col gap-[var(--token-spacing-8)] max-w-[400px]">
           <ListItem title="View details" subtitle="Transaction #42" right={<Link linkText="Open" size="xs" />} trailing={null} />
           <ListItem title="Tag example" subtitle="Categorized item" right={<Tag label="DeFi" />} trailing={null} />
         </div>
@@ -544,7 +643,7 @@ function ListItemPreview() {
       {/* Disabled */}
       <div>
         <SectionLabel>disabled</SectionLabel>
-        <div className="flex flex-col gap-[var(--token-spacing-2)] max-w-[400px]">
+        <div className="flex flex-col gap-[var(--token-spacing-8)] max-w-[400px]">
           <ListItem title="Disabled" subtitle="Can't interact" disabled onPress={() => {}} />
         </div>
       </div>
@@ -552,118 +651,177 @@ function ListItemPreview() {
   )
 }
 
-function BadgePreview() {
+
+const overlayImg = <img src={tokenIcons.LINK} alt="" className="w-full h-full object-cover" />
+
+const avatarGridRows = [
+  {
+    type: 'Icon',
+    cells: {
+      sm: <Avatar size="sm" badge overlay={overlayImg} />,
+      md: <Avatar size="md" badge overlay={overlayImg} />,
+      lg: <Avatar size="lg" badge overlay={overlayImg} />,
+    },
+  },
+  {
+    type: 'Image',
+    cells: {
+      sm: <Avatar size="sm" src="https://i.pravatar.cc/80?u=alice" badge overlay={overlayImg} />,
+      md: <Avatar size="md" src="https://i.pravatar.cc/80?u=alice" badge overlay={overlayImg} />,
+      lg: <Avatar size="lg" src="https://i.pravatar.cc/80?u=alice" badge overlay={overlayImg} />,
+    },
+  },
+  {
+    type: 'Text',
+    cells: {
+      sm: <Avatar size="sm" initials="PN" badge overlay={overlayImg} />,
+      md: <Avatar size="md" initials="PN" badge overlay={overlayImg} />,
+      lg: <Avatar size="lg" initials="PN" badge overlay={overlayImg} />,
+    },
+  },
+] as const
+
+const CHIP_VARIANTS = ['neutral', 'inverse', 'positive', 'warning', 'critical', 'grape', 'guava'] as const
+
+function ChipPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-md)]">
-      <div>
-        <SectionLabel>semantic</SectionLabel>
-        <div className="flex flex-wrap gap-[var(--token-spacing-2)]">
-          {(['success', 'warning', 'error', 'info', 'neutral'] as const).map((v) => (
-            <Badge key={v} variant={v} size="md">{v}</Badge>
-          ))}
+    <div className="flex gap-4">
+      {(['light', 'dark'] as const).map((surface) => (
+        <div
+          key={surface}
+          className={cn(
+            'flex-1 rounded-[var(--token-radius-lg)] p-5 flex flex-col gap-5 transition-colors',
+            surface === 'dark'
+              ? 'bg-[var(--color-surface-inverse-level-1)]'
+              : 'bg-[var(--color-surface-level-0)] border border-[var(--color-border)]'
+          )}
+        >
+          <p className={cn(
+            'text-[length:var(--token-font-size-caption)] font-semibold uppercase tracking-wider',
+            surface === 'dark' ? 'text-[var(--color-content-inverse-secondary)]' : 'text-[var(--color-content-tertiary)]'
+          )}>
+            {surface}
+          </p>
+
+          <div className="flex flex-col gap-[var(--token-spacing-8)]">
+            <p className={cn(
+              'text-[length:var(--token-font-size-caption)]',
+              surface === 'dark' ? 'text-[var(--color-content-inverse-secondary)]' : 'text-[var(--color-content-tertiary)]'
+            )}>solid</p>
+            <div className="flex flex-wrap gap-[var(--token-spacing-8)]">
+              {CHIP_VARIANTS.map((v) => (
+                <Chip key={v} variant={v} surface={surface}>{v}</Chip>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-[var(--token-spacing-8)]">
+            <p className={cn(
+              'text-[length:var(--token-font-size-caption)]',
+              surface === 'dark' ? 'text-[var(--color-content-inverse-secondary)]' : 'text-[var(--color-content-tertiary)]'
+            )}>outline</p>
+            <div className="flex flex-wrap gap-[var(--token-spacing-8)]">
+              {CHIP_VARIANTS.map((v) => (
+                <Chip key={v} variant={v} outline surface={surface}>{v}</Chip>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-[var(--token-spacing-8)]">
+            <p className={cn(
+              'text-[length:var(--token-font-size-caption)]',
+              surface === 'dark' ? 'text-[var(--color-content-inverse-secondary)]' : 'text-[var(--color-content-tertiary)]'
+            )}>with icon</p>
+            <div className="flex flex-wrap gap-[var(--token-spacing-8)]">
+              {CHIP_VARIANTS.map((v) => (
+                <Chip key={v} variant={v} surface={surface} icon={<RiFlashlightLine size={12} />}>{v}</Chip>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-      <div>
-        <SectionLabel>brand colors</SectionLabel>
-        <div className="flex flex-wrap gap-[var(--token-spacing-2)]">
-          <Badge variant="guava" size="md">Guava</Badge>
-          <Badge variant="grape" size="md">Grape</Badge>
-          <Badge variant="lime" size="md">Lime</Badge>
-          <Badge variant="none" size="md">None</Badge>
-        </div>
-      </div>
-      <div>
-        <SectionLabel>with icon</SectionLabel>
-        <Badge variant="success" size="md" icon={<RiStarLine size={12} />}>Featured</Badge>
-      </div>
+      ))}
     </div>
   )
 }
 
 function AvatarPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-md)]">
+    <div className="flex flex-col gap-[32px]">
+
+      {/* Type × Size grid */}
       <div>
-        <SectionLabel>sizes (initials)</SectionLabel>
-        <div className="flex gap-[var(--token-spacing-3)] items-end">
-          {(['sm', 'md', 'lg', 'xl'] as const).map((size) => (
-            <Avatar key={size} size={size} initials="RP" />
+        <SectionLabel>type × size</SectionLabel>
+        <div className="grid gap-[1px] rounded-[8px] overflow-hidden border border-[var(--color-border,#E5E7EB)]"
+          style={{ gridTemplateColumns: '120px repeat(3, 1fr)' }}
+        >
+          {/* Header */}
+          <div className="bg-[var(--color-surface-level-0,#FAFAFA)] p-[16px]" />
+          {(['SM', 'Base', 'LG'] as const).map((label) => (
+            <div key={label} className="bg-[var(--color-surface-level-0,#FAFAFA)] p-[16px] flex flex-col gap-[2px]">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-[var(--color-content-secondary)]">SIZE</span>
+              <span className="text-[16px] font-semibold text-[var(--color-content-primary)]">{label}</span>
+            </div>
+          ))}
+
+          {/* Data rows */}
+          {avatarGridRows.map((row) => (
+            <>
+              <div key={`${row.type}-label`} className="bg-white border-t border-[var(--color-border,#E5E7EB)] p-[16px] flex flex-col gap-[2px] justify-center">
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-[var(--color-content-secondary)]">TYPE</span>
+                <span className="text-[16px] font-semibold text-[var(--color-content-primary)]">{row.type}</span>
+              </div>
+              {(['sm', 'md', 'lg'] as const).map((size) => (
+                <div key={`${row.type}-${size}`} className="bg-white border-t border-[var(--color-border,#E5E7EB)] p-[24px] flex items-center justify-center">
+                  {row.cells[size]}
+                </div>
+              ))}
+            </>
           ))}
         </div>
       </div>
+
+      {/* Tone */}
       <div>
-        <SectionLabel>initials</SectionLabel>
-        <div className="flex gap-[var(--token-spacing-3)]">
-          <Avatar initials="AB" />
-          <Avatar initials="JD" />
-          <Avatar initials="MK" />
+        <SectionLabel>tone (semantic — Alert icon slot)</SectionLabel>
+        <div className="flex flex-col gap-[12px]">
+          {([
+            { tone: 'neutral',  Icon: RiInformationLine,  label: 'neutral' },
+            { tone: 'success',  Icon: RiCheckLine,        label: 'success' },
+            { tone: 'warning',  Icon: RiAlertLine,        label: 'warning' },
+            { tone: 'critical', Icon: RiErrorWarningLine, label: 'critical' },
+          ] as const).map(({ tone, Icon, label }) => (
+            <div key={tone} className="flex items-center gap-[16px]">
+              <span className="w-[72px] text-[12px] text-[var(--color-content-secondary)] font-mono">{label}</span>
+              {([{ size: 'sm', iconSize: 16 }, { size: 'md', iconSize: 20 }, { size: 'lg', iconSize: 32 }] as const).map(({ size, iconSize }) => (
+                <Avatar key={size} size={size} tone={tone} icon={<Icon size={iconSize} />} />
+              ))}
+            </div>
+          ))}
         </div>
       </div>
+
+      {/* Image variants note */}
       <div>
-        <SectionLabel>src (crypto tokens via coingecko)</SectionLabel>
-        <div className="flex gap-[var(--token-spacing-3)]">
+        <SectionLabel>image variants (photo · crypto · custom)</SectionLabel>
+        <div className="flex gap-[12px] flex-wrap items-center">
+          <Avatar src="https://i.pravatar.cc/80?u=alice" />
+          <Avatar src="https://i.pravatar.cc/80?u=bob" />
           <Avatar src={tokenIcons.BTC} />
           <Avatar src={tokenIcons.ETH} />
           <Avatar src={tokenIcons.SOL} />
           <Avatar src={tokenIcons.USDC} />
-          <Avatar src={tokenIcons.AVAX} />
-          <Avatar src={tokenIcons.LINK} />
-        </div>
-      </div>
-      <div>
-        <SectionLabel>src (photo)</SectionLabel>
-        <div className="flex gap-[var(--token-spacing-3)]">
-          <Avatar src="https://i.pravatar.cc/80?u=alice" />
-          <Avatar src="https://i.pravatar.cc/80?u=bob" />
-          <Avatar src="https://i.pravatar.cc/80?u=carol" />
-        </div>
-      </div>
-      <div>
-        <SectionLabel>icon</SectionLabel>
-        <div className="flex gap-[var(--token-spacing-3)]">
-          <Avatar icon={<RiWalletLine size={18} />} />
-          <Avatar icon={<RiGlobalLine size={18} />} />
-          <Avatar />
-        </div>
-      </div>
-      <div>
-        <SectionLabel>bgColor + iconColor</SectionLabel>
-        <div className="flex gap-[var(--token-spacing-3)]">
           <Avatar icon={<RiWalletLine size={18} />} bgColor="#EFF6FF" iconColor="#3B82F6" />
-          <Avatar icon={<RiGlobalLine size={18} />} bgColor="#F0FDF4" iconColor="#22C55E" />
-          <Avatar initials="RP" bgColor="#2F289F" iconColor="#FFFFFF" />
+          <Avatar initials="AB" bgColor="#2F289F" iconColor="#FFFFFF" />
         </div>
       </div>
-      <div>
-        <SectionLabel>with overlay (chain logo, bottom-right)</SectionLabel>
-        <div className="flex gap-[var(--token-spacing-4)] items-end">
-          <Avatar size="xl" src={tokenIcons.ETH} overlay={<img src={tokenIcons.LINK} alt="" className="w-full h-full object-cover" />} />
-          <Avatar size="lg" src="https://i.pravatar.cc/80?u=alice" overlay={<img src={tokenIcons.LINK} alt="" className="w-full h-full object-cover" />} />
-          <Avatar size="md" src={tokenIcons.USDC} overlay={<img src={tokenIcons.LINK} alt="" className="w-full h-full object-cover" />} />
-        </div>
-      </div>
-      <div>
-        <SectionLabel>with badge (notification, top-right)</SectionLabel>
-        <div className="flex gap-[var(--token-spacing-4)] items-end">
-          <Avatar size="xl" src="https://i.pravatar.cc/80?u=bob" badge />
-          <Avatar size="lg" initials="JD" badge />
-          <Avatar size="md" src={tokenIcons.BTC} badge badgeColor="#10B981" />
-        </div>
-      </div>
-      <div>
-        <SectionLabel>overlay + badge combined</SectionLabel>
-        <div className="flex gap-[var(--token-spacing-4)] items-end">
-          <Avatar size="xl" src="https://i.pravatar.cc/80?u=carol" overlay={<img src={tokenIcons.LINK} alt="" className="w-full h-full object-cover" />} badge />
-          <Avatar size="lg" icon={<RiWalletLine size={24} />} overlay={<img src={tokenIcons.LINK} alt="" className="w-full h-full object-cover" />} badge badgeColor="#EAB308" />
-        </div>
-      </div>
+
     </div>
   )
 }
 
 function TagPreview() {
   return (
-    <div className="flex flex-wrap gap-[var(--token-spacing-2)]">
+    <div className="flex flex-wrap gap-[var(--token-spacing-8)]">
       <Tag label="Crypto" />
       <Tag label="PIX" />
       <Tag label="Removable" removable onRemove={() => {}} />
@@ -674,7 +832,7 @@ function TagPreview() {
 
 function ProgressBarPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-md)] max-w-[360px]">
+    <div className="flex flex-col gap-[var(--token-gap-lg)] max-w-[360px]">
       {[25, 50, 75, 100].map((v) => (
         <div key={v}>
           <SectionLabel>{`${v}%`}</SectionLabel>
@@ -687,11 +845,11 @@ function ProgressBarPreview() {
 
 function AmountPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-3)] bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)]">
+    <div className="flex flex-col gap-[var(--token-spacing-12)] bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)]">
       <Amount value={12450.0} size="display" />
       <Amount value={5280.5} size="lg" />
-      <Amount value={150.0} size="md" />
-      <Amount value={-42.99} size="sm" />
+      <Amount value={150.0} />
+      <Amount value={-42.99} />
       <Amount value={1000} currency="$" size="lg" />
     </div>
   )
@@ -699,10 +857,10 @@ function AmountPreview() {
 
 function DataListPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-md)]">
+    <div className="flex flex-col gap-[var(--token-gap-lg)]">
       <div>
         <SectionLabel>transaction details</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
           <DataList data={[
             { label: 'Amount', value: 'R$ 150.00' },
             { label: 'Fee', value: 'Free', secondaryValue: 'PIX transfer' },
@@ -713,7 +871,7 @@ function DataListPreview() {
       </div>
       <div>
         <SectionLabel>with copy & info</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
           <DataList data={[
             { label: 'PIX code', value: '8a7f3e...c92d', copyable: true },
             { label: 'Network fee', value: 'R$ 0.00', info: 'No fee for this transfer' },
@@ -724,7 +882,7 @@ function DataListPreview() {
       </div>
       <div>
         <SectionLabel>with expandable breakdown</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
           <DataList data={[
             { label: 'Amount', value: 'R$ 200.00' },
             {
@@ -743,7 +901,7 @@ function DataListPreview() {
       </div>
       <div>
         <SectionLabel>vertical — card details</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
           <DataList variant="vertical" data={[
             { label: 'Nome', value: 'Cartão Virtual' },
             { label: 'Número', value: '0234 3829 3090 3849', copyable: true },
@@ -756,12 +914,12 @@ function DataListPreview() {
       </div>
       <div>
         <SectionLabel>vertical — with action button</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
           <DataList variant="vertical" data={[
             {
               label: 'Limite diário de gastos',
               value: 'US$ 5.000,00',
-              action: <Button variant="primary" size="sm" onPress={() => {}}>Editar</Button>,
+              action: <Button variant="primary" inverse onPress={() => {}}>Editar</Button>,
             },
             { label: 'Limite por transação', value: 'US$ 5.000,00' },
             { label: 'Instruções para uso', value: 'Escolha sempre o método crédito e a moeda local ao realizar compras.' },
@@ -774,10 +932,10 @@ function DataListPreview() {
 
 function SummaryPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-lg)] max-w-[400px]">
+    <div className="flex flex-col gap-[var(--token-padding-lg)] max-w-[400px]">
       <div>
         <SectionLabel>default</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)]">
           <Summary
             header="Transfer summary"
             data={[
@@ -790,7 +948,7 @@ function SummaryPreview() {
       </div>
       <div>
         <SectionLabel>with done status</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)]">
           <Summary
             data={[
               { icon: <RiGlobalLine size={24} className="text-[var(--color-content-primary)]" />, title: 'Identity verified', description: 'Your documents have been approved.', status: 'done' },
@@ -802,7 +960,7 @@ function SummaryPreview() {
       </div>
       <div>
         <SectionLabel>with pending status</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)]">
           <Summary
             data={[
               { icon: <RiGlobalLine size={24} className="text-[var(--color-content-primary)]" />, title: 'Identity verified', description: 'Your documents have been approved.', status: 'done' },
@@ -839,22 +997,22 @@ const lineChartAreaData = Array.from({ length: 13 }, (_, i) => ({
 
 function LineChartPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-lg)] max-w-[480px]">
+    <div className="flex flex-col gap-[var(--token-padding-lg)] max-w-[480px]">
       <div>
         <SectionLabel>baseline (price chart)</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)]">
           <LineChart data={lineChartBaselineData} variant="baseline" height={180} />
         </div>
       </div>
       <div>
         <SectionLabel>area (yield projection)</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)]">
           <LineChart data={lineChartAreaData} variant="area" height={180} />
         </div>
       </div>
       <div>
         <SectionLabel>with axes visible</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)]">
           <LineChart data={lineChartBaselineData} variant="baseline" height={200} showPriceScale showTimeScale />
         </div>
       </div>
@@ -866,7 +1024,7 @@ function LineChartPreview() {
 
 function ToastPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-3)]">
+    <div className="flex flex-col gap-[var(--token-spacing-12)]">
       {(['success', 'error', 'info', 'warning'] as const).map((v) => (
         <Toast key={v} variant={v} message={`This is a ${v} toast notification`} onDismiss={() => {}} />
       ))}
@@ -881,7 +1039,7 @@ function EmptyStatePreview() {
         icon={<RiInboxLine size={48} />}
         title="No transactions yet"
         description="Your transactions will appear here once you make your first deposit."
-        action={<Button size="sm">Make a deposit</Button>}
+        action={<Button>Make a deposit</Button>}
       />
     </div>
   )
@@ -889,9 +1047,9 @@ function EmptyStatePreview() {
 
 function LoadingSpinnerPreview() {
   return (
-    <div className="flex items-end gap-[var(--token-spacing-lg)]">
+    <div className="flex items-end gap-[var(--token-padding-lg)]">
       {(['sm', 'md', 'lg'] as const).map((size) => (
-        <div key={size} className="flex flex-col items-center gap-[var(--token-spacing-2)]">
+        <div key={size} className="flex flex-col items-center gap-[var(--token-spacing-8)]">
           <LoadingSpinner size={size} />
           <Text variant="caption">{size}</Text>
         </div>
@@ -902,10 +1060,10 @@ function LoadingSpinnerPreview() {
 
 function SkeletonPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-md)] bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[320px]">
-      <div className="flex items-center gap-[var(--token-spacing-3)]">
+    <div className="flex flex-col gap-[var(--token-gap-lg)] bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[320px]">
+      <div className="flex items-center gap-[var(--token-spacing-12)]">
         <Skeleton variant="circle" height="40px" />
-        <div className="flex-1 flex flex-col gap-[var(--token-spacing-2)]">
+        <div className="flex-1 flex flex-col gap-[var(--token-spacing-8)]">
           <Skeleton height="14px" width="60%" />
           <Skeleton height="12px" width="40%" />
         </div>
@@ -917,28 +1075,43 @@ function SkeletonPreview() {
   )
 }
 
-function BannerPreview() {
+function AlertPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-lg)] max-w-[400px]">
-      {(['neutral', 'success', 'warning', 'critical'] as const).map((v) => (
-        <Banner key={v} title={`${v.charAt(0).toUpperCase() + v.slice(1)} banner`} description="This is the description text for this banner variant." variant={v} />
-      ))}
+    <div className="flex flex-col gap-[var(--token-gap-lg)] max-w-[400px]">
+
       <div>
-        <SectionLabel>collapsable (collapsed)</SectionLabel>
-        <Banner title="Entenda nossas taxas" description="This content is hidden until expanded." collapsable />
+        <SectionLabel>variants</SectionLabel>
+        <div className="flex flex-col gap-[8px]">
+          <Alert variant="neutral"  title="Informação"   description="Seu depósito está sendo processado." />
+          <Alert variant="success"  title="Confirmado"   description="Transferência realizada com sucesso." />
+          <Alert variant="warning"  title="Atenção"      description="Esta operação pode levar até 3 dias úteis." />
+          <Alert variant="critical" title="Erro"         description="Não foi possível concluir a operação." />
+        </div>
       </div>
+
       <div>
-        <SectionLabel>collapsable (expanded)</SectionLabel>
-        <Banner title="Entenda nossas taxas" description="Caso contrário o valor será devolvido automaticamente para a mesma conta." collapsable defaultExpanded />
+        <SectionLabel>with action (AlertLink)</SectionLabel>
+        <div className="flex flex-col gap-[8px]">
+          <Alert variant="neutral"  title="Entenda as taxas"  description="Confira nossa estrutura de tarifas." action={<AlertLink>Ver detalhes</AlertLink>} />
+          <Alert variant="warning"  title="Limite próximo"    description="Você usou 80% do seu limite mensal."  action={<AlertLink>Aumentar limite</AlertLink>} />
+          <Alert variant="success"  title="Depósito recebido" description="R$ 1.200 foram creditados na sua conta." action={<AlertLink>Ver extrato</AlertLink>} />
+          <Alert variant="critical" title="Falha no envio"    description="Verifique seus dados e tente novamente." action={<AlertLink>Tentar novamente</AlertLink>} />
+        </div>
       </div>
+
       <div>
         <SectionLabel>dismissible</SectionLabel>
-        <Banner title="Dismissible banner" description="Close me with the X button." dismissible />
+        <Alert variant="neutral" title="Dica" description="Você pode usar o PIX para depósitos instantâneos." dismissible />
       </div>
+
       <div>
-        <SectionLabel>with link</SectionLabel>
-        <Banner title="Learn more" description="Read about our fee structure." linkText="View details" onLinkPress={() => {}} />
+        <SectionLabel>collapsable</SectionLabel>
+        <div className="flex flex-col gap-[8px]">
+          <Alert title="Entenda nossas taxas" description="Caso contrário o valor será devolvido automaticamente para a mesma conta." collapsable />
+          <Alert title="Entenda nossas taxas" description="Caso contrário o valor será devolvido automaticamente para a mesma conta." collapsable defaultExpanded />
+        </div>
       </div>
+
     </div>
   )
 }
@@ -947,20 +1120,20 @@ function TooltipPreview() {
   const [visible1, setVisible1] = useState(true)
   const [visible2, setVisible2] = useState(true)
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-lg)] max-w-[400px]">
+    <div className="flex flex-col gap-[var(--token-padding-lg)] max-w-[400px]">
       <div>
         <SectionLabel>arrow top (default)</SectionLabel>
         <Tooltip visible={visible1} onClose={() => setVisible1(!visible1)} position="top">
           <span><span className="font-semibold">Novidade:</span> deposite e receba dólares de qualquer banco internacional via ACH</span>
         </Tooltip>
-        {!visible1 && <Button size="sm" onPress={() => setVisible1(true)}>Show again</Button>}
+        {!visible1 && <Button onPress={() => setVisible1(true)}>Show again</Button>}
       </div>
       <div>
         <SectionLabel>arrow bottom</SectionLabel>
         <Tooltip visible={visible2} onClose={() => setVisible2(!visible2)} position="bottom">
           Você pode digitar um valor em <span className="font-semibold">dólares ou reais</span> para depositar
         </Tooltip>
-        {!visible2 && <Button size="sm" onPress={() => setVisible2(true)}>Show again</Button>}
+        {!visible2 && <Button onPress={() => setVisible2(true)}>Show again</Button>}
       </div>
       <div>
         <SectionLabel>no close button</SectionLabel>
@@ -976,33 +1149,33 @@ function TooltipPreview() {
 
 function HeaderPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-lg)]">
+    <div className="flex flex-col gap-[var(--token-padding-lg)]">
       <div>
         <SectionLabel>with back button</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
           <Header title="Limites e taxas" onBack={() => {}} />
         </div>
       </div>
       <div>
         <SectionLabel>with close button</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
           <Header title="Settings" onClose={() => {}} />
         </div>
       </div>
       <div>
         <SectionLabel>with description</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
           <Header title="Deposit" description="Choose the asset and amount you want to deposit." onBack={() => {}} />
         </div>
       </div>
       <div>
         <SectionLabel>back + right action</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
           <Header
             title="Limites e taxas"
             onBack={() => {}}
             rightAction={
-              <IconButton icon={<RiSettings3Line size={24} />} variant="base" onPress={() => {}} />
+              <Avatar icon={<RiSettings3Line size={24} />} onPress={() => {}} />
             }
           />
         </div>
@@ -1046,7 +1219,7 @@ function SegmentedControlPreview() {
 
 function GroupHeaderPreview() {
   return (
-    <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+    <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
       <GroupHeader text="GENERAL" />
       <div className="py-3"><Text variant="body-md">Some content...</Text></div>
       <GroupHeader text="SECURITY" />
@@ -1101,10 +1274,10 @@ function BaseLayoutPreview() {
 
 function StackPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-lg)]">
+    <div className="flex flex-col gap-[var(--token-padding-lg)]">
       <div>
         <SectionLabel>default (16px)</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
           <Stack>
             <TextInput label="First name" placeholder="John" />
             <TextInput label="Last name" placeholder="Doe" />
@@ -1116,25 +1289,25 @@ function StackPreview() {
         <SectionLabel>none (0px) — flush list rows</SectionLabel>
         <div className="bg-surface-primary rounded-[var(--token-radius-md)] max-w-[400px]">
           <Stack gap="none">
-            <ListItem title="Bitcoin" subtitle="BTC" left={<Avatar size="md" src={tokenIcons.BTC} />} onPress={() => {}} />
-            <ListItem title="Ethereum" subtitle="ETH" left={<Avatar size="md" src={tokenIcons.ETH} />} onPress={() => {}} />
-            <ListItem title="Solana" subtitle="SOL" left={<Avatar size="md" src={tokenIcons.SOL} />} onPress={() => {}} />
+            <ListItem title="Bitcoin" subtitle="BTC" left={<Avatar src={tokenIcons.BTC} />} onPress={() => {}} />
+            <ListItem title="Ethereum" subtitle="ETH" left={<Avatar src={tokenIcons.ETH} />} onPress={() => {}} />
+            <ListItem title="Solana" subtitle="SOL" left={<Avatar src={tokenIcons.SOL} />} onPress={() => {}} />
           </Stack>
         </div>
       </div>
       <div>
         <SectionLabel>sm (8px)</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
           <Stack gap="sm">
-            <Badge variant="success" size="md">Completed</Badge>
-            <Badge variant="info" size="md">Processing</Badge>
-            <Badge variant="warning" size="md">Pending</Badge>
+            <Chip variant="positive">Completed</Chip>
+            <Chip variant="neutral">Processing</Chip>
+            <Chip variant="warning">Pending</Chip>
           </Stack>
         </div>
       </div>
       <div>
         <SectionLabel>lg (24px)</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
           <Stack gap="lg">
             <Card variant="flat"><Text variant="body-md">Card one</Text></Card>
             <Card variant="flat"><Text variant="body-md">Card two</Text></Card>
@@ -1147,10 +1320,10 @@ function StackPreview() {
 
 function SectionPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-lg)]">
+    <div className="flex flex-col gap-[var(--token-padding-lg)]">
       <div>
         <SectionLabel>with title</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
           <Section title="Account Settings">
             <Stack gap="none">
               <ListItem title="Profile" subtitle="Manage your info" onPress={() => {}} />
@@ -1161,7 +1334,7 @@ function SectionPreview() {
       </div>
       <div>
         <SectionLabel>without title</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px]">
           <Section>
             <Text variant="body-md">Sections without a title work as semantic grouping containers. BaseLayout separates them with 24px gaps.</Text>
           </Section>
@@ -1169,7 +1342,7 @@ function SectionPreview() {
       </div>
       <div>
         <SectionLabel>multiple sections (as in BaseLayout)</SectionLabel>
-        <div className="bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)] max-w-[400px] flex flex-col gap-[var(--token-spacing-6)]">
+        <div className="bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)] max-w-[400px] flex flex-col gap-[var(--token-spacing-24)]">
           <Section title="General">
             <Stack gap="none">
               <ListItem title="Language" subtitle="English" onPress={() => {}} />
@@ -1190,7 +1363,7 @@ function SectionPreview() {
 
 function StickyFooterPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-4)]">
+    <div className="flex flex-col gap-[var(--token-spacing-16)]">
       <SectionLabel>Mobile (sticky bottom)</SectionLabel>
       <div className="h-[300px] rounded-[var(--token-radius-md)] overflow-hidden border border-border-default">
         <LayoutProvider isDesktop={false}>
@@ -1229,11 +1402,11 @@ function BottomSheetPreview() {
     <>
       <Button onPress={() => setOpen(true)}>Open Bottom Sheet</Button>
       <BottomSheet open={open} onClose={() => setOpen(false)} title="Transfer Details">
-        <div className="flex flex-col gap-[var(--token-spacing-3)]">
+        <div className="flex flex-col gap-[var(--token-spacing-12)]">
           <Text variant="body-md">Amount: R$ 150.00</Text>
           <Text variant="body-md">To: John Doe</Text>
           <Text variant="body-md">Via: PIX</Text>
-          <div className="h-[var(--token-spacing-md)]" />
+          <div className="h-[var(--token-gap-lg)]" />
           <Button fullWidth onPress={() => setOpen(false)}>Confirm</Button>
         </div>
       </BottomSheet>
@@ -1245,9 +1418,9 @@ function ModalPreview() {
   const [regularOpen, setRegularOpen] = useState(false)
   const [bottomOpen, setBottomOpen] = useState(false)
   return (
-    <div className="flex gap-[var(--token-spacing-3)]">
+    <div className="flex gap-[var(--token-spacing-12)]">
       <Button onPress={() => setRegularOpen(true)}>Center Modal</Button>
-      <Button variant="primary" onPress={() => setBottomOpen(true)}>Bottom Modal</Button>
+      <Button variant="primary" inverse onPress={() => setBottomOpen(true)}>Bottom Modal</Button>
       <Modal
         isVisible={regularOpen}
         variant="regular"
@@ -1266,8 +1439,8 @@ function ModalPreview() {
         onBackdropPress={() => setBottomOpen(false)}
       >
         <div className="flex flex-col gap-3 mt-2">
-          <Button variant="ghost" fullWidth onPress={() => setBottomOpen(false)}>Checking •••• 1234</Button>
-          <Button variant="ghost" fullWidth onPress={() => setBottomOpen(false)}>Savings •••• 5678</Button>
+          <Button variant="minimal" fullWidth onPress={() => setBottomOpen(false)}>Checking •••• 1234</Button>
+          <Button variant="minimal" fullWidth onPress={() => setBottomOpen(false)}>Savings •••• 5678</Button>
         </div>
       </Modal>
     </div>
@@ -1276,7 +1449,7 @@ function ModalPreview() {
 
 function FeedbackLayoutPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-4)]">
+    <div className="flex flex-col gap-[var(--token-spacing-16)]">
       <SectionLabel>Success with pending result</SectionLabel>
       <div className="h-[600px] border border-border-default rounded-[var(--token-radius-md)] overflow-hidden">
         <FeedbackLayout onClose={() => {}}>
@@ -1286,7 +1459,7 @@ function FeedbackLayoutPreview() {
               Seu saldo ficará disponível para uso em alguns minutos.
             </Text>
           </Stack>
-          <Banner variant="neutral" title="Você economizou R$20.71" description="Valor aproximado de economia" />
+          <Alert variant="neutral" title="Você economizou R$20.71" description="Valor aproximado de economia" />
           <DataList data={[
             { label: 'Você pagou', value: 'R$ 545,83' },
             { label: 'Você recebeu', value: 'US$ 100' },
@@ -1302,7 +1475,7 @@ function FeedbackLayoutPreview() {
 
 function CountdownPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-4)] bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)]">
+    <div className="flex flex-col gap-[var(--token-spacing-16)] bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)]">
       <div>
         <SectionLabel>Normal (5 minutes)</SectionLabel>
         <Countdown seconds={300} label="Código válido por" />
@@ -1328,7 +1501,7 @@ function LoadingScreenPreview() {
   ]
 
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-4)]">
+    <div className="flex flex-col gap-[var(--token-spacing-16)]">
       <SectionLabel>Auto-advancing (1.5s per step)</SectionLabel>
       <div className="h-[500px] border border-border-default rounded-[var(--token-radius-md)] overflow-hidden">
         <LoadingScreen steps={steps} autoAdvance autoAdvanceInterval={1500} />
@@ -1353,7 +1526,7 @@ function SidebarPreview() {
         ]}
         activeId={activeId}
         onChange={setActiveId}
-        header={<Text variant="heading-md">Picnic</Text>}
+        header={<Text variant="h2">Picnic</Text>}
       />
     </div>
   )
@@ -1361,7 +1534,7 @@ function SidebarPreview() {
 
 function BreadcrumbPreview() {
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-4)] bg-surface-primary p-[var(--token-spacing-md)] rounded-[var(--token-radius-md)]">
+    <div className="flex flex-col gap-[var(--token-spacing-16)] bg-surface-primary p-[var(--token-gap-lg)] rounded-[var(--token-radius-md)]">
       <div>
         <SectionLabel>Two levels</SectionLabel>
         <Breadcrumb items={[
@@ -1392,7 +1565,7 @@ function AppShellPreview() {
       ]}
       activeId={activeTab}
       onChange={setActiveTab}
-      header={<Text variant="heading-sm">Picnic</Text>}
+      header={<Text variant="h3">Picnic</Text>}
     />
   )
   const tabBarNode = (
@@ -1408,7 +1581,7 @@ function AppShellPreview() {
   )
 
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-4)]">
+    <div className="flex flex-col gap-[var(--token-spacing-16)]">
       <SectionLabel>Desktop (isDesktop=true)</SectionLabel>
       <div className="h-[350px] border border-border-default rounded-[var(--token-radius-md)] overflow-hidden">
         <LayoutProvider isDesktop={true}>
@@ -1482,12 +1655,12 @@ function FeatureLayoutPreview() {
         ]}
       />
 
-      <Banner variant="neutral" title="Quick Activation" description="We'll run a secure identity check to unlock your banking details." />
+      <Alert variant="neutral" title="Quick Activation" description="We'll run a secure identity check to unlock your banking details." />
     </>
   )
 
   return (
-    <div className="flex flex-col gap-[var(--token-spacing-lg)]">
+    <div className="flex flex-col gap-[var(--token-padding-lg)]">
       <div>
         <SectionLabel>mobile (full-screen, sticky footer)</SectionLabel>
         <div className="h-[640px] max-w-[393px] rounded-[var(--token-radius-lg)] overflow-hidden border border-shell-border">
@@ -1497,7 +1670,7 @@ function FeatureLayoutPreview() {
               imageAlt="Feature preview"
               onClose={() => {}}
               imageOverlay={
-                <Badge variant="lime" icon={<RiFlashlightLine size={16} />}>New</Badge>
+                <Chip variant="positive" icon={<RiFlashlightLine size={16} />}>New</Chip>
               }
             >
               {featureContent}
@@ -1517,7 +1690,7 @@ function FeatureLayoutPreview() {
               imageAlt="Feature preview"
               onClose={() => {}}
               imageOverlay={
-                <Badge variant="lime" icon={<RiFlashlightLine size={16} />}>New</Badge>
+                <Chip variant="positive" icon={<RiFlashlightLine size={16} />}>New</Chip>
               }
             >
               {featureContent}

@@ -6,7 +6,7 @@ import Header from '@/library/navigation/Header'
 import StickyFooter from '@/library/layout/StickyFooter'
 import Stack from '@/library/layout/Stack'
 import Text from '@/library/foundations/Text'
-import Badge from '@/library/display/Badge'
+import Badge from '@/library/display/Chip'
 import Button from '@/library/inputs/Button'
 import GroupHeader from '@/library/navigation/GroupHeader'
 import SegmentedControl from '@/library/navigation/SegmentedControl'
@@ -73,7 +73,7 @@ export default function Screen2_Dashboard({ onNext, onBack, onElementTap }: Flow
                 <Text variant="caption" color="content-secondary">Valor total</Text>
                 <Stack direction="row" gap="sm" align="center">
                   <Text variant="display">{formatBRL(totalValue)}</Text>
-                  <Badge variant={totalChange >= 0 ? 'lime' : 'error'} size="sm">
+                  <Badge variant={totalChange >= 0 ? 'positive' : 'critical'}>
                     {formatPercentChange(totalChange)}
                   </Badge>
                 </Stack>
@@ -115,11 +115,11 @@ export default function Screen2_Dashboard({ onNext, onBack, onElementTap }: Flow
             </>
           ) : (
             <Stack gap="default" align="center" className="py-16">
-              <Text variant="heading-md" align="center">Comece a investir</Text>
+              <Text variant="h2" align="center">Comece a investir</Text>
               <Text variant="body-md" color="content-secondary" align="center">
                 Explore os ativos disponíveis e faça seu primeiro investimento.
               </Text>
-              <Button variant="primary" onPress={() => setTabIndex(1)}>
+              <Button variant="primary" inverse onPress={() => setTabIndex(1)}>
                 Explorar ativos
               </Button>
             </Stack>
@@ -166,7 +166,7 @@ export default function Screen2_Dashboard({ onNext, onBack, onElementTap }: Flow
 
       {tabIndex === 0 && hasPositions && (
         <StickyFooter>
-          <Button fullWidth variant="primary" onPress={() => setTabIndex(1)}>
+          <Button fullWidth variant="primary" inverse onPress={() => setTabIndex(1)}>
             Explorar mais ativos
           </Button>
         </StickyFooter>

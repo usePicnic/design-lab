@@ -14,8 +14,8 @@ import type { LineChartCrosshairData } from '../../../library/display/LineChart'
 import LineChart from '../../../library/display/LineChart'
 import Stack from '../../../library/layout/Stack'
 import SegmentedControl from '../../../library/navigation/SegmentedControl'
-import IconButton from '../../../library/inputs/IconButton'
-import Badge from '../../../library/display/Badge'
+import Avatar from '../../../library/display/Avatar'
+import Badge from '../../../library/display/Chip'
 import Text from '../../../library/foundations/Text'
 import {
   RiArrowLeftLine,
@@ -80,10 +80,10 @@ export default function Screen2_Hub_B({ onNext, onBack, onElementTap }: FlowScre
           </div>
 
           {/* Back button */}
-          <div className="relative pt-[calc(var(--safe-area-top,12px)+8px)] px-[var(--token-spacing-4)]">
+          <div className="relative pt-[calc(var(--safe-area-top,12px)+8px)] px-[var(--token-spacing-16)]">
             {onBack && (
-              <IconButton
-                variant="base"
+              <Avatar
+               
                 inverted
                 icon={<RiArrowLeftLine size={24} />}
                 onPress={onBack}
@@ -96,14 +96,14 @@ export default function Screen2_Hub_B({ onNext, onBack, onElementTap }: FlowScre
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="relative px-[var(--token-spacing-6)] pb-2"
+            className="relative px-[var(--token-spacing-24)] pb-2"
           >
             <Stack gap="sm">
               <Stack direction="row" gap="sm" align="center">
                 <div className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-white/20">
                   <img src={currInfo.flagIcon} alt="" className="w-full h-full object-cover" />
                 </div>
-                <Text variant="heading-sm" className="text-white">Caixinha do dólar</Text>
+                <Text variant="h3" className="text-white">Caixinha do dólar</Text>
               </Stack>
 
               {balance > 0 ? (
@@ -116,7 +116,7 @@ export default function Screen2_Hub_B({ onNext, onBack, onElementTap }: FlowScre
                 </Stack>
               ) : (
                 <Stack gap="sm">
-                  <Text variant="heading-sm" className="text-white/70">Saldo zerado</Text>
+                  <Text variant="h3" className="text-white/70">Saldo zerado</Text>
                   <Text variant="body-sm" className="text-white/50">
                     Adicione fundos para começar a render.
                   </Text>
@@ -125,8 +125,8 @@ export default function Screen2_Hub_B({ onNext, onBack, onElementTap }: FlowScre
 
               {/* Badges row */}
               <Stack direction="row" gap="sm" align="center" className="mt-1">
-                <Badge variant="lime" size="md">{currInfo.apyDisplay}</Badge>
-                <Badge variant="success" size="md">Resgate imediato</Badge>
+                <Badge variant="positive">{currInfo.apyDisplay}</Badge>
+                <Badge variant="positive">Resgate imediato</Badge>
               </Stack>
             </Stack>
           </motion.div>
@@ -136,7 +136,7 @@ export default function Screen2_Hub_B({ onNext, onBack, onElementTap }: FlowScre
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.4 }}
-            className="relative flex items-center gap-2 mx-[var(--token-spacing-6)] mt-3 mb-4 px-3 py-2 rounded-full bg-white/[0.08] border border-white/[0.10]"
+            className="relative flex items-center gap-2 mx-[var(--token-spacing-24)] mt-3 mb-4 px-3 py-2 rounded-full bg-white/[0.08] border border-white/[0.10]"
           >
             <RiShieldCheckLine size={14} className="text-white/70 shrink-0" />
             <Text variant="caption" className="text-white/70">
@@ -164,7 +164,7 @@ export default function Screen2_Hub_B({ onNext, onBack, onElementTap }: FlowScre
         </div>
 
         {/* White card section — pulls up over gradient */}
-        <div className="relative bg-surface-primary px-[var(--token-spacing-6)] pt-6 pb-[48px]">
+        <div className="relative bg-surface-primary px-[var(--token-spacing-24)] pt-6 pb-[48px]">
           <Stack gap="lg">
             {/* Floating action buttons */}
             <motion.div

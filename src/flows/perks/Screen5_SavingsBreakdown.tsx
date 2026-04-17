@@ -63,8 +63,8 @@ export default function Screen5_SavingsBreakdown({ onNext, onBack }: FlowScreenP
           {lineItems.map((item, i) => (
             <div key={item.label}>
               {i > 0 && <Divider spacing="sm" />}
-              <div className="flex items-center py-[var(--token-spacing-3)]">
-                <div className="flex items-center gap-[var(--token-spacing-2)] flex-1 min-w-0">
+              <div className="flex items-center py-[var(--token-spacing-12)]">
+                <div className="flex items-center gap-[var(--token-spacing-8)] flex-1 min-w-0">
                   {item.icon}
                   <Stack gap="none">
                     <Text variant="body-sm">{item.label}</Text>
@@ -99,7 +99,7 @@ export default function Screen5_SavingsBreakdown({ onNext, onBack }: FlowScreenP
       </Stack>
 
       <StickyFooter>
-        <Button variant="ghost" fullWidth onPress={onNext}>
+        <Button variant="minimal" fullWidth onPress={onNext}>
           Entendi
         </Button>
       </StickyFooter>

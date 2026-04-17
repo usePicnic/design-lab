@@ -6,8 +6,8 @@ import Header from '../../library/navigation/Header'
 import Stack from '../../library/layout/Stack'
 import Text from '../../library/foundations/Text'
 import Amount from '../../library/display/Amount'
-import Badge from '../../library/display/Badge'
-import Banner from '../../library/display/Banner'
+import Badge from '../../library/display/Chip'
+import Alert from '../../library/display/Alert'
 import DataList from '../../library/display/DataList'
 import ShortcutButton from '../../library/inputs/ShortcutButton'
 
@@ -42,7 +42,7 @@ export default function Screen1_Hub({ onNext, onBack, onElementTap }: FlowScreen
         >
           <Stack direction="row" align="between">
             <Text variant="caption" className="text-[#8a8a8a]">Renda Protegida</Text>
-            <Badge variant="success" size="sm">Protegido</Badge>
+            <Badge variant="positive">Protegido</Badge>
           </Stack>
 
           <Amount value={MOCK_BALANCE} currency="US$" size="lg" className="text-white" />
@@ -73,12 +73,11 @@ export default function Screen1_Hub({ onNext, onBack, onElementTap }: FlowScreen
           />
         </Stack>
 
-        <Banner
+        <Alert
           variant="success"
           collapsable
           title="Seus fundos são segurados"
-          linkText="Saiba mais"
-          onLinkPress={() => setCoverageOpen(true)}
+          action={<button type="button" className="text-[length:var(--token-font-size-body-sm)] font-semibold underline text-[var(--color-content-primary)] cursor-pointer hover:opacity-70 w-fit" onClick={() => setCoverageOpen(true)}>Saiba mais</button>}
         />
 
         <DataList

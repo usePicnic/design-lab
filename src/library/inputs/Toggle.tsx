@@ -26,7 +26,7 @@ export default function Toggle({
       type="button"
       onClick={handlePress}
       disabled={disabled}
-      className={`flex items-center justify-between gap-[var(--token-spacing-3)] ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'} ${className}`}
+      className={`flex items-center justify-between gap-[var(--token-spacing-12)] ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'} ${className}`}
     >
       {label && (
         <span className="text-[length:var(--token-font-size-body-md)] leading-[var(--token-line-height-body-md)] text-content-primary">
@@ -55,6 +55,7 @@ export default function Toggle({
 registerComponent({
   name: 'Toggle',
   category: 'inputs',
+  reviewed: true,
   description: 'Binary on/off switch with animated thumb. Use inside ListItem for settings rows.',
   component: Toggle,
   props: [

@@ -3,7 +3,7 @@ import BaseLayout from '../../../library/layout/BaseLayout'
 import StickyFooter from '../../../library/layout/StickyFooter'
 import Stack from '../../../library/layout/Stack'
 import Header from '../../../library/navigation/Header'
-import Banner from '../../../library/display/Banner'
+import Alert from '../../../library/display/Alert'
 import DataList from '../../../library/display/DataList'
 import GroupHeader from '../../../library/navigation/GroupHeader'
 import Button from '../../../library/inputs/Button'
@@ -16,13 +16,13 @@ export default function Screen5_DeleteConfirm({ onBack, onElementTap }: FlowScre
 
       <Stack gap="lg">
         <Stack gap="sm">
-          <Text variant="heading-lg">Excluir caixinha?</Text>
+          <Text variant="h1">Excluir caixinha?</Text>
           <Text variant="body-md" color="content-secondary">
             Esta ação não pode ser desfeita. Você poderá criar uma nova caixinha a qualquer momento.
           </Text>
         </Stack>
 
-        <Banner
+        <Alert
           variant="warning"
           title="Atenção"
           description="Ao excluir, o histórico de rendimentos desta caixinha será perdido."
@@ -46,7 +46,7 @@ export default function Screen5_DeleteConfirm({ onBack, onElementTap }: FlowScre
           }}>
             Excluir caixinha
           </Button>
-          <Button fullWidth variant="primary" onPress={onBack}>
+          <Button fullWidth variant="primary" inverse onPress={onBack}>
             Cancelar
           </Button>
         </Stack>

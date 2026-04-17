@@ -10,6 +10,7 @@
 | # | Rule | Wrong | Right |
 |---|------|-------|-------|
 | 1 | **No arbitrary colors** | `bg-green-500`, `color: "#3B82F6"` | Use CSS variable tokens: `var(--color-feedback-success)`, `text-content-primary` |
+| 1a | **Semantic tokens first** | `var(--token-avocado-600)`, `var(--token-brand-500)` | `var(--color-feedback-success)`, `var(--color-action)` — base tokens (`--token-*`) são internos e **nunca** devem aparecer em componentes ou flows |
 | 2 | **No custom typography** | `text-[18px] font-bold` | `<Text variant="heading-sm">` |
 | 3 | **No new layout containers** | Custom `<div>` wrappers with padding/margin | `<BaseLayout>`, `<Stack>`, `<Section>` |
 | 4 | **No re-creating existing components** | Custom card with icon + text + chevron | `<ListItem>` with `left`, `title`, `subtitle`, `onPress` |
@@ -73,7 +74,7 @@ Use `<Stack>` gap presets instead of manual spacing:
 
 | Component | When to use | Key props |
 |-----------|-------------|-----------|
-| **Button** | Primary and secondary actions. One primary per screen, at bottom. | `variant` (`primary`/`secondary`/`ghost`/`destructive`), `size`, `fullWidth`, `loading`, `disabled`, `onPress`, `subtitle` |
+| **Button** | Primary and secondary actions. One primary per screen, at bottom. | `variant` (`primary`/`secondary`/`minimal`/`destructive`), `size` (`xs`/`sm`/`base`), `inverse`, `fullWidth`, `loading`, `disabled`, `onPress`, `icon`, `trailingIcon` |
 | **IconButton** | Icon-only actions: close, back, toolbar. | `icon`, `variant` (`large`/`base`/`small`/`no_background`), `onPress` |
 | **TextInput** | Text field with label, validation, prefix/suffix. | `label`, `value`, `onChange`, `error`, `helperText`, `prefix`, `suffix` |
 | **CurrencyInput** | Large currency entry with token avatar. For deposit/withdrawal/swap amounts. | `label`, `value`, `onChange`, `tokenIcon`, `error`, `helperText`, `disabled`, `readOnly` |

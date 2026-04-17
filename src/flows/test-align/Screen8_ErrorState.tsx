@@ -12,13 +12,13 @@ export default function Screen({ onNext, onBack, screenTitle, screenDescription 
   return (
     <FeedbackLayout animation={null} onClose={onBack}>
       <Stack>
-        <Text variant="heading-lg">{screenTitle ?? 'Error'}</Text>
+        <Text variant="h1">{screenTitle ?? 'Error'}</Text>
         <Text variant="body-md" color="content-secondary">
           {screenDescription ?? 'Something went wrong. Please try again.'}
         </Text>
       </Stack>
       <StickyFooter>
-        <Button variant="accent" size="lg" onPress={onNext} fullWidth>
+        <Button variant="primary" size="lg" onPress={onNext} fullWidth>
           Tentar novamente
         </Button>
       </StickyFooter>

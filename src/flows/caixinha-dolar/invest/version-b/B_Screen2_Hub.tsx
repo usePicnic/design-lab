@@ -6,10 +6,10 @@ import BaseLayout from '../../../../library/layout/BaseLayout'
 import Stack from '../../../../library/layout/Stack'
 import SegmentedControl from '../../../../library/navigation/SegmentedControl'
 import ShortcutButton from '../../../../library/inputs/ShortcutButton'
-import Badge from '../../../../library/display/Badge'
+import Badge from '../../../../library/display/Chip'
 import Amount from '../../../../library/display/Amount'
 import DataList from '../../../../library/display/DataList'
-import Banner from '../../../../library/display/Banner'
+import Alert from '../../../../library/display/Alert'
 import LineChart from '../../../../library/display/LineChart'
 import Text from '../../../../library/foundations/Text'
 
@@ -40,7 +40,7 @@ export default function B_Screen2_Hub({ onNext, onBack, onElementTap }: FlowScre
 
       <Stack gap="default">
         <Stack gap="sm" align="center">
-          <Badge variant="lime" size="sm">5% a.a.</Badge>
+          <Badge variant="positive">5% a.a.</Badge>
           <Amount value={MOCK_BALANCE} currency="US$" size="lg" />
           <Text variant="caption" color="content-secondary">
             +US$ {YIELD_TODAY.toFixed(2).replace('.', ',')} hoje
@@ -84,7 +84,7 @@ export default function B_Screen2_Hub({ onNext, onBack, onElementTap }: FlowScre
               ]}
             />
 
-            <Banner
+            <Alert
               variant="neutral"
               title="Informações fiscais"
               description={TAX_DESCRIPTION}
@@ -92,7 +92,7 @@ export default function B_Screen2_Hub({ onNext, onBack, onElementTap }: FlowScre
               defaultExpanded={false}
             />
 
-            <Banner
+            <Alert
               variant="neutral"
               title="Seus fundos são protegidos"
               description="Depósitos lastreados em títulos do Tesouro americano."

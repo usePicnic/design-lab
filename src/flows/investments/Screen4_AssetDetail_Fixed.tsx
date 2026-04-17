@@ -7,8 +7,8 @@ import Stack from '@/library/layout/Stack'
 import Button from '@/library/inputs/Button'
 import Text from '@/library/foundations/Text'
 import Avatar from '@/library/display/Avatar'
-import Badge from '@/library/display/Badge'
-import Banner from '@/library/display/Banner'
+import Badge from '@/library/display/Chip'
+import Alert from '@/library/display/Alert'
 import DataList from '@/library/display/DataList'
 import Summary from '@/library/display/Summary'
 import GroupHeader from '@/library/navigation/GroupHeader'
@@ -38,7 +38,7 @@ export default function Screen4_AssetDetail_Fixed({ onNext, onBack, onElementTap
 
       <Stack gap="sm" align="center">
         <Avatar src={asset.icon} size="lg" />
-        <Badge variant="lime" size="md">Renda Fixa</Badge>
+        <Badge variant="positive">Renda Fixa</Badge>
         <Text variant="display">{asset.apyDisplay}</Text>
       </Stack>
 
@@ -75,7 +75,7 @@ export default function Screen4_AssetDetail_Fixed({ onNext, onBack, onElementTap
         />
       </Stack>
 
-      <Banner
+      <Alert
         variant="neutral"
         title="Seu investimento é protegido por cobertura automática"
         description="Em caso de falha técnica, você é reembolsado integralmente."

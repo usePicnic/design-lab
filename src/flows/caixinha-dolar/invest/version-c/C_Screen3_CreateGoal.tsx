@@ -8,7 +8,7 @@ import Button from '../../../../library/inputs/Button'
 import CurrencyInput from '../../../../library/inputs/CurrencyInput'
 import RadioGroup from '../../../../library/inputs/RadioGroup'
 import DataList from '../../../../library/display/DataList'
-import Banner from '../../../../library/display/Banner'
+import Alert from '../../../../library/display/Alert'
 import Text from '../../../../library/foundations/Text'
 
 import { USD_ICON, TIME_HORIZONS, formatUsd, projectedYield } from '../../shared/data'
@@ -29,12 +29,12 @@ export default function C_Screen3_CreateGoal({ onNext, onBack }: FlowScreenProps
 
       <Stack gap="default">
         <Stack gap="sm">
-          <Text variant="heading-sm">Quanto você quer guardar?</Text>
+          <Text variant="h3">Quanto você quer guardar?</Text>
           <CurrencyInput label="Meta" value={targetValue} onChange={setTargetValue} tokenIcon={USD_ICON} currencySymbol="US$" />
         </Stack>
 
         <Stack gap="sm">
-          <Text variant="heading-sm">Até quando?</Text>
+          <Text variant="h3">Até quando?</Text>
           <RadioGroup
             value={selectedHorizon}
             onChange={(v) => setSelectedHorizon(String(v))}
@@ -55,7 +55,7 @@ export default function C_Screen3_CreateGoal({ onNext, onBack }: FlowScreenProps
           />
         )}
 
-        <Banner
+        <Alert
           variant="neutral"
           title="A meta é flexível"
           description="Você pode alterar o valor e o prazo a qualquer momento. A caixinha continua rendendo independente da meta."

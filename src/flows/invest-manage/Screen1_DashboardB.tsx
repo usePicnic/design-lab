@@ -68,14 +68,14 @@ export default function Screen1_DashboardB({ onNext, onElementTap }: FlowScreenP
             <RiRocketLine size={32} className="text-[var(--color-content-secondary)]" />
           </div>
           <Stack gap="sm">
-            <Text variant="heading-md">Comece a investir</Text>
+            <Text variant="h2">Comece a investir</Text>
             <Text variant="body-md" color="content-secondary">
               Criptomoedas, ouro, prata e renda fixa digital. Tudo em um só lugar, com resgate simples.
             </Text>
           </Stack>
         </Stack>
         <StickyFooter>
-          <Button variant="accent" size="lg" fullWidth onPress={handleExplorarButton}>
+          <Button variant="primary" size="lg" fullWidth onPress={handleExplorarButton}>
             Explorar investimentos
           </Button>
         </StickyFooter>

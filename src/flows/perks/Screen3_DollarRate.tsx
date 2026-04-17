@@ -6,7 +6,7 @@ import StickyFooter from '../../library/layout/StickyFooter'
 import Stack from '../../library/layout/Stack'
 import Text from '../../library/foundations/Text'
 import Button from '../../library/inputs/Button'
-import IconButton from '../../library/inputs/IconButton'
+import Avatar from '../../library/display/Avatar'
 import Link from '../../library/foundations/Link'
 import BottomSheet from '../../library/layout/BottomSheet'
 import ListItem from '../../library/display/ListItem'
@@ -40,7 +40,7 @@ export default function Screen3_DollarRate({ onNext, onBack }: FlowScreenProps) 
       onClose={onBack}
     >
       <Stack gap="sm">
-        <Text variant="heading-lg">
+        <Text variant="h1">
           O dólar mais barato do Brasil.
         </Text>
         <Stack gap="sm">
@@ -64,15 +64,15 @@ export default function Screen3_DollarRate({ onNext, onBack }: FlowScreenProps) 
 
       {/* Savings card — bespoke visual with background image */}
       <div
-        className="relative overflow-hidden rounded-[var(--token-radius-lg)] px-[var(--token-spacing-4)] py-[var(--token-spacing-4)] flex flex-col justify-between"
+        className="relative overflow-hidden rounded-[var(--token-radius-lg)] px-[var(--token-spacing-16)] py-[var(--token-spacing-16)] flex flex-col justify-between"
         style={{ minHeight: 171 }}
       >
         <div className="absolute inset-0 overflow-hidden rounded-[var(--token-radius-lg)] pointer-events-none">
           <img src={savingsBg} alt="" className="absolute h-full left-[-47%] top-0 w-[157%] max-w-none object-cover" />
         </div>
-        <div className="absolute top-[var(--token-spacing-4)] right-[var(--token-spacing-4)]">
-          <IconButton
-            variant="base"
+        <div className="absolute top-[var(--token-spacing-16)] right-[var(--token-spacing-16)]">
+          <Avatar
+            size="md"
             inverted
             icon={<RiInformationLine size={24} />}
             onPress={() => setSheetOpen(true)}
@@ -84,14 +84,14 @@ export default function Screen3_DollarRate({ onNext, onBack }: FlowScreenProps) 
             {MOCK_SAVINGS}
           </span>
         </div>
-        <Button variant="accent" size="sm" onPress={() => setSheetOpen(true)} className="relative mt-auto w-fit">
+        <Button variant="primary" size="sm" onPress={() => setSheetOpen(true)} className="relative mt-auto w-fit">
           Compartilhar
         </Button>
       </div>
 
       <BottomSheet open={sheetOpen} onClose={() => setSheetOpen(false)}>
         <Stack>
-          <Text variant="heading-md">
+          <Text variant="h2">
             Como calculamos sua economia
           </Text>
           <Text variant="body-sm" color="content-secondary">

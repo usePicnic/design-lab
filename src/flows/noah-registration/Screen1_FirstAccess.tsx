@@ -4,8 +4,8 @@ import FeatureLayout from '../../library/layout/FeatureLayout'
 import StickyFooter from '../../library/layout/StickyFooter'
 import Stack from '../../library/layout/Stack'
 import Button from '../../library/inputs/Button'
-import Badge from '../../library/display/Badge'
-import Banner from '../../library/display/Banner'
+import Badge from '../../library/display/Chip'
+import Alert from '../../library/display/Alert'
 import Summary from '../../library/display/Summary'
 import GroupHeader from '../../library/navigation/GroupHeader'
 import Text from '../../library/foundations/Text'
@@ -19,7 +19,7 @@ export default function Screen1_FirstAccess({ onNext, onBack }: FlowScreenProps)
       imageAlt="US banking illustration"
       onClose={onBack}
       imageOverlay={
-        <Badge variant="lime" icon={<RiFlashlightLine size={16} />}>
+        <Badge variant="positive" icon={<RiFlashlightLine size={16} />}>
           Novidade
         </Badge>
       }
@@ -75,7 +75,7 @@ export default function Screen1_FirstAccess({ onNext, onBack }: FlowScreenProps)
         />
       </Stack>
 
-      <Banner
+      <Alert
         variant="neutral"
         title="Ativação Rápida"
         description="Para liberar seus dados bancários, faremos uma verificação de identidade segura via Noah."

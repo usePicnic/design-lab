@@ -12,7 +12,7 @@ import Button from '../../../library/inputs/Button'
 import CurrencyInput from '../../../library/inputs/CurrencyInput'
 import RadioGroup from '../../../library/inputs/RadioGroup'
 import DataList from '../../../library/display/DataList'
-import Banner from '../../../library/display/Banner'
+import Alert from '../../../library/display/Alert'
 import Text from '../../../library/foundations/Text'
 import { RiArrowUpLine, RiArrowDownLine, RiFlagLine, RiEditLine, RiCheckLine } from '@remixicon/react'
 import { BalanceDisplay, DetailsTab, HistoryTab } from '../version-a/A_Screen1_Hub.parts'
@@ -229,10 +229,10 @@ export default function B_Screen1_Hub({ onNext, onElementTap }: FlowScreenProps)
 
         {/* White container with rounded top — overlaps hero (flat on desktop) */}
         <div className={`relative bg-surface-primary ${isDesktop ? '' : 'rounded-t-[35px]'}`}>
-          <Stack gap="lg" className="px-[var(--token-spacing-6)] pt-[24px] pb-[48px]">
+          <Stack gap="lg" className="px-[var(--token-spacing-24)] pt-[24px] pb-[48px]">
             {/* Title + Balance + Actions */}
             <Stack gap="lg">
-              <Text variant="heading-lg" className="tracking-[-0.6px]">Caixinha</Text>
+              <Text variant="h1" className="tracking-[-0.6px]">Caixinha</Text>
 
               {hasGoal ? (
                 <GoalCard balance={CURRENT_BALANCE} goalAmount={GOAL_AMOUNT} reached={!!goalReached} />
@@ -323,7 +323,7 @@ export default function B_Screen1_Hub({ onNext, onElementTap }: FlowScreenProps)
             />
           )}
 
-          <Banner
+          <Alert
             variant="neutral"
             title="A meta é flexível"
             description="Você pode alterar o valor e o prazo a qualquer momento. A caixinha continua rendendo independente da meta."

@@ -4,7 +4,7 @@ import StickyFooter from '../../library/layout/StickyFooter'
 import Stack from '../../library/layout/Stack'
 import Button from '../../library/inputs/Button'
 import Text from '../../library/foundations/Text'
-import Badge from '../../library/display/Badge'
+import Badge from '../../library/display/Chip'
 import DataList from '../../library/display/DataList'
 import GroupHeader from '../../library/navigation/GroupHeader'
 
@@ -15,7 +15,7 @@ export default function Screen7_DepositSuccess({ onBack, onElementTap, onNext }:
     <FeedbackLayout onClose={onBack}>
       <Stack gap="sm" align="center">
         <Text variant="display">Depósito protegido!</Text>
-        <Badge variant="success" size="md">Protegido</Badge>
+        <Badge variant="positive">Protegido</Badge>
       </Stack>
 
       <Stack gap="none">
@@ -38,7 +38,7 @@ export default function Screen7_DepositSuccess({ onBack, onElementTap, onNext }:
           }}>
             Ver rendimentos
           </Button>
-          <Button variant="ghost" fullWidth onPress={onBack}>
+          <Button variant="minimal" fullWidth onPress={onBack}>
             Início
           </Button>
         </Stack>

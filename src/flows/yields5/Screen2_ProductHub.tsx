@@ -7,10 +7,10 @@ import Stack from '../../library/layout/Stack'
 import BottomSheet from '../../library/layout/BottomSheet'
 import GroupHeader from '../../library/navigation/GroupHeader'
 import Text from '../../library/foundations/Text'
-import Badge from '../../library/display/Badge'
+import Badge from '../../library/display/Chip'
 import Amount from '../../library/display/Amount'
 import DataList from '../../library/display/DataList'
-import Banner from '../../library/display/Banner'
+import Alert from '../../library/display/Alert'
 import LineChart from '../../library/display/LineChart'
 import ListItem from '../../library/display/ListItem'
 import Avatar from '../../library/display/Avatar'
@@ -59,7 +59,7 @@ export default function Screen2_ProductHub({ onNext, onBack, onElementTap }: Flo
         >
           <Stack direction="row" align="between">
             <Text variant="caption" className="text-[#8a8a8a]">Saldo alocado</Text>
-            <Badge variant="success" size="sm">Protegido</Badge>
+            <Badge variant="positive">Protegido</Badge>
           </Stack>
 
           <Amount value={MOCK_BALANCE} currency="US$" size="lg" className="text-white" />
@@ -130,12 +130,11 @@ export default function Screen2_ProductHub({ onNext, onBack, onElementTap }: Flo
         </Stack>
 
         {/* Insurance */}
-        <Banner
+        <Alert
           variant="success"
           title={`Segurado — ${COVERAGE_PERCENT}% cobertura`}
           description={`Via ${INSURANCE_PROVIDER}. Custo de ${formatPct(INSURANCE_COST)} a.a. já incluso.`}
-          linkText="Ver detalhes da cobertura"
-          onLinkPress={() => setCoverageOpen(true)}
+          action={<button type="button" className="text-[length:var(--token-font-size-body-sm)] font-semibold underline text-[var(--color-content-primary)] cursor-pointer hover:opacity-70 w-fit" onClick={() => setCoverageOpen(true)}>Ver detalhes da cobertura</button>}
         />
       </Stack>
 
@@ -152,7 +151,7 @@ export default function Screen2_ProductHub({ onNext, onBack, onElementTap }: Flo
                 left={
                   <Avatar
                     icon={<RiCheckLine size={16} />}
-                    size="sm"
+                   
                     className="bg-[var(--color-feedback-success-light)] text-[var(--color-feedback-success)]"
                   />
                 }
@@ -169,7 +168,7 @@ export default function Screen2_ProductHub({ onNext, onBack, onElementTap }: Flo
                 left={
                   <Avatar
                     icon={<RiCloseLine size={16} />}
-                    size="sm"
+                   
                     className="bg-[var(--color-feedback-error-light)] text-[var(--color-feedback-error)]"
                   />
                 }

@@ -16,7 +16,7 @@ import SegmentedControl from '@/library/navigation/SegmentedControl'
 import GroupHeader from '@/library/navigation/GroupHeader'
 import ShortcutButton from '@/library/inputs/ShortcutButton'
 import Button from '@/library/inputs/Button'
-import Badge from '@/library/display/Badge'
+import Badge from '@/library/display/Chip'
 import Avatar from '@/library/display/Avatar'
 import ListItem from '@/library/display/ListItem'
 import LineChart from '@/library/display/LineChart'
@@ -123,13 +123,13 @@ export default function Screen3_AssetHub({ onNext, onBack, onElementTap }: FlowS
             <Stack direction="row" gap="default" align="center">
               <Avatar src={asset.icon} size="lg" bgColor="rgba(255,255,255,0.15)" />
               <Stack gap="none" className="flex-1">
-                <Text variant="heading-md" className="text-white">{asset.name}</Text>
+                <Text variant="h2" className="text-white">{asset.name}</Text>
                 <Stack direction="row" gap="sm" align="center" className="mt-1">
-                  <Badge variant={CATEGORY_BADGE_VARIANT[asset.category]} size="md">
+                  <Badge variant={CATEGORY_BADGE_VARIANT[asset.category]}>
                     {CATEGORY_INFO[asset.category].label}
                   </Badge>
                   {!volatile && (
-                    <Badge variant="success" size="md">Resgate imediato</Badge>
+                    <Badge variant="positive">Resgate imediato</Badge>
                   )}
                 </Stack>
               </Stack>
@@ -143,7 +143,7 @@ export default function Screen3_AssetHub({ onNext, onBack, onElementTap }: FlowS
                 </Text>
                 <BalanceDisplay value={position.currentValue} symbol="R$" inverted />
                 {volatile && asset.change24h !== undefined && (
-                  <Badge variant={asset.change24h >= 0 ? 'success' : 'error'} size="sm">
+                  <Badge variant={asset.change24h >= 0 ? 'positive' : 'critical'}>
                     {formatPercentChange(asset.change24h)}
                   </Badge>
                 )}
@@ -158,7 +158,7 @@ export default function Screen3_AssetHub({ onNext, onBack, onElementTap }: FlowS
                     <Text variant="body-sm" className="text-white/70">Preço atual</Text>
                     <BalanceDisplay value={asset.price!} symbol="R$" inverted />
                     {asset.change24h !== undefined && (
-                      <Badge variant={asset.change24h >= 0 ? 'success' : 'error'} size="sm">
+                      <Badge variant={asset.change24h >= 0 ? 'positive' : 'critical'}>
                         {formatPercentChange(asset.change24h)} (24h)
                       </Badge>
                     )}
@@ -280,7 +280,7 @@ export default function Screen3_AssetHub({ onNext, onBack, onElementTap }: FlowS
             <Button fullWidth onPress={handleInvest}>
               {volatile ? 'Comprar' : 'Investir'}
             </Button>
-            <Button fullWidth variant="primary" onPress={handleReceive}>
+            <Button fullWidth variant="primary" inverse onPress={handleReceive}>
               Depositar
             </Button>
           </Stack>
@@ -293,13 +293,13 @@ export default function Screen3_AssetHub({ onNext, onBack, onElementTap }: FlowS
           <ListItem
             title="Enviar"
             subtitle="Transferir para outra carteira"
-            left={<Avatar icon={<RiUploadLine size={20} />} size="md" />}
+            left={<Avatar icon={<RiUploadLine size={20} />} />}
             onPress={handleSend}
           />
           <ListItem
             title="Depositar"
             subtitle="Receber de outra carteira"
-            left={<Avatar icon={<RiDownloadLine size={20} />} size="md" />}
+            left={<Avatar icon={<RiDownloadLine size={20} />} />}
             onPress={handleReceive}
           />
         </Stack>

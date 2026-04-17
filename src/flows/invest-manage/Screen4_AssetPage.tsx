@@ -16,7 +16,7 @@ import GroupHeader from '@/library/navigation/GroupHeader'
 import ShortcutButton from '@/library/inputs/ShortcutButton'
 import Button from '@/library/inputs/Button'
 import Avatar from '@/library/display/Avatar'
-import Badge from '@/library/display/Badge'
+import Badge from '@/library/display/Chip'
 import LineChart from '@/library/display/LineChart'
 import Text from '@/library/foundations/Text'
 import { RiArrowDownLine, RiArrowUpLine, RiHistoryLine } from '@remixicon/react'
@@ -109,13 +109,13 @@ export default function Screen4_AssetPage({ onNext, onBack, onElementTap }: Flow
             <Stack direction="row" gap="default" align="center">
               <Avatar src={asset.icon} size="lg" />
               <Stack gap="none" className="flex-1">
-                <Text variant="heading-md" className="text-white">{asset.name}</Text>
+                <Text variant="h2" className="text-white">{asset.name}</Text>
                 <Stack direction="row" gap="sm" align="center" className="mt-1">
-                  <Badge variant={CATEGORY_BADGE_VARIANT[asset.category]} size="md">
+                  <Badge variant={CATEGORY_BADGE_VARIANT[asset.category]}>
                     {CATEGORY_INFO[asset.category].label}
                   </Badge>
                   {!vol && (
-                    <Badge variant="lime" size="md">{asset.apyDisplay}</Badge>
+                    <Badge variant="positive">{asset.apyDisplay}</Badge>
                   )}
                 </Stack>
               </Stack>
@@ -152,7 +152,7 @@ export default function Screen4_AssetPage({ onNext, onBack, onElementTap }: Flow
                     </Text>
                   </>
                 ) : (
-                  <Text variant="heading-lg" className="text-white">{asset.apyDisplay}</Text>
+                  <Text variant="h1" className="text-white">{asset.apyDisplay}</Text>
                 )}
               </Stack>
             )}
@@ -222,7 +222,7 @@ export default function Screen4_AssetPage({ onNext, onBack, onElementTap }: Flow
       {/* CTA for not-invested state */}
       {!hasPosition && (
         <StickyFooter>
-          <Button variant="accent" size="lg" fullWidth onPress={handleBuyButton}>
+          <Button variant="primary" size="lg" fullWidth onPress={handleBuyButton}>
             {vol ? 'Comprar' : 'Investir'}
           </Button>
         </StickyFooter>

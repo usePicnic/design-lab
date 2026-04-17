@@ -15,7 +15,7 @@ import Button from '@/library/inputs/Button'
 import TextInput from '@/library/inputs/TextInput'
 import Text from '@/library/foundations/Text'
 import Stack from '@/library/layout/Stack'
-import Badge from '@/library/display/Badge'
+import Badge from '@/library/display/Chip'
 import Avatar from '@/library/display/Avatar'
 
 // ── Zero-fee items ──
@@ -37,11 +37,11 @@ export default function Screen({ onNext, onElementTap }: FlowScreenProps) {
   return (
     <BaseLayout className="!bg-[#FAF7F0] !gap-0">
       {/* ══════ DARK HERO SECTION ══════ */}
-      <div className="-mx-[var(--token-spacing-6)] -mt-[var(--token-spacing-6)] px-[24px] pt-[32px] pb-[28px] bg-[#111827] rounded-b-[28px]">
+      <div className="-mx-[var(--token-spacing-24)] -mt-[var(--token-spacing-24)] px-[24px] pt-[32px] pb-[28px] bg-[#111827] rounded-b-[28px]">
         {/* Top bar */}
         <div className="flex items-center justify-between mb-[24px]">
           <span className="text-[18px] font-bold tracking-[-0.5px] text-white">picnic</span>
-          <Badge variant="lime" size="sm">ACESSO VIA INDICAÇÃO</Badge>
+          <Badge variant="positive">ACESSO VIA INDICAÇÃO</Badge>
         </div>
 
         {/* Hero headline */}
@@ -51,7 +51,7 @@ export default function Screen({ onNext, onElementTap }: FlowScreenProps) {
           </Text>
         </div>
         <div className="mb-[20px]">
-          <Text variant="heading-sm" className="!text-[var(--token-brand-400)]">
+          <Text variant="h3" className="!text-[var(--token-brand-400)]">
             Sem IOF. Sem taxas. Sem pegadinha.
           </Text>
         </div>
@@ -107,8 +107,8 @@ export default function Screen({ onNext, onElementTap }: FlowScreenProps) {
         {/* ── Zero Fees Grid ── */}
         <div>
           <div className="flex items-center justify-between mb-[12px]">
-            <Text variant="heading-sm">Taxas? Zero. Todas.</Text>
-            <Badge variant="warning" size="sm">Só até 30/abr</Badge>
+            <Text variant="h3">Taxas? Zero. Todas.</Text>
+            <Badge variant="warning">Só até 30/abr</Badge>
           </div>
           <div className="grid grid-cols-2 gap-[8px]">
             {zeroFees.map((item) => (
@@ -134,7 +134,7 @@ export default function Screen({ onNext, onElementTap }: FlowScreenProps) {
         <div className="flex flex-col items-center gap-[8px]">
           <div className="flex -space-x-3">
             {['Ana', 'Pedro', 'Carla', 'Lucas', 'Bia', 'Gui'].map((name) => (
-              <Avatar key={name} initials={name.slice(0, 2)} size="sm" />
+              <Avatar key={name} initials={name.slice(0, 2)} />
             ))}
           </div>
           <div className="flex items-center gap-[4px]">
@@ -158,7 +158,7 @@ export default function Screen({ onNext, onElementTap }: FlowScreenProps) {
             value={email}
             onChange={setEmail}
           />
-          <Button variant="accent" size="lg" onPress={handleClaim} fullWidth>
+          <Button variant="primary" size="lg" onPress={handleClaim} fullWidth>
             Quero meu bônus de US$ 10 <RiArrowRightLine size={18} className="inline ml-[4px] -mt-[2px]" />
           </Button>
           <Text variant="caption" color="content-tertiary" align="center">
