@@ -48,6 +48,7 @@ export default function Checkbox({
 registerComponent({
   name: 'Checkbox',
   category: 'inputs',
+  reviewed: true,
   description: 'Check mark for boolean selection. Use inside ListItem for labeled rows.',
   component: Checkbox,
   props: [

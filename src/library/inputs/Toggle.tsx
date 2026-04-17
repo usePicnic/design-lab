@@ -55,6 +55,7 @@ export default function Toggle({
 registerComponent({
   name: 'Toggle',
   category: 'inputs',
+  reviewed: true,
   description: 'Binary on/off switch with animated thumb. Use inside ListItem for settings rows.',
   component: Toggle,
   props: [

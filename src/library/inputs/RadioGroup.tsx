@@ -98,6 +98,7 @@ export default function RadioGroup({
 registerComponent({
   name: 'RadioGroup',
   category: 'inputs',
+  reviewed: true,
   description: 'Mutually exclusive option selector. Use for single-choice questions in forms and settings.',
   component: RadioGroup,
   props: [
