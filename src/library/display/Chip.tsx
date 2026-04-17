@@ -123,6 +123,7 @@ export default function Chip({
 registerComponent({
   name: 'Chip',
   category: 'presentation',
+  reviewed: true,
   description: 'Compact label. 7 variants × solid/outline × light/dark surface. Use surface="dark" when the chip sits on an inverse or dark background.',
   component: Chip,
   variants: ['neutral', 'inverse', 'positive', 'warning', 'critical', 'grape', 'guava'],
