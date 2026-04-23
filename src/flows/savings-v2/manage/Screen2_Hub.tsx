@@ -15,7 +15,7 @@ import Text from '../../../library/foundations/Text'
 import Badge from '../../../library/display/Chip'
 import { motion } from 'framer-motion'
 import { RiArrowDownLine, RiArrowRightUpLine, RiTimeLine, RiShieldCheckLine } from '@remixicon/react'
-import { DetailsTab, HistoryTab } from './Screen2_Hub.parts'
+import { DetailsTab, HistoryTab, DocumentsTab } from './Screen2_Hub.parts'
 import { BalanceDisplay } from '../../savings-reviewed/manage/Screen2_Hub.parts'
 import { formatCurrency } from '../../savings-reviewed/shared/data'
 
@@ -57,8 +57,8 @@ export default function Screen2_Hub({ onNext, onBack, onElementTap }: FlowScreen
 
       <Stack gap="lg">
         <Stack direction="row" gap="sm" align="center" className="-mt-2">
-          <Badge variant="positive" icon={<RiTimeLine size={14} />}>Resgate imediato</Badge>
-          <Badge variant="positive" icon={<RiShieldCheckLine size={14} />}>Cobertura inclusa</Badge>
+          <Badge variant="neutral" outline icon={<RiShieldCheckLine size={14} />}>Protegido</Badge>
+          <Badge variant="neutral" outline icon={<RiTimeLine size={14} />}>Resgate quando quiser</Badge>
         </Stack>
 
         <Stack gap="none" className="gap-1">
@@ -108,7 +108,7 @@ export default function Screen2_Hub({ onNext, onBack, onElementTap }: FlowScreen
 
         <Stack gap="sm">
           <SegmentedControl
-            segments={['Detalhes', 'Histórico']}
+            segments={['Detalhes', 'Histórico', 'Documentos']}
             activeIndex={activeTab}
             onChange={setActiveTab}
             className="self-start"
@@ -116,6 +116,7 @@ export default function Screen2_Hub({ onNext, onBack, onElementTap }: FlowScreen
 
           {activeTab === 0 && <DetailsTab hasBalance={hasBalance} yieldAmount={formatCurrency(CURRENT_GAINS, 'USD')} onViewPolicy={handleViewPolicy} defaultYieldSheetOpen={showYieldInfo} />}
           {activeTab === 1 && <HistoryTab hasBalance={hasBalance} />}
+          {activeTab === 2 && <DocumentsTab onViewPolicy={handleViewPolicy} />}
         </Stack>
       </Stack>
     </BaseLayout>

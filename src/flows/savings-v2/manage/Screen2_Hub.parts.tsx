@@ -4,6 +4,7 @@ import DataList from '../../../library/display/DataList'
 import Alert from '../../../library/display/Alert'
 import Text from '../../../library/foundations/Text'
 import Button from '../../../library/inputs/Button'
+import Link from '../../../library/foundations/Link'
 import BottomSheet from '../../../library/layout/BottomSheet'
 import { RiAddLine, RiSubtractLine } from '@remixicon/react'
 
@@ -73,11 +74,13 @@ export function DetailsTab({ hasBalance = true, yieldAmount, onViewPolicy, defau
                   { label: 'Rendimento acumulado', value: yieldAmount ?? 'US$ 80,32' },
                   { label: 'Guardando desde', value: '21 jan 2026' },
                   { label: 'Resgate', value: 'A qualquer momento' },
+                  { label: 'Informações do produto', value: <Link linkText="Consultar" onLinkPress={() => {}} size="base" /> },
                 ]
               : [
                   { label: 'Rentabilidade atual', value: '4,72% a.a.', info: openYieldInfo },
                   { label: 'Resgate', value: 'A qualquer momento' },
                   { label: 'Proteção', value: 'Seguro incluso' },
+                  { label: 'Informações do produto', value: <Link linkText="Consultar" onLinkPress={() => {}} size="base" /> },
                 ]
           }
         />
@@ -183,6 +186,26 @@ function TransactionLine({ tx }: { tx: Transaction }) {
 
 interface HistoryTabProps {
   hasBalance?: boolean
+}
+
+// ── Documents Tab ──
+
+interface DocumentsTabProps {
+  onViewPolicy?: () => void
+}
+
+export function DocumentsTab({ onViewPolicy }: DocumentsTabProps) {
+  const consultarLink = (onPress: () => void) => (
+    <Link linkText="Consultar" onLinkPress={onPress} size="base" />
+  )
+  return (
+    <DataList
+      data={[
+        { label: 'Termos da Caixinha', value: consultarLink(() => {}) },
+        { label: 'Certificado de cobertura', value: consultarLink(onViewPolicy ?? (() => {})) },
+      ]}
+    />
+  )
 }
 
 export function HistoryTab({ hasBalance = true }: HistoryTabProps) {
