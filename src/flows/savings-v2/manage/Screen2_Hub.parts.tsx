@@ -90,10 +90,10 @@ export function DetailsTab({ hasBalance = true, yieldAmount, onViewPolicy, defau
         action={<button type="button" className="text-[length:var(--token-font-size-body-sm)] font-semibold underline text-[var(--color-content-primary)] cursor-pointer hover:opacity-70 w-fit" onClick={onViewPolicy}>Ver certificado</button>}
       />
 
-      <BottomSheet open={yieldSheetOpen} onClose={() => setYieldSheetOpen(false)} title="Rentabilidade atual">
+      <BottomSheet open={yieldSheetOpen} onClose={() => setYieldSheetOpen(false)} title="Sobre a rentabilidade">
         <Stack gap="lg">
           <Text variant="body-md" color="content-secondary">
-            A rentabilidade da sua Caixinha acompanha a taxa de mercado — ela pode subir ou descer de acordo com a demanda por empréstimos em dólar. Normalmente fica estável por algumas semanas, mas pode se ajustar mais rápido em momentos de maior movimento.
+            A rentabilidade da sua Caixinha acompanha a taxa de mercado — ela pode aumentar ou diminuir de acordo com a demanda. Normalmente se mantém estável por algumas semanas, mas pode se ajustar mais rápido em momentos de maior movimento.
           </Text>
           <Button variant="secondary" size="base" fullWidth onPress={() => setYieldSheetOpen(false)}>
             Consultar detalhes do produto
