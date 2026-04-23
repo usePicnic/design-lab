@@ -565,12 +565,6 @@ export function seedDefaultGroups(_allFlows?: unknown): void {
   const seeds: { domain: string; group: string; flowIds: string[] }[] = [
     { domain: 'cards', group: 'Card Detail', flowIds: ['card-info', 'edit-daily-limits', 'rename-virtual-card', 'remove-virtual-card', 'report-card-loss', 'apple-pay-setup'] },
     { domain: 'cards', group: 'Card Actions', flowIds: ['create-virtual-card', 'update-phone'] },
-    { domain: 'earn', group: 'Caixinha Dólar', flowIds: ['caixinha-dolar', 'caixinha-deposit', 'caixinha-withdraw'] },
-    { domain: 'earn', group: 'Yields 2', flowIds: ['yields2', 'yields2-deposit', 'yields2-withdraw'] },
-    { domain: 'earn', group: 'Yields 3', flowIds: ['yields3', 'yields3-deposit', 'yields3-withdraw'] },
-    { domain: 'earn', group: 'Yields 4', flowIds: ['yields4', 'yields4-deposit', 'yields4-withdraw'] },
-    { domain: 'earn', group: 'Yields 5', flowIds: ['yields5', 'yields5-deposit', 'yields5-withdraw'] },
-    { domain: 'earn', group: 'Reviewed', flowIds: ['caixinha-create', 'caixinha-manage', 'caixinha-deposit-reviewed', 'caixinha-withdraw-reviewed'] },
     { domain: 'add-funds', group: 'ACH Deposit', flowIds: ['deposit-ach', 'noah-registration'] },
   ]
 
@@ -601,6 +595,39 @@ export function seedDefaultGroups(_allFlows?: unknown): void {
   }
 
   writeState(state)
+}
+
+// ── Cleanup: remove obsolete seeded earn groups from existing state ──
+
+const OBSOLETE_EARN_GROUPS_CLEANUP_KEY = 'picnic-design-lab:cleanup-obsolete-earn-groups'
+const OBSOLETE_EARN_GROUP_NAMES = new Set([
+  'Caixinha Dólar',
+  'Yields 2',
+  'Yields 3',
+  'Yields 4',
+  'Yields 5',
+  'Reviewed',
+])
+
+export function cleanupObsoleteEarnGroups(): void {
+  if (localStorage.getItem(OBSOLETE_EARN_GROUPS_CLEANUP_KEY)) return
+
+  const state = readState()
+  let changed = false
+
+  for (const [id, group] of Object.entries(state.groups)) {
+    if (group.domainId !== 'earn' || !OBSOLETE_EARN_GROUP_NAMES.has(group.name)) continue
+
+    const hasFlows = Object.values(state.memberships).some((m) => m.groupId === id)
+    if (hasFlows) continue
+
+    delete state.groups[id]
+    delete state.archivedGroups[id]
+    changed = true
+  }
+
+  if (changed) writeState(state)
+  localStorage.setItem(OBSOLETE_EARN_GROUPS_CLEANUP_KEY, '1')
 }
 
 // ── vs1.0 Migration ──

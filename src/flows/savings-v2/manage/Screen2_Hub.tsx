@@ -26,11 +26,12 @@ interface ScreenData {
   tab?: number
   hasBalance?: boolean
   hasPending?: boolean
+  showYieldInfo?: boolean
   [key: string]: unknown
 }
 
 export default function Screen2_Hub({ onNext, onBack, onElementTap }: FlowScreenProps) {
-  const { tab: initialTab, hasBalance: hasBalanceData, hasPending: hasPendingData } = useScreenData<ScreenData>()
+  const { tab: initialTab, hasBalance: hasBalanceData, hasPending: hasPendingData, showYieldInfo } = useScreenData<ScreenData>()
   const hasBalance = hasBalanceData ?? true
   const hasPending = hasPendingData ?? false
   const [activeTab, setActiveTab] = useState(initialTab ?? 0)
@@ -113,7 +114,7 @@ export default function Screen2_Hub({ onNext, onBack, onElementTap }: FlowScreen
             className="self-start"
           />
 
-          {activeTab === 0 && <DetailsTab hasBalance={hasBalance} yieldAmount={formatCurrency(CURRENT_GAINS, 'USD')} onViewPolicy={handleViewPolicy} />}
+          {activeTab === 0 && <DetailsTab hasBalance={hasBalance} yieldAmount={formatCurrency(CURRENT_GAINS, 'USD')} onViewPolicy={handleViewPolicy} defaultYieldSheetOpen={showYieldInfo} />}
           {activeTab === 1 && <HistoryTab hasBalance={hasBalance} />}
         </Stack>
       </Stack>

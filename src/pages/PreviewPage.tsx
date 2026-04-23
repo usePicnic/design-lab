@@ -23,8 +23,8 @@ import {
 } from '@remixicon/react'
 import { PiPiggyBank, PiPiggyBankFill } from 'react-icons/pi'
 
-/* Auto-discover all flow registrations */
-import.meta.glob('../flows/*/index.ts', { eager: true })
+/* Flow registrations — scoped to caixinha-review for the handoff session. */
+import.meta.glob('../flows/caixinha-review/index.ts', { eager: true })
 
 import { getFlow, hydrateDynamicFlows } from './simulator/flowRegistry'
 import { getFlowGraph } from './simulator/flowGraphStore'
