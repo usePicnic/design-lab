@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import Stack from '../../../library/layout/Stack'
 import DataList from '../../../library/display/DataList'
 import Alert from '../../../library/display/Alert'
 import Text from '../../../library/foundations/Text'
+import Button from '../../../library/inputs/Button'
+import BottomSheet from '../../../library/layout/BottomSheet'
 import { RiAddLine, RiSubtractLine } from '@remixicon/react'
 
 // ── Balance Display (CurrencyInput typography) ──
@@ -52,9 +55,13 @@ interface DetailsTabProps {
   hasBalance?: boolean
   yieldAmount?: string
   onViewPolicy?: () => void
+  defaultYieldSheetOpen?: boolean
 }
 
-export function DetailsTab({ hasBalance = true, yieldAmount, onViewPolicy }: DetailsTabProps) {
+export function DetailsTab({ hasBalance = true, yieldAmount, onViewPolicy, defaultYieldSheetOpen = false }: DetailsTabProps) {
+  const [yieldSheetOpen, setYieldSheetOpen] = useState(defaultYieldSheetOpen)
+  const openYieldInfo = () => setYieldSheetOpen(true)
+
   return (
     <Stack gap="default">
       <Stack gap="none">
@@ -62,13 +69,13 @@ export function DetailsTab({ hasBalance = true, yieldAmount, onViewPolicy }: Det
           data={
             hasBalance
               ? [
-                  { label: 'Rendimento', value: '4,72% a.a.' },
+                  { label: 'Rentabilidade atual', value: '4,72% a.a.', info: openYieldInfo },
                   { label: 'Rendeu até agora', value: yieldAmount ?? 'US$ 80,32' },
                   { label: 'Guardando desde', value: '21 jan 2026' },
                   { label: 'Resgate', value: 'A qualquer momento' },
                 ]
               : [
-                  { label: 'Rendimento', value: '4,72% a.a.' },
+                  { label: 'Rentabilidade atual', value: '4,72% a.a.', info: openYieldInfo },
                   { label: 'Resgate', value: 'A qualquer momento' },
                   { label: 'Proteção', value: 'Seguro incluso' },
                 ]
@@ -82,6 +89,17 @@ export function DetailsTab({ hasBalance = true, yieldAmount, onViewPolicy }: Det
         description="Seu saldo é coberto contra falhas técnicas e fraudes — sem custo adicional."
         action={<button type="button" className="text-[length:var(--token-font-size-body-sm)] font-semibold underline text-[var(--color-content-primary)] cursor-pointer hover:opacity-70 w-fit" onClick={onViewPolicy}>Ver certificado</button>}
       />
+
+      <BottomSheet open={yieldSheetOpen} onClose={() => setYieldSheetOpen(false)} title="Rentabilidade atual">
+        <Stack gap="lg">
+          <Text variant="body-md" color="content-secondary">
+            A rentabilidade da sua Caixinha acompanha a taxa de mercado — ela pode subir ou descer de acordo com a demanda por empréstimos em dólar. Normalmente fica estável por algumas semanas, mas pode se ajustar mais rápido em momentos de maior movimento.
+          </Text>
+          <Button variant="secondary" size="base" fullWidth onPress={() => setYieldSheetOpen(false)}>
+            Consultar detalhes do produto
+          </Button>
+        </Stack>
+      </BottomSheet>
     </Stack>
   )
 }

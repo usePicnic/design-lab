@@ -28,7 +28,7 @@ export default function Screen1_Intro({ onNext, onBack, onElementTap }: FlowScre
     >
       <Stack gap="lg">
         <Stack gap="sm">
-          <Text variant="display">Caixinha que faz seu dinheiro render</Text>
+          <Text variant="display">Caixinha que faz seu dólar render</Text>
           <Text variant="body-md" color="content-secondary">
             Guarde qualquer valor e veja ele crescer todo dia. Seu dinheiro rende automaticamente — e você resgata quando quiser, sem taxas e sem burocracia.
           </Text>
@@ -38,21 +38,29 @@ export default function Screen1_Intro({ onNext, onBack, onElementTap }: FlowScre
           <GroupHeader text="Como funciona" />
           <Summary
             data={[
-              { icon: <RiExchangeDollarLine size={20} />, title: 'Rendimento automático', description: 'Seu saldo rende todos os dias, sem precisar fazer nada' },
+              { icon: <RiExchangeDollarLine size={20} />, title: 'Rendimento dinâmico', description: 'Seu saldo rende todos os dias de acordo com a taxa atual, sem precisar fazer nada' },
               { icon: <RiTimeLine size={20} />, title: 'Resgate quando quiser', description: 'Sem carência — retire seus fundos a qualquer momento' },
-              { icon: <RiShieldCheckLine size={20} />, title: 'Seu dinheiro protegido', description: 'Se uma falha técnica afetar seu saldo, você é reembolsado em até 30 dias', linkText: 'Saiba mais', onLinkPress: handleSaibaMais },
+              { icon: <RiShieldCheckLine size={20} />, title: 'Seu dinheiro protegido', description: 'Se uma falha técnica afetar seu saldo, você será reembolsado em até 45 dias', linkText: 'Saiba mais', onLinkPress: handleSaibaMais },
             ]}
           />
         </Stack>
       </Stack>
 
       <StickyFooter>
-        <Button fullWidth onPress={() => {
-          const handled = onElementTap?.('Button: Ativar minha Caixinha')
-          if (!handled) onNext()
-        }}>
-          Ativar minha Caixinha
-        </Button>
+        <Stack gap="sm">
+          <Button size="base" fullWidth onPress={() => {
+            const handled = onElementTap?.('Button: Ativar minha Caixinha')
+            if (!handled) onNext()
+          }}>
+            Ativar minha Caixinha
+          </Button>
+          <Button variant="secondary" size="base" fullWidth onPress={() => {
+            const handled = onElementTap?.('Button: Consultar detalhes do produto')
+            if (!handled) onNext()
+          }}>
+            Consultar detalhes do produto
+          </Button>
+        </Stack>
       </StickyFooter>
     </FeatureLayout>
   )
