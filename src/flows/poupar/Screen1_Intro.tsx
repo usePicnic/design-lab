@@ -30,7 +30,7 @@ export default function Screen1_Intro({ onNext, onBack, onElementTap }: FlowScre
         <Stack gap="sm">
           <Text variant="display">Caixinha que faz seu dólar render</Text>
           <Text variant="body-md" color="content-secondary">
-            Guarde qualquer valor e veja ele crescer todo dia. Seu dinheiro rende automaticamente — e você resgata quando quiser, sem taxas e sem burocracia.
+            Guarde qualquer valor e veja seu saldo crescer todo dia. Seu dinheiro rende automaticamente — e você resgata quando quiser, sem taxas e sem burocracia.
           </Text>
         </Stack>
 

@@ -70,7 +70,7 @@ export function DetailsTab({ hasBalance = true, yieldAmount, onViewPolicy, defau
             hasBalance
               ? [
                   { label: 'Rentabilidade atual', value: '4,72% a.a.', info: openYieldInfo },
-                  { label: 'Rendeu até agora', value: yieldAmount ?? 'US$ 80,32' },
+                  { label: 'Rendimento acumulado', value: yieldAmount ?? 'US$ 80,32' },
                   { label: 'Guardando desde', value: '21 jan 2026' },
                   { label: 'Resgate', value: 'A qualquer momento' },
                 ]
@@ -93,7 +93,7 @@ export function DetailsTab({ hasBalance = true, yieldAmount, onViewPolicy, defau
       <BottomSheet open={yieldSheetOpen} onClose={() => setYieldSheetOpen(false)} title="Sobre a rentabilidade">
         <Stack gap="lg">
           <Text variant="body-md" color="content-secondary">
-            A rentabilidade da sua Caixinha acompanha a taxa de mercado — ela pode aumentar ou diminuir de acordo com a demanda. Normalmente se mantém estável por algumas semanas, mas pode se ajustar mais rápido em momentos de maior movimento.
+            A rentabilidade da sua Caixinha acompanha a taxa de mercado — ela pode aumentar ou diminuir de acordo com a demanda. Normalmente se mantém estável por algumas semanas, mas pode se ajustar mais rápido em momentos de muita movimentação no mercado.
           </Text>
           <Button variant="secondary" size="base" fullWidth onPress={() => setYieldSheetOpen(false)}>
             Consultar detalhes do produto

@@ -217,7 +217,7 @@ export default function Screen1_Dashboard({ onNext, onElementTap }: FlowScreenPr
               onPress={handleTapDolar}
             />
             <CaixinhaRow currency="EUR" name="Caixinha em Euro" balance={0} yieldToday={0} disabled />
-            <CaixinhaRow currency="BRL" name="Caixinha em reais" balance={0} yieldToday={0} disabled />
+            <CaixinhaRow currency="BRL" name="Caixinha em Reais" balance={0} yieldToday={0} disabled />
           </Stack>
         </Stack>
       </Stack>

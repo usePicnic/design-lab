@@ -32,7 +32,7 @@ export default function Screen3_InsuranceCard({ onBack }: FlowScreenProps) {
             <GroupHeader text="O que está coberto" />
             <Summary
               data={[
-                { icon: <RiCodeLine size={20} />, title: 'Falhas técnicas', description: 'Erros técnicos do provedor afetem seu saldo ou bloqueiem o resgate de valores' },
+                { icon: <RiCodeLine size={20} />, title: 'Falhas técnicas', description: 'Erros técnicos do provedor que afetem seu saldo ou bloqueiem o resgate' },
                 { icon: <RiLineChartLine size={20} />, title: 'Valores incorretos', description: 'Erros de cotação que causem perda do valor depositado e rendimentos' },
                 { icon: <RiShieldCheckLine size={20} />, title: 'Ataques ao provedor', description: 'Ataques maliciosos que comprometam o valor investido' },
               ]}
@@ -42,7 +42,7 @@ export default function Screen3_InsuranceCard({ onBack }: FlowScreenProps) {
           <Alert
             variant="neutral"
             title="O que não é coberto?"
-            description="Quedas normais de mercado e acesso indevido à conta — como ataques phishing e malware"
+            description="Quedas normais de mercado e acesso indevido à conta — como ataques de phishing ou malware"
           />
         </Stack>
 
