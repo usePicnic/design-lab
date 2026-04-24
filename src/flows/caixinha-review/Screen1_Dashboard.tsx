@@ -3,7 +3,7 @@
  * @description Caixinhas list uses ListItem + Avatar (size md, 40px) instead of
  *   the bespoke CaixinhaCard. Only USD active, EUR/BRL disabled with "Em breve".
  */
-import { RiArrowDownLine, RiArrowRightUpLine } from '@remixicon/react'
+import { RiArrowDownLine, RiArrowRightUpLine, RiInformationLine } from '@remixicon/react'
 import savingsPiggy from '../../assets/images/savings-piggy-3d.jpg'
 import type { FlowScreenProps } from '../../pages/simulator/flowRegistry'
 import { useScreenData } from '../../lib/ScreenDataContext'
@@ -97,6 +97,11 @@ export default function Screen1_Dashboard({ onNext, onElementTap }: FlowScreenPr
     if (!resolved) onNext()
   }
 
+  const handleTapHelp = () => {
+    const resolved = onElementTap?.('IconButton: Ajuda')
+    if (!resolved) onNext()
+  }
+
   return (
     <FeatureLayout
       imageBgColor="#F2C0CB"
@@ -126,6 +131,14 @@ export default function Screen1_Dashboard({ onNext, onElementTap }: FlowScreenPr
               Rendimento automático e simples
             </Text>
           </Stack>
+          <div className="absolute top-[var(--safe-area-top,12px)] right-[var(--token-spacing-24)] z-20">
+            <Avatar
+              size="md"
+              inverted
+              icon={<RiInformationLine size={24} />}
+              onPress={handleTapHelp}
+            />
+          </div>
         </>
       }
     >

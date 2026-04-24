@@ -55,6 +55,7 @@ const screenDefs = [
     component: ManageDashboard,
     interactiveElements: [
       { id: 'cc-usd', component: 'CurrencyCard', label: 'Dólar americano' },
+      { id: 'btn-help', component: 'IconButton', label: 'Ajuda' },
     ],
     states: [
       { id: 'default', name: 'Com saldo', description: 'USD caixinha has balance', isDefault: true, data: {} },
@@ -210,6 +211,18 @@ bootstrapFlowGraph(
         pageId: 'save-all-manage-insurance',
       } as FlowNodeData,
     },
+    {
+      id: 'n-dash-help',
+      type: 'action',
+      position: { x: X - 240, y: ROW * 2 },
+      data: {
+        label: 'Tap Ajuda',
+        screenId: null,
+        nodeType: 'action',
+        actionType: 'tap',
+        actionTarget: 'IconButton: Ajuda',
+      } as FlowNodeData,
+    },
   ],
   [
     { id: 'e-intro-ins', source: 'n-onboarding-intro', target: 'n-onboarding-insurance' },
@@ -217,6 +230,8 @@ bootstrapFlowGraph(
     { id: 'e-dash-hub', source: 'n-manage-dashboard', target: 'n-manage-hub' },
     { id: 'e-hub-yieldinfo', source: 'n-manage-hub', target: 'n-manage-hub-yield-info' },
     { id: 'e-yieldinfo-ins', source: 'n-manage-hub-yield-info', target: 'n-manage-insurance' },
+    { id: 'e-dash-help', source: 'n-manage-dashboard', target: 'n-dash-help' },
+    { id: 'e-help-intro', source: 'n-dash-help', target: 'n-onboarding-intro' },
   ],
-  2,
+  3,
 )
