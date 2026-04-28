@@ -4,7 +4,7 @@ import StickyFooter from '@/library/layout/StickyFooter'
 import Stack from '@/library/layout/Stack'
 import Button from '@/library/inputs/Button'
 import DataList from '@/library/display/DataList'
-import Alert from '@/library/display/Alert'
+import Countdown from '@/library/feedback/Countdown'
 import GroupHeader from '@/library/navigation/GroupHeader'
 import Text from '@/library/foundations/Text'
 
@@ -12,38 +12,33 @@ export default function Screen4_Success({ onBack, onElementTap }: FlowScreenProp
   return (
     <FeedbackLayout onClose={onBack}>
       <Stack gap="sm">
-        <Text variant="display">Seu dinheiro já está rendendo</Text>
+        <Text variant="display">Depósito em andamento...</Text>
         <Text variant="body-md" color="content-secondary">
-          O depósito foi concluído e o rendimento começa a ser aplicado hoje mesmo.
+          Você será notificado quando concluído. Seu dinheiro começa a render ainda hoje.
         </Text>
       </Stack>
+
+      <Countdown seconds={180} label="Tempo estimado:" />
 
       <Stack gap="default">
         <Stack gap="none">
           <GroupHeader text="Resumo da operação" />
           <DataList data={[
             { label: 'Valor guardado', value: 'US$ 100,00' },
-            { label: 'Pagamento', value: 'Saldo do Cartão' },
-            { label: 'Rendimento atual', value: '5% a.a.' },
-            { label: 'Rendimento a partir de', value: 'Hoje' },
+            { label: 'Meio de pagamento', value: 'Saldo do Cartão' },
             {
               label: 'Nossa taxa',
               value: (
                 <span className="text-[var(--color-feedback-success)] font-medium">Grátis</span>
               ),
             },
+            { label: 'Rentabilidade atual', value: '4,72% a.a.' },
           ]} />
         </Stack>
-
-        <Alert
-          variant="neutral"
-          title="Seu saldo está protegido"
-          description="Seu rendimento é coberto por um seguro automático contra falhas técnicas — sem custo adicional."
-        />
       </Stack>
 
       <StickyFooter>
-        <Button fullWidth onPress={() => {
+        <Button size="base" fullWidth onPress={() => {
           const handled = onElementTap?.('Button: Entendi')
           if (!handled) onBack()
         }}>Entendi</Button>
