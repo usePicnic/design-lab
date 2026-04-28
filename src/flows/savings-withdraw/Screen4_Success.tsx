@@ -5,30 +5,33 @@ import Stack from '../../library/layout/Stack'
 import GroupHeader from '../../library/navigation/GroupHeader'
 import Button from '../../library/inputs/Button'
 import DataList from '../../library/display/DataList'
+import Countdown from '../../library/feedback/Countdown'
 import Text from '../../library/foundations/Text'
 export default function Screen4_Success({ onBack }: FlowScreenProps) {
   return (
     <FeedbackLayout onClose={onBack}>
       <Stack gap="sm">
-        <Text variant="display">Resgate concluído</Text>
+        <Text variant="display">Resgate em andamento...</Text>
         <Text variant="body-md" color="content-secondary">
-          O valor foi creditado no saldo do seu cartão.
+          Você será notificado quando concluído. O valor será creditado no saldo do seu cartão em alguns minutos.
         </Text>
       </Stack>
 
+      <Countdown seconds={180} label="Tempo estimado:" />
+
       <Stack gap="none">
-        <GroupHeader text="Detalhes do resgate" />
+        <GroupHeader text="Resumo da operação" />
         <DataList
           data={[
             { label: 'Valor resgatado', value: 'US$ 100,00' },
             { label: 'Destino', value: 'Saldo do Cartão' },
-            { label: 'Taxa', value: 'Grátis' },
+            { label: 'Nossa taxa', value: <span className="text-[var(--color-feedback-success)] font-medium">Grátis</span> },
           ]}
         />
       </Stack>
 
       <StickyFooter>
-        <Button fullWidth onPress={onBack}>
+        <Button size="base" fullWidth onPress={onBack}>
           Concluir
         </Button>
       </StickyFooter>

@@ -35,7 +35,7 @@ export default function SegmentedControl({
     <div
       data-component="SegmentedControl"
       className={cn(
-        'flex gap-[4px]',
+        'flex gap-0',
         className,
       )}
       style={style}

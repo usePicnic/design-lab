@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
 import type { FlowScreenProps } from '../../pages/simulator/flowRegistry'
 import { useScreenData } from '../../lib/ScreenDataContext'
 import { USD_FLAG, BRL_FLAG } from '@/lib/flags'
@@ -15,11 +14,12 @@ import ListItem from '../../library/display/ListItem'
 import Avatar from '../../library/display/Avatar'
 import Badge from '../../library/display/Chip'
 import DataList from '../../library/display/DataList'
-import Alert from '../../library/display/Alert'
+import Link from '../../library/foundations/Link'
 import { DataListSkeleton } from '../../library/feedback/Skeleton'
+import { setLastAmount } from './state'
 
 const MOCK_RATE = 5.4583
-const MOCK_CARD_BALANCE = 1250.00
+const MOCK_CARD_BALANCE = 12000.00
 
 type PaymentMethod = 'card-balance' | 'pix' | 'ach'
 type CalcState = 'idle' | 'loading' | 'ready'
@@ -130,28 +130,23 @@ export default function Screen1_AmountEntry({ onNext, onBack, onElementTap, onSt
                   { label: 'VET', info: () => {}, value: `US$ 1 ⇄ R$ ${(MOCK_RATE * 1.0038).toFixed(4)}` },
                 ]
               : []),
-            { label: 'Prazo', value: isPix ? '5 minutos' : 'Instantâneo' },
-            { label: 'Rendimento a partir de', value: 'Hoje' },
+            { label: 'Prazo', value: parsedAmount > 10000 ? '30 minutos' : '3 minutos' },
             {
               label: 'Nossa taxa',
               value: (
                 <span className="text-[var(--color-feedback-success)] font-medium">Grátis</span>
               ),
             },
+            { label: 'Rentabilidade atual', value: '4,72% a.a.' },
+            { label: 'Resgate', value: 'A qualquer momento' },
+            { label: 'Proteção Inclusa', value: <Link linkText="Consultar" onLinkPress={() => {}} size="base" /> },
           ]} />
         )}
-
-        <motion.div layout transition={{ duration: 0.3, ease: 'easeOut' }}>
-          <Alert
-            variant="neutral"
-            title="Rendimento automático"
-            description="Seu dinheiro rende 4.37% ao ano e você resgata quando quiser."
-          />
-        </motion.div>
       </Stack>
 
       <StickyFooter>
-        <Button fullWidth disabled={!isValid || calcState !== 'ready'} onPress={() => {
+        <Button size="base" fullWidth disabled={!isValid || calcState !== 'ready'} onPress={() => {
+          setLastAmount(parsedAmount)
           const handled = onElementTap?.('Button: Continuar')
           if (!handled) onNext()
         }}>

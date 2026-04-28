@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 import type { FlowScreenProps } from '../../pages/simulator/flowRegistry'
+import { USD_FLAG } from '@/lib/flags'
 import BaseLayout from '../../library/layout/BaseLayout'
 import StickyFooter from '../../library/layout/StickyFooter'
 import Stack from '../../library/layout/Stack'
@@ -32,14 +33,17 @@ export default function Screen1_AmountEntry({ onNext, onBack, onElementTap }: Fl
 
   return (
     <BaseLayout>
-      <Header title="Resgatar" onClose={onBack} />
+      <Header title="" onClose={onBack} />
 
       <Stack gap="default">
         <CurrencyInput
+          label="Resgate"
           currencySymbol="US$"
+          tokenIcon={USD_FLAG}
           value={amount}
           onChange={handleChange}
           balance={BALANCE_DISPLAY}
+          balanceLabel="Saldo da Caixinha"
           onBalanceTap={handleBalanceTap}
           balanceError={isOverBalance || balanceError}
         />
@@ -47,14 +51,18 @@ export default function Screen1_AmountEntry({ onNext, onBack, onElementTap }: Fl
         <DataList
           data={[
             { label: 'Destino', value: 'Saldo do Cartão' },
-            { label: 'Taxa', value: 'Grátis' },
-            { label: 'Prazo', value: 'Instantâneo' },
+            { label: 'Prazo', value: '3 minutos' },
+            {
+              label: 'Taxa',
+              value: <span className="text-[var(--color-feedback-success)] font-medium">Grátis</span>,
+            },
           ]}
         />
       </Stack>
 
       <StickyFooter>
         <Button
+          size="base"
           fullWidth
           disabled={!isValid}
           onPress={() => {

@@ -15,6 +15,7 @@ export interface AvatarProps {
   iconColor?: string
   inverted?: boolean
   overlay?: ReactNode
+  overlayBg?: string
   badge?: boolean
   badgeColor?: string
   onPress?: () => void
@@ -32,10 +33,10 @@ const sizeStyles = {
 const iconSizes = { sm: 16, md: 20, lg: 32, xl: 40 } as const
 
 const overlayConfig = {
-  sm: { size: 'w-[12px] h-[12px]', offset: 'right-[-1px] bottom-[-1px]' },
-  md: { size: 'w-[16px] h-[16px]', offset: 'right-[-2px] bottom-[-2px]' },
-  lg: { size: 'w-[24px] h-[24px]', offset: 'right-[-3px] bottom-[-3px]' },
-  xl: { size: 'w-[32px] h-[32px]', offset: 'right-[-3px] bottom-[-3px]' },
+  sm: { size: 'w-[14px] h-[14px]', offset: 'right-[-1px] bottom-[-1px]' },
+  md: { size: 'w-[20px] h-[20px]', offset: 'right-[-2px] bottom-[-2px]' },
+  lg: { size: 'w-[28px] h-[28px]', offset: 'right-[-3px] bottom-[-3px]' },
+  xl: { size: 'w-[36px] h-[36px]', offset: 'right-[-3px] bottom-[-3px]' },
 } as const
 
 const badgeConfig = {
@@ -62,6 +63,7 @@ export default function Avatar({
   iconColor,
   inverted = false,
   overlay,
+  overlayBg,
   badge = false,
   badgeColor = 'var(--token-apple-300)',
   onPress,
@@ -74,7 +76,7 @@ export default function Avatar({
   const isGhost = !!onPress && !inverted && !tone && !resolvedBg && !src
 
   const base = cn(
-    'inline-flex items-center justify-center shrink-0 rounded-[var(--token-radius-full)] overflow-hidden transition-colors',
+    'relative inline-flex items-center justify-center shrink-0 rounded-[var(--token-radius-full)] overflow-hidden transition-colors',
     inverted
       ? 'bg-black/40 text-white'
       : isGhost
@@ -96,7 +98,7 @@ export default function Avatar({
 
   let content: ReactNode
   if (src) {
-    content = <img src={src} alt="" className="w-full h-full object-cover" />
+    content = <img src={src} alt="" className="block w-full h-full object-cover" />
   } else if (initials) {
     content = <span className="font-semibold">{initials.slice(0, 2).toUpperCase()}</span>
   } else {
@@ -135,14 +137,16 @@ export default function Avatar({
       className={cn('relative inline-flex shrink-0 isolate', sizeStyles[size], className)}
       {...interactiveProps}
     >
-      <div className={cn(base, 'w-full h-full')} style={inlineStyle}>{content}</div>
+      <div className={cn(base, sizeStyles[size])} style={inlineStyle}>{content}</div>
 
       {overlay && (
         <div
           className={cn(
-            'absolute rounded-[var(--token-radius-full)] bg-[var(--token-neutral-300)] border-2 border-[var(--color-surface-level-0)] flex items-center justify-center overflow-hidden',
+            'absolute rounded-[var(--token-radius-full)] shadow-[0_0_0_2px_var(--color-surface-level-0)] flex items-center justify-center overflow-hidden',
+            !overlayBg && 'bg-[var(--token-neutral-300)]',
             oc.size, oc.offset,
           )}
+          style={overlayBg ? { backgroundColor: overlayBg } : undefined}
         >
           {overlay}
         </div>

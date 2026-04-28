@@ -12,12 +12,12 @@ import Header from '../../../library/navigation/Header'
 import SegmentedControl from '../../../library/navigation/SegmentedControl'
 import ShortcutButton from '../../../library/inputs/ShortcutButton'
 import Text from '../../../library/foundations/Text'
-import Badge from '../../../library/display/Chip'
+import Alert from '../../../library/display/Alert'
 import { motion } from 'framer-motion'
-import { RiArrowDownLine, RiArrowRightUpLine, RiTimeLine, RiShieldCheckLine } from '@remixicon/react'
-import { DetailsTab, HistoryTab } from './Screen2_Hub.parts'
+import { RiArrowDownLine, RiArrowRightUpLine } from '@remixicon/react'
+import { DetailsTab, HistoryTab, DocumentsTab } from './Screen2_Hub.parts'
 import { BalanceDisplay } from '../../savings-reviewed/manage/Screen2_Hub.parts'
-import { formatCurrency } from '../../savings-reviewed/shared/data'
+import { formatCurrency, formatBrlEquivalent } from '../../savings-reviewed/shared/data'
 
 const CURRENT_BALANCE = 9894.89
 const CURRENT_GAINS = 80.32
@@ -26,11 +26,12 @@ interface ScreenData {
   tab?: number
   hasBalance?: boolean
   hasPending?: boolean
+  showYieldInfo?: boolean
   [key: string]: unknown
 }
 
 export default function Screen2_Hub({ onNext, onBack, onElementTap }: FlowScreenProps) {
-  const { tab: initialTab, hasBalance: hasBalanceData, hasPending: hasPendingData } = useScreenData<ScreenData>()
+  const { tab: initialTab, hasBalance: hasBalanceData, hasPending: hasPendingData, showYieldInfo } = useScreenData<ScreenData>()
   const hasBalance = hasBalanceData ?? true
   const hasPending = hasPendingData ?? false
   const [activeTab, setActiveTab] = useState(initialTab ?? 0)
@@ -50,17 +51,17 @@ export default function Screen2_Hub({ onNext, onBack, onElementTap }: FlowScreen
     if (!resolved) onNext()
   }
 
+  const handleViewInsurance = () => {
+    const resolved = onElementTap?.('Link: Proteção Inclusa')
+    if (!resolved) onNext()
+  }
+
   return (
     <BaseLayout>
       <Header title="Caixinha em Dólar" onBack={onBack} />
 
       <Stack gap="lg">
-        <Stack direction="row" gap="sm" align="center" className="-mt-2">
-          <Badge variant="positive" icon={<RiTimeLine size={14} />}>Resgate imediato</Badge>
-          <Badge variant="positive" icon={<RiShieldCheckLine size={14} />}>Cobertura inclusa</Badge>
-        </Stack>
-
-        <Stack gap="none" className="gap-1">
+        <Stack gap="none" className="gap-[var(--token-spacing-4)]">
           <div className={hasPending ? 'opacity-40' : ''}>
             <BalanceDisplay value={hasBalance ? CURRENT_BALANCE : 0} symbol="US$" />
           </div>
@@ -83,11 +84,22 @@ export default function Screen2_Hub({ onNext, onBack, onElementTap }: FlowScreen
             </div>
           )}
           {hasBalance && !hasPending && (
-            <Text variant="body-md" className="text-[var(--color-feedback-success)] font-medium tracking-tight">
-              ↑ {formatCurrency(CURRENT_GAINS, 'USD')}
+            <Text
+              variant="body-md"
+              className="text-[var(--color-content-secondary)] font-medium tracking-tight"
+            >
+              {formatBrlEquivalent(CURRENT_BALANCE, 'USD')}
             </Text>
           )}
         </Stack>
+
+        {!hasBalance && (
+          <Alert
+            variant="neutral"
+            title="Rendimento com proteção inclusa"
+            description="O saldo dessa caixinha  é protegido contra falhas técnicas e fraudes — sem custo adicional."
+          />
+        )}
 
         <Stack direction="row" gap="default" align="start">
           <ShortcutButton
@@ -105,16 +117,17 @@ export default function Screen2_Hub({ onNext, onBack, onElementTap }: FlowScreen
           />
         </Stack>
 
-        <Stack gap="sm">
+        <Stack gap="sm" className="mt-[var(--token-spacing-8)]">
           <SegmentedControl
-            segments={['Detalhes', 'Histórico']}
+            segments={['Detalhes', 'Histórico', 'Documentos']}
             activeIndex={activeTab}
             onChange={setActiveTab}
             className="self-start"
           />
 
-          {activeTab === 0 && <DetailsTab hasBalance={hasBalance} yieldAmount={formatCurrency(CURRENT_GAINS, 'USD')} onViewPolicy={handleViewPolicy} />}
+          {activeTab === 0 && <DetailsTab hasBalance={hasBalance} yieldAmount={formatCurrency(CURRENT_GAINS, 'USD')} defaultYieldSheetOpen={showYieldInfo} onViewInsurance={handleViewInsurance} />}
           {activeTab === 1 && <HistoryTab hasBalance={hasBalance} />}
+          {activeTab === 2 && <DocumentsTab onViewPolicy={handleViewPolicy} />}
         </Stack>
       </Stack>
     </BaseLayout>

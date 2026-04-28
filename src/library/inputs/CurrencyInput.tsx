@@ -19,6 +19,8 @@ export interface CurrencyInputProps {
   helperText?: string
   /** Formatted balance string displayed below the input (e.g. "US$ 1.250,00") */
   balance?: string
+  /** Label preceding the balance (default "Saldo"). Renders as "{balanceLabel}: {balance}". */
+  balanceLabel?: string
   /** Called when the balance text is tapped — typically fills max amount */
   onBalanceTap?: () => void
   /** When true, balance text turns red with an alert icon to indicate insufficient funds */
@@ -60,6 +62,7 @@ export default function CurrencyInput({
   secondaryValue,
   helperText,
   balance,
+  balanceLabel = 'Saldo',
   onBalanceTap,
   balanceError = false,
   error,
@@ -162,7 +165,7 @@ export default function CurrencyInput({
           className={`flex items-center gap-[var(--token-spacing-4)] text-[length:var(--token-font-size-body-sm)] leading-[var(--token-line-height-body-sm)] ${balanceError ? 'text-[var(--color-feedback-error)]' : 'text-content-tertiary'} ${onBalanceTap ? 'cursor-pointer underline decoration-dotted underline-offset-2' : ''}`}
         >
           {balanceError && <RiErrorWarningLine size={18} />}
-          Saldo: {balance}
+          {balanceLabel}: {balance}
         </button>
       )}
 

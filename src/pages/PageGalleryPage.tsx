@@ -2,8 +2,8 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { RiAddLine } from '@remixicon/react'
 
-/* Auto-discover all flow registrations */
-import.meta.glob('../flows/*/index.ts', { eager: true })
+/* Flow registrations — scoped to the caixinha-review handoff set. */
+import.meta.glob('../flows/{caixinha-review,savings-deposit,savings-withdraw}/index.ts', { eager: true })
 
 import AppHeader from '../components/AppHeader'
 import PageGalleryCanvas from './gallery/PageGalleryCanvas'

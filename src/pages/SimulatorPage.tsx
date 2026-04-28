@@ -3,8 +3,9 @@ import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { RiComputerLine, RiGitBranchLine, RiPaintBrushLine, RiAddLine } from '@remixicon/react'
 
-/* Auto-discover all flow registrations */
-import.meta.glob('../flows/*/index.ts', { eager: true })
+/* Flow registrations — scoped to the caixinha-review handoff set.
+ * Other flows are intentionally not imported to keep the sidebar focused. */
+import.meta.glob('../flows/{caixinha-review,savings-deposit,savings-withdraw}/index.ts', { eager: true })
 
 import AppHeader from '../components/AppHeader'
 import FlowSidebar from './simulator/FlowSidebar'
@@ -16,7 +17,7 @@ import EditableFlowSlug from './simulator/EditableFlowSlug'
 import { migrateHardcodedFlows, migrateStaleScreenPaths } from './simulator/flowMigration'
 import { subscribeToGraphChanges } from './simulator/flowGraphStore'
 import { subscribeToDynamicFlowChanges, migrateSavingsToEarnDomain } from './simulator/dynamicFlowStore'
-import { seedDefaultGroups, migrateV1Flows, enableUserActions, subscribeToGroupChanges } from './simulator/flowGroupStore'
+import { seedDefaultGroups, migrateV1Flows, cleanupObsoleteEarnGroups, enableUserActions, subscribeToGroupChanges } from './simulator/flowGroupStore'
 import { pullFromSupabase, pushAllToSupabase } from '../lib/syncStore'
 
 // Expose push function for console use
@@ -73,6 +74,7 @@ export default function SimulatorPage() {
     migrateSavingsToEarnDomain()
     hydrateDynamicFlows()
     seedDefaultGroups()
+    cleanupObsoleteEarnGroups()
     migrateV1Flows()
     setVersion((v) => v + 1)
   }, [])
