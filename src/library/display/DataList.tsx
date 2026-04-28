@@ -74,7 +74,7 @@ function HorizontalRow({ item, isLast }: { item: DataListItem; isLast: boolean }
   return (
     <div
       className={cn(
-        'w-full border-b border-[var(--token-neutral-100)]',
+        'w-full border-b border-[var(--token-neutral-200)]',
         isLast && 'border-b-0',
       )}
     >
@@ -228,7 +228,7 @@ function VerticalRow({ items, isLast }: { items: DataListItem[]; isLast: boolean
   return (
     <div
       className={cn(
-        'w-full border-b border-[var(--token-neutral-100)]',
+        'w-full border-b border-[var(--token-neutral-200)]',
         isLast && 'border-b-0',
       )}
     >

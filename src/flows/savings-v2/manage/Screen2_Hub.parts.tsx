@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import Stack from '../../../library/layout/Stack'
 import DataList from '../../../library/display/DataList'
-import Alert from '../../../library/display/Alert'
 import Text from '../../../library/foundations/Text'
+import Button from '../../../library/inputs/Button'
+import Link from '../../../library/foundations/Link'
+import BottomSheet from '../../../library/layout/BottomSheet'
 import { RiAddLine, RiSubtractLine } from '@remixicon/react'
 
 // ── Balance Display (CurrencyInput typography) ──
@@ -51,10 +54,14 @@ export const MOCK_YIELD_DATA = Array.from({ length: 30 }, (_, i) => {
 interface DetailsTabProps {
   hasBalance?: boolean
   yieldAmount?: string
-  onViewPolicy?: () => void
+  defaultYieldSheetOpen?: boolean
+  onViewInsurance?: () => void
 }
 
-export function DetailsTab({ hasBalance = true, yieldAmount, onViewPolicy }: DetailsTabProps) {
+export function DetailsTab({ hasBalance = true, yieldAmount, defaultYieldSheetOpen = false, onViewInsurance }: DetailsTabProps) {
+  const [yieldSheetOpen, setYieldSheetOpen] = useState(defaultYieldSheetOpen)
+  const openYieldInfo = () => setYieldSheetOpen(true)
+
   return (
     <Stack gap="default">
       <Stack gap="none">
@@ -62,26 +69,34 @@ export function DetailsTab({ hasBalance = true, yieldAmount, onViewPolicy }: Det
           data={
             hasBalance
               ? [
-                  { label: 'Rendimento', value: '4,72% a.a.' },
-                  { label: 'Rendeu até agora', value: yieldAmount ?? 'US$ 80,32' },
                   { label: 'Guardando desde', value: '21 jan 2026' },
+                  { label: 'Rentabilidade atual', value: '4,72% a.a.', info: openYieldInfo },
+                  { label: 'Rendimento acumulado', value: <span className="text-[var(--color-feedback-success)] font-medium">↑ {yieldAmount ?? 'US$ 80,32'}</span> },
                   { label: 'Resgate', value: 'A qualquer momento' },
+                  { label: 'Proteção Inclusa', value: <Link linkText="Consultar" onLinkPress={onViewInsurance ?? (() => {})} size="base" /> },
+                  { label: 'Informações do produto', value: <Link linkText="Consultar" onLinkPress={() => {}} size="base" /> },
                 ]
               : [
-                  { label: 'Rendimento', value: '4,72% a.a.' },
+                  { label: 'Rentabilidade atual', value: '4,72% a.a.', info: openYieldInfo },
                   { label: 'Resgate', value: 'A qualquer momento' },
-                  { label: 'Proteção', value: 'Seguro incluso' },
+                  { label: 'Proteção Inclusa', value: <Link linkText="Consultar" onLinkPress={onViewInsurance ?? (() => {})} size="base" /> },
+                  { label: 'Informações do produto', value: <Link linkText="Consultar" onLinkPress={() => {}} size="base" /> },
                 ]
           }
         />
       </Stack>
 
-      <Alert
-        variant="neutral"
-        title="Seu dinheiro protegido"
-        description="Seu saldo é coberto contra falhas técnicas e fraudes — sem custo adicional."
-        action={<button type="button" className="text-[length:var(--token-font-size-body-sm)] font-semibold underline text-[var(--color-content-primary)] cursor-pointer hover:opacity-70 w-fit" onClick={onViewPolicy}>Ver certificado</button>}
-      />
+
+      <BottomSheet open={yieldSheetOpen} onClose={() => setYieldSheetOpen(false)} title="Sobre a rentabilidade">
+        <Stack gap="lg">
+          <Text variant="body-md" color="content-secondary">
+            A rentabilidade da sua Caixinha acompanha a taxa de mercado — ela pode aumentar ou diminuir de acordo com a demanda. Normalmente se mantém estável por algumas semanas, mas pode se ajustar mais rápido em momentos de muita movimentação no mercado.
+          </Text>
+          <Button variant="secondary" size="base" fullWidth onPress={() => setYieldSheetOpen(false)}>
+            Consultar detalhes do produto
+          </Button>
+        </Stack>
+      </BottomSheet>
     </Stack>
   )
 }
@@ -165,6 +180,26 @@ function TransactionLine({ tx }: { tx: Transaction }) {
 
 interface HistoryTabProps {
   hasBalance?: boolean
+}
+
+// ── Documents Tab ──
+
+interface DocumentsTabProps {
+  onViewPolicy?: () => void
+}
+
+export function DocumentsTab({ onViewPolicy }: DocumentsTabProps) {
+  const consultarLink = (onPress: () => void) => (
+    <Link linkText="Consultar" onLinkPress={onPress} size="base" />
+  )
+  return (
+    <DataList
+      data={[
+        { label: 'Termos e Condições da caixinha', value: consultarLink(() => {}) },
+        { label: 'OpenCover', value: consultarLink(onViewPolicy ?? (() => {})) },
+      ]}
+    />
+  )
 }
 
 export function HistoryTab({ hasBalance = true }: HistoryTabProps) {

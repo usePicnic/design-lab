@@ -33,6 +33,7 @@ export default function Header({
           {showLeftButton && (
             <Avatar
               size="md"
+              bgColor="var(--color-surface-level-2)"
               icon={onBack
                 ? <RiArrowLeftLine size={24} className="text-content-primary" />
                 : <RiCloseLine size={24} className="text-content-primary" />

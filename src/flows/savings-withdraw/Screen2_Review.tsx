@@ -16,19 +16,20 @@ export default function Screen2_Review({ onNext, onBack, onElementTap }: FlowScr
       <Text variant="h1">Confirme o resgate</Text>
 
       <Stack gap="none">
-        <GroupHeader text="Detalhes do resgate" />
+        <GroupHeader text="Detalhes da operação" />
         <DataList
           data={[
-            { label: 'Valor', value: 'US$ 100,00' },
+            { label: 'Você está resgatando', value: 'US$ 100,00' },
             { label: 'Destino', value: 'Saldo do Cartão' },
-            { label: 'Taxa', value: 'Grátis' },
-            { label: 'Prazo', value: 'Instantâneo' },
+            { label: 'Taxa', value: '3 minutos' },
+            { label: 'Taxa', value: <span className="text-[var(--color-feedback-success)] font-medium">Grátis</span> },
           ]}
         />
       </Stack>
 
       <StickyFooter>
         <Button
+          size="base"
           fullWidth
           onPress={() => {
             const handled = onElementTap?.('Button: Confirmar resgate')
